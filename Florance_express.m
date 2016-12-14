@@ -4,7 +4,6 @@ clear
 close all
 clc
 
-%% C3_max = 5.8;
 
 %% -------------------------- Time settings -----------------------------
 
@@ -108,7 +107,7 @@ theta_arr = kep_arr(6);
 Dv_vect = [];
 r1 = [];
 r2 = [];
-c3_vect =[];
+v_inf_vect =[];
 
 % Computation of DV with two for cylcle.
 
@@ -129,10 +128,10 @@ for i = 1 : length(t_dep)
             dv1 = norm(VI' - v_e);
             dv2 = norm(v_f - VF');
             dv_tot = abs(dv1) + abs(dv2);
-            c3 = (norm(v_e - VI'))^2;     
+            v_inf = (norm(v_e - VI'));     
         else
             dv_tot = nan;
-            c3 = nan;
+            v_inf = nan;
         end
         
         if i == length(t_dep)
@@ -140,7 +139,7 @@ for i = 1 : length(t_dep)
         end
         
         Dv_vect = [Dv_vect dv_tot];
-        c3_vect = [c3_vect c3];
+        v_inf_vect = [v_inf_vect v_inf];
     end
     r1 =[r1 r_e];
 end
@@ -171,22 +170,22 @@ Dv_max = max(max(Dv_matrix));
 
 %% -------------------------------- C3 -----------------------------------
 
-c3_max = 5.8;
+v_inf_max = 5.8;
 
-if min(c3_vect) > c3_max
+if min(v_inf_vect) > v_inf_max
     warning ('The value of C3 Max is too small, automatically set C3 Max = C3 Max*2');
-    c3_max =c3_max*2;
+    v_inf_max =v_inf_max*2;
 end
 
-for s = 1 : length(c3_vect)
-    if c3_vect(s) > (c3_max)
-       c3_vect(s) = nan;
+for s = 1 : length(v_inf_vect)
+    if v_inf_vect(s) > (v_inf_max)
+       v_inf_vect(s) = nan;
     end
 end
 
  
-c3_matrix = reshape(c3_vect,[length(t_arr),length(t_dep)]); 
-c3_matrix = c3_matrix';
+v_inf_matrix = reshape(v_inf_vect,[length(t_arr),length(t_dep)]); 
+v_inf_matrix = v_inf_matrix';
 
 
 
@@ -205,15 +204,15 @@ r2_arc = r2(COLUMN,:);
 
 %% ----- Computation of sub-optimal transfer arc for the minimun C3 ------
 
-c3_min = min(min(c3_matrix));
-[ROW_c3_min,COLUMN_c3_min] =find(c3_matrix == c3_min);
-c3_min_TOF = (TOF_matrix(ROW_c3_min,COLUMN_c3_min)*86400);
+v_inf_min = min(min(v_inf_matrix));
+[ROW_v_inf_min,COLUMN_v_inf_min] =find(v_inf_matrix == v_inf_min);
+v_inf_min_TOF = (TOF_matrix(ROW_v_inf_min,COLUMN_v_inf_min)*86400);
 
-r1_sub_arc = r1(ROW_c3_min,:);
-r2_sub_arc = r2(COLUMN_c3_min,:);
-[A,P,E,ERROR,v1_sub_arc,v2_sub_arc,TPAR,THETA] = lambertMR(r1_sub_arc,r2_sub_arc,c3_min_TOF,ksun);
+r1_sub_arc = r1(ROW_v_inf_min,:);
+r2_sub_arc = r2(COLUMN_v_inf_min,:);
+[A,P,E,ERROR,v1_sub_arc,v2_sub_arc,TPAR,THETA] = lambertMR(r1_sub_arc,r2_sub_arc,v_inf_min_TOF,ksun);
 
-[rx_sub_arc, ry_sub_arc, rz_sub_arc, vx_sub_arc, vy_sub_arc, vz_sub_arc] = intARC_lamb(r1_sub_arc,v1_sub_arc,ksun,c3_min_TOF,86400);
+[rx_sub_arc, ry_sub_arc, rz_sub_arc, vx_sub_arc, vy_sub_arc, vz_sub_arc] = intARC_lamb(r1_sub_arc,v1_sub_arc,ksun,v_inf_min_TOF,86400);
 
 
 %% ---------------------------- Plotting ---------------------------------
@@ -224,6 +223,7 @@ figure(1)
 whitebg(figure(1), 'black')
 hold on
 grid on
+axis equal
 title('Orbits and best transfer arc rapresentation ')
 plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
 plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
@@ -262,13 +262,14 @@ grid on
 title('Pork chop plot contour')
 xlabel('Time of arrivals');
 ylabel('Time of departure');
-% datetick('x','yy/mm/dd')
-% datetick('y','yy/mm/dd')
 axis equal
 
 contour(t_arr,t_dep,Dv_matrix,50);
 caxis([10 80]);
 colormap jet
+
+datetick('x','yy/mm/dd')
+datetick('y','yy/mm/dd')
 
 %  Pork chop plot DV,TOF.
 
@@ -278,8 +279,6 @@ grid on
 title('Pork chop plot contour and TOF')
 xlabel('Time of arrivals');
 ylabel('Time of departure');
-% datetick('x','yy/mm/dd')
-% datetick('y','yy/mm/dd')
 axis equal
 
 contour(t_arr,t_dep,Dv_matrix,50);
@@ -287,23 +286,27 @@ caxis([10 80]);
 colormap jet
 contour(t_arr,t_dep,TOF_matrix,20,'r','ShowText','on');
 
-% Pork chop plot C3.
+datetick('x','yy/mm/dd')
+datetick('y','yy/mm/dd')
+
+% Pork chop plot V infinity.
 
 figure(5)
 hold on
 grid on
-title('Pork chop plot C3')
+title('Pork chop plot V infinity')
 xlabel('Time of arrivals');
 ylabel('Time of departure');
-% datetick('x','yy/mm/dd')
-% datetick('y','yy/mm/dd')
 axis equal
 
 contour(t_arr,t_dep,Dv_matrix,50);
 caxis([10 80]);
 colormap jet
 contour(t_arr,t_dep,TOF_matrix,20,'r');
-contour(t_arr,t_dep,c3_matrix,10,'ShowText','on','Fill','on')
+contour(t_arr,t_dep,v_inf_matrix,10,'ShowText','on')
+
+datetick('x','yy/mm/dd')
+datetick('y','yy/mm/dd')
 
 % 3D Pork chop plot contour.
 
@@ -314,8 +317,6 @@ title('3D Pork chop plot')
 xlabel('Time of arrivals');
 ylabel('Time of departure');
 zlabel('Delta V')
-% datetick('x','yy/mm/dd')
-% datetick('y','yy/mm/dd')
 axis equal
 
 contour3(t_arr,t_dep,Dv_matrix,125);
@@ -323,6 +324,8 @@ caxis([10 80]);
 [X,Y]=meshgrid(t_arr,t_dep);
 surface(X,Y,Dv_matrix); 
 
+datetick('x','yy/mm/dd')
+datetick('y','yy/mm/dd')
 
 
 
