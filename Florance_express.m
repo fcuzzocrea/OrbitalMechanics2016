@@ -1,5 +1,4 @@
 %% Florance_express.
-%alfonso 
 
 clear 
 close all
@@ -204,6 +203,19 @@ r2_arc = r2(COLUMN,:);
 
 
 
+%% ----- Computation of sub-optimal transfer arc for the minimun C3 ------
+
+c3_min = min(min(c3_matrix));
+[ROW_c3_min,COLUMN_c3_min] =find(c3_matrix == c3_min);
+c3_min_TOF = (TOF_matrix(ROW_c3_min,COLUMN_c3_min)*86400);
+
+r1_sub_arc = r1(ROW_c3_min,:);
+r2_sub_arc = r2(COLUMN_c3_min,:);
+[A,P,E,ERROR,v1_sub_arc,v2_sub_arc,TPAR,THETA] = lambertMR(r1_sub_arc,r2_sub_arc,c3_min_TOF,ksun);
+
+[rx_sub_arc, ry_sub_arc, rz_sub_arc, vx_sub_arc, vy_sub_arc, vz_sub_arc] = intARC_lamb(r1_sub_arc,v1_sub_arc,ksun,c3_min_TOF,86400);
+
+
 %% ---------------------------- Plotting ---------------------------------
 
 % Orbits plot.
@@ -222,7 +234,14 @@ plot3(r1_arc(1),r1_arc(2),r1_arc(3),'b*')
 plot3(r2_arc(1),r2_arc(2),r2_arc(3),'r*')
 plot3(rx_arc, ry_arc, rz_arc,'y')
 
-legend('Earth Orbit','Florence Orbit','Earth Departure Position','Florence Arrival Position','Transfer arc', 'Location', 'NorthWest')
+% Sub-optimal transfer arc plot
+
+plot3(r1_sub_arc(1),r1_sub_arc(2),r1_sub_arc(3),'w*')
+plot3(r2_sub_arc(1),r2_sub_arc(2),r2_sub_arc(3),'m*')
+plot3(rx_sub_arc, ry_sub_arc, rz_sub_arc,'g')
+
+legend('Earth Orbit','Florence Orbit','Earth Departure Position','Florence Arrival Position','Transfer arc',...
+    'Earth sub-optimal departure','Florence sub-optimal arrival','Sub-optimal transfer arc', 'Location', 'NorthWest')
 
 % Time of departure, Time of fligt, Delta v plot. 
 
