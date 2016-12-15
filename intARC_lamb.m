@@ -1,16 +1,16 @@
 function [rx_vect, ry_vect, rz_vect, vx_vect, vy_vect, vz_vect] = intARC_lamb(r_1,VI,mu,time,n)
 
 %% This function implements the integration of the dynamics orbit equations
-
+% 
 %% Input:
-
+% 
 % r_1       - initial position  
 % time      - transfer time
 % VI        - initial velocity
 % mu        - planetary constant
-
+% 
 %% Output:
-
+% 
 % rx_vect   - vector of all x components of position vectors
 % ry_vect   - vector of all y components of position vectors
 % rz_vect   - vector of all z components of position vectors
@@ -40,12 +40,12 @@ if nargin <= 4
     n =1;
 end
 
-time=[0:n:time];
+time = 0:n:time;
  %% Integration with ode113 function
 
 % [T,X] = ode113(@(t,X) dyn_2BP(t,X,mu),time,X0,options);
 
-[T,X]=ode113(@ dyn_orb_eq,time,X0,options,mu);
+[~,X] = ode113(@ dyn_orb_eq,time,X0,options,mu);
 
 %% Definition of the Output after from integration values
 
