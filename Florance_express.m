@@ -179,15 +179,15 @@ Dv_max = max(max(Dv_matrix));
 
 %% ---------------------------- v inf max --------------------------------
 
-v_inf_max = 5.8;
+v_inf_assigned = 5.8;
 
-if min(min(v_inf_matrix)) > v_inf_max
+if min(min(v_inf_matrix)) > v_inf_assigned
     warning ('The value of C3 Max is too small, automatically set C3 Max = C3 Max*2');
-    v_inf_max = v_inf_max*2;
+    v_inf_assigned = v_inf_assigned*2;
 end
 
 for s = 1 : numel(v_inf_matrix)
-    if v_inf_matrix(s) > v_inf_max
+    if v_inf_matrix(s) > v_inf_assigned
        v_inf_matrix(s) = nan;
     end
 end
@@ -206,19 +206,20 @@ r2_arc = r_arr_vect(COLUMN,:);
     v1_arc,ksun,Dv_min_TOF,86400);
 
 
-%% ----- Computation of sub-optimal transfer arc for the minimun C3 ------
+%% --------------- Computation of sub-optimal transfer arc ---------------
+%  ------- for the nearest V infinity to V infinity assigned -------------
 
-v_inf_min = min(min(v_inf_matrix));
-[ROW_v_inf_min,COLUMN_v_inf_min] = find(v_inf_matrix == v_inf_min);
-v_inf_min_TOF = (TOF_matrix(ROW_v_inf_min,COLUMN_v_inf_min)*86400);
+v_inf_max = max(min(v_inf_matrix));
+[ROW_v_inf,COLUMN_v_inf] = find(v_inf_matrix == v_inf_max);
+v_inf_TOF = (TOF_matrix(ROW_v_inf,COLUMN_v_inf)*86400);
 
-r1_sub_arc = r_dep_vect(ROW_v_inf_min,:);
-r2_sub_arc = r_arr_vect(COLUMN_v_inf_min,:);
+r1_sub_arc = r_dep_vect(ROW_v_inf,:);
+r2_sub_arc = r_arr_vect(COLUMN_v_inf,:);
 [A,P,E,ERROR,v1_sub_arc,v2_sub_arc,TPAR,THETA] = lambertMR(r1_sub_arc,...
-    r2_sub_arc,v_inf_min_TOF,ksun);
+    r2_sub_arc,v_inf_TOF,ksun);
 
 [rx_sub_arc, ry_sub_arc, rz_sub_arc, vx_sub_arc, vy_sub_arc, vz_sub_arc...
-    ] = intARC_lamb(r1_sub_arc,v1_sub_arc,ksun,v_inf_min_TOF,86400);
+    ] = intARC_lamb(r1_sub_arc,v1_sub_arc,ksun,v_inf_TOF,86400);
 
 
 %% ---------------------------- Plotting ---------------------------------
@@ -240,7 +241,7 @@ plot3(r1_arc(1),r1_arc(2),r1_arc(3),'b*')
 plot3(r2_arc(1),r2_arc(2),r2_arc(3),'r*')
 plot3(rx_arc, ry_arc, rz_arc,'y')
 
-% Sub-optimal transfer arc plot
+% V infinity nearest to assigned V infinity transfer arc plot
 
 plot3(r1_sub_arc(1),r1_sub_arc(2),r1_sub_arc(3),'w*')
 plot3(r2_sub_arc(1),r2_sub_arc(2),r2_sub_arc(3),'m*')
@@ -249,7 +250,7 @@ plot3(rx_sub_arc, ry_sub_arc, rz_sub_arc,'g')
 legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
     'Florence Arrival Position','Transfer arc',...
     'Earth sub-optimal departure','Florence sub-optimal arrival',...
-    'Sub-optimal transfer arc', 'Location', 'NorthWest')
+    'Transfer arc for c3~c3_max', 'Location', 'NorthWest')
 
 % Time of departure, Time of fligt, Delta v plot. 
 
@@ -277,6 +278,8 @@ colormap jet
 
 datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
 
 %  Pork chop plot DV,TOF.
 
@@ -295,6 +298,8 @@ colormap jet
 
 datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
 
 % Pork chop plot V infinity.
 
@@ -314,6 +319,8 @@ contour(t_arr,t_dep,v_inf_matrix,10,'ShowText','on')
 
 datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
 
 % 3D Pork chop plot contour.
 
@@ -333,4 +340,6 @@ surface(X,Y,Dv_matrix);
 
 datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
 
