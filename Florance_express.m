@@ -343,3 +343,21 @@ datetick('y','yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
+%% Homann transfer for delta_V comparison 
+
+
+
+
+% Change of inclination 
+
+% Point 1
+[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,i_dep,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun)
+% Point 2
+[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,i_dep,OMG_dep,i_arr,OMG_arr,omg_dep,1,ksun)
+
+% Homann Transfer
+
+[deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
+
+
+
