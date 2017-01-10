@@ -24,7 +24,8 @@ ra_t1=ra2;
 
 e_t1=(ra_t1-rp_t1)/(ra_t1+rp_t1);
 p_t1=(2*rp_t1*ra_t1)/(ra_t1+rp_t1);
-a_t1=p_t1/(1-e_t1^2);
+%a_t1=p_t1/(1-e_t1^2);
+a_t1 = (ra_t1 + rp_t1)/2;
 
 vp_t1=sqrt(mu/p_t1)*(1+e_t1);
 va_t1=sqrt(mu/p_t1)*(1-e_t1);
@@ -48,7 +49,8 @@ end
 
 e_t2=(ra_t2-rp_t2)/(ra_t2+rp_t2);
 p_t2=(2*rp_t2*ra_t2)/(ra_t2+rp_t2);
-a_t2=p_t2/(1-e_t2^2);
+%a_t2=p_t2/(1-e_t2^2);
+a_t2 = (ra_t2 + rp_t2)/2;
 
 vp_t2=sqrt(mu/p_t2)*(1+e_t2);
 va_t2=sqrt(mu/p_t2)*(1-e_t2);
