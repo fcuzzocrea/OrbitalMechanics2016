@@ -1,6 +1,6 @@
 function []= plotorbit(a,e,i,OMG,omg,mu,color_orbit)
 %% This Script plot the orbit calculatede after using kep2car to obtain the position vector.
-
+%
 % Input
 % a              - semimajor axis
 % e              - eccentricity
@@ -20,7 +20,7 @@ function []= plotorbit(a,e,i,OMG,omg,mu,color_orbit)
 
 
 % Definition of true anomaly  
-theta_deg =[0:1:360];
+theta_deg = 0:360;
 theta = theta_deg.*(2*pi)./360;
 r = zeros(3,length(theta_deg));
 v = zeros(3,length(theta_deg));
@@ -38,36 +38,26 @@ rz=r(3,:);
 
 % Plotting
 
-figure(1)
-whitebg(figure(1), 'black')
-hold on
+whitebg(gcf, 'black')
 grid on
 title('Orbits rapresentation')
 
 if (color_orbit == 1)
     plot3(rx,ry,rz,'b--','lineWidth',1.5);
-else if (color_orbit == 2)
+elseif (color_orbit == 2)
         plot3(rx,ry,rz,'g--','lineWidth',1.5);
-else if (color_orbit == 3)
+elseif (color_orbit == 3)
         plot3(rx,ry,rz,'y--','lineWidth',1.5);
-else if (color_orbit == 4)
+elseif (color_orbit == 4)
         plot3(rx,ry,rz,'r--','lineWidth',1.5);
-else if (color_orbit == 5)
+elseif (color_orbit == 5)
         plot3(rx,ry,rz,'c--','lineWidth',1.5);
-else if (color_orbit == 6)
+elseif (color_orbit == 6)
         plot3(rx,ry,rz,'m--','lineWidth',1.5);
-else if (color_orbit == 7)
+elseif (color_orbit == 7)
         plot3(rx,ry,rz,'k--','lineWidth',1.5);
-else if (color_orbit == 8)
+elseif (color_orbit == 8)
         plot3(rx,ry,rz,'w--','lineWidth',1.5);
-    end
-    end
-    end
-    end
-    end
-    end
-    end
 end
 
-
-          
+end
