@@ -112,7 +112,6 @@ v_arr_vect = zeros(length(t_arr),3);
 % Computation of position and velocity.
 
 parfor i = 1 : length(t_dep)
-    
     [kep_dep_vect(i,:),~] = uplanet(t_dep(i),ibody_dep);
     [r_dep_vect(i,:),v_dep_vect(i,:)] = kep2car(kep_dep_vect(i,:),ksun);
     
@@ -345,19 +344,16 @@ set(gca,'YTickLabelRotation',45)
 
 %% Homann transfer for delta_V comparison 
 
-
-
-
 % Change of inclination 
 
 % Point 1
-[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,i_dep,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun)
+[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun)
 % Point 2
-[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,i_dep,OMG_dep,i_arr,OMG_arr,omg_dep,1,ksun)
+%[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,1,ksun)
 
 % Homann Transfer
 
-[deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
+%[deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
 
 
 
