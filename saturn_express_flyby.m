@@ -1,6 +1,7 @@
 %% ASSIGNMENT 2 - INTERPLANETARY FLYBY
 %  Planetes : Mars, Saturn, Neptune
 %  (C) Collogrosso, Cuzzocrea, Lui - POLIMI SPACE AGENCY
+%  WEB : https://github.com/fcuzzocrea/OrbitalMechanics2016
 
 clear
 close all
@@ -22,6 +23,9 @@ date = date2mjd2000(date);
 
 starting_departure_time = [2016 1 1 12 0 0];
 final_departure_time = [2055 1 1 12 0 0];
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Mission Window : [%d %d %d %d %d %d] - [%d %d %d %d %d %d]\n',starting_departure_time,final_departure_time);
+fclose(fileID);
 
 % Conversion of departure dates from Gregorian calendar
 % to modified Julian Day 2000.
@@ -129,7 +133,7 @@ for i = 1:length(t_dep)
                     v_inf_matrix_2(j,k) = dv1_saturn;
                                        
                     dv_ga = abs(dv1_saturn - dv2_saturn);
-                                       
+                                     
                     DV_Tensor(i,j,k) = Dv_matrix_1(i,j) + dv_ga + Dv_matrix_2(j,k);
                     
                 else
@@ -146,13 +150,16 @@ for i = 1:length(t_dep)
     end    
 end
 
-% This is done due to fact that bla bla bla
+% This is done due to fact that first row of output matrix is zeros
 Dv_matrix_2(1,:) = nan;
 v_inf_matrix_2(1,:) = nan;
 
 % Find the minimum DV
 DV_MIN = min(min(min(DV_Tensor)));
 [row,column,depth] = ind2sub(size(DV_Tensor),find(DV_Tensor == DV_MIN));
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] DELTAV MIN : \n',DV_MIN);
+fclose(fileID);
 
 % Find best arcs
 r1_arc = r_dep_vect_mars(row,:);
@@ -171,26 +178,60 @@ Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
 
 [rx_arc_2, ry_arc_2, rz_arc_2, vx_arc_2, vy_arc_2, vz_arc_2] = intARC_lamb(r2_arc,...
     VI_arc2,ksun,Dv_min_TOF_2,86400);
-       
-plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
-plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
 
 % V infinity 
 
 v_saturn = v_dep_vect_saturn(column,:);
 
-v_inf_min = (v_saturn - VF_arc1);
+v_inf_min = (VF_arc1 - v_saturn );
 v_inf_plus = (VI_arc2 - v_saturn);
 
 %% FLYBY
 
-%% PLOTTING
+r_soi_saturn = 1433449370*((5.683e26)/(1.989e30))^(2/5);
+
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Saturn SOI radius : \n',r_soi_saturn);
+fclose(fileID);
+
+if norm(v_inf_min) - norm(v_inf_plus) == 0
+    disp('Powered gravity assist is not needed')
+end
+
+delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
+ksaturn = astroConstants(16);
+f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn))) - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn)));
+r_p = fzero(f,700000) %Shitty IC because of shitty matlab solver
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola : \n',r_p);
+fclose(fileID);
+
+% Entering Hyperbola 
+e_min = 1 + (r_p*norm(v_inf_min)^2)/ksaturn;
+delta_min = 2*(1/e_min);
+DELTA_min = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_min)^2)));
+theta_inf_min = acos(-1/e_min);
+
+% Exiting Hyperbola
+e_plus = 1 + (r_p*norm(v_inf_plus)^2)/ksaturn;
+delta_plus = 2*(1/e_plus);
+DELTA_plus = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_plus)^2))),
+theta_inf_plus = acos(-1/e_plus);
+
+%DeltaV Pericenter
+vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
+vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
+DELTA_VP = abs(vp_plus - vp_min);
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] DeltaV to give : \n',DELTA_VP);
+fclose(fileID);
 
 figure
 grid on
 hold on
 whitebg(figure(1), 'black')
 plot3(rx_mars,ry_mars,rz_mars);
-hold on
 plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
+plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
+plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')

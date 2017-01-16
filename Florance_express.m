@@ -1,6 +1,7 @@
 %% ASSIGNMENT 1 - EXPRESS TRANSFER
 %  Asteroid : Florance
 %  (C) Collogrosso, Cuzzocrea, Lui - POLIMI SPACE AGENCY
+%  WEB : https://github.com/fcuzzocrea/OrbitalMechanics2016
 
 clear 
 close all
@@ -32,7 +33,6 @@ date2_departure = date2mjd2000(final_departure_time);
 % Time of departure window vectors in days and seconds.
 t_dep = date1_departure : 7 : date2_departure ;
 t_dep_sec = t_dep*86400;
-
 
 % First and last arrival dates.
 starting_arrival_time = [2024 11 1 12 0 0];
