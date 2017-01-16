@@ -1,7 +1,5 @@
 function [r,v]=kep2car(kep,mu)
 
-
-
 % kep2car.m
 % 
 % PROTOTYPE:
