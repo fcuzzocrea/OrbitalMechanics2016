@@ -4,6 +4,14 @@ clear
 close all
 clc
 
+% File for saving datas
+if exist(fullfile(cd, 'results_florance.txt'), 'file') == 2
+    delete(fullfile(cd, 'results_florance.txt'))
+end
+filename = 'results_florance.txt';
+fileID = fopen(filename,'w+');
+fprintf(fileID,'[ASSIGNMENT 1 : FLORANCE EXPRESS]\n');
+fclose(fileID);
 
 %% -------------------------- Time settings ------------------------------
 
@@ -11,6 +19,9 @@ clc
 
 starting_departure_time = [2024 3 1 12 0 0];
 final_departure_time = [2027 1 1 12 0 0];
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Departure Window : [%d %d %d %d %d %d] - [%d %d %d %d %d %d]\n',starting_departure_time,final_departure_time);
+fclose(fileID);
 
 % Conversion of departure dates from Gregorian calendar
 % to modified Julian Day 2000.
@@ -28,6 +39,9 @@ t_dep_sec = t_dep*86400;
 
 starting_arrival_time = [2024 11 1 12 0 0];
 final_arrival_time = [2029 6 1 12 0 0];
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Arrival Window : [%d %d %d %d %d %d] - [%d %d %d %d %d %d]\n',starting_arrival_time,final_arrival_time);
+fclose(fileID);
 
 % Conversion of arrival dates from Gregorian calendar
 % to modified Julian Day 2000.
@@ -175,14 +189,24 @@ end
 Dv_min = min(min(Dv_matrix));
 Dv_max = max(max(Dv_matrix));
 
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Mimimum DV found after optimization : %f\n',Dv_min);
+fprintf(fileID,'[LOG] Maximum DV found after optimization : %f\n',Dv_max);
+fclose(fileID);
 
 %% ---------------------------- v inf max --------------------------------
 
 v_inf_assigned = 5.8;
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Assigned C3 : %f\n',v_inf_assigned);
+fclose(fileID);
 
 if min(min(v_inf_matrix)) > v_inf_assigned
     warning ('The value of C3 Max is too small, automatically set C3 Max = C3 Max*2');
     v_inf_assigned = v_inf_assigned*2;
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] The value of C3 Max is too small, automatically set C3 Max = C3 Max*2 = %f\n',v_inf_assigned);
+    fclose(fileID);
 end
 
 for s = 1 : numel(v_inf_matrix)
@@ -209,6 +233,10 @@ r2_arc = r_arr_vect(COLUMN,:);
 %  ------- for the nearest V infinity to V infinity assigned -------------
 
 v_inf_max = max(min(v_inf_matrix));
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Maximum V_infinity : %f\n',v_inf_max);
+fclose(fileID);
+
 [ROW_v_inf,COLUMN_v_inf] = find(v_inf_matrix == v_inf_max);
 v_inf_TOF = (TOF_matrix(ROW_v_inf,COLUMN_v_inf)*86400);
 
@@ -344,16 +372,18 @@ set(gca,'YTickLabelRotation',45)
 
 %% Homann transfer for delta_V comparison 
 
+% Change of a and e whith an ohman transfer
+[deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
+
 % Change of inclination 
+[delta_v_inc,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun);
 
-% Point 1
-[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun)
-% Point 2
-%[delta_v,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,1,ksun)
+% Change of w in order to adjust the shape of the orbit 
+[delta_v_w,theta_man,theta_after_man]= anoperichange(a_dep, e_dep, omega_2, omg_arr, theta_1, ksun);
 
-% Homann Transfer
+% Total deltaV
+delta_V_TOT = delta_v_inc + delta_v_w + deltaV_a_t1;
 
-%[deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
-
-
-
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Total DV required in the case of Hohmann transfer : %f\n',delta_V_TOT);
+fclose(fileID);
