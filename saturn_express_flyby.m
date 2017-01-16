@@ -1,8 +1,8 @@
 %% ASSIGNMENT 2 - INTERPLANETARY FLYBY
 %  Planetes : Mars, Saturn, Neptune
-%  Time window : [2015 - 2055] 
+%  (C) Collogrosso, Cuzzocrea, Lui - POLIMI SPACE AGENCY
 
-clear all
+clear
 close all
 clc
 
@@ -18,29 +18,7 @@ fclose(fileID);
 date =  [2016 1 1 12 0 0];
 date = date2mjd2000(date);
 
-%% ORBITS
-ibody_mars = 4;
-[kep_mars,ksun] = uplanet(date, ibody_mars);
-[rx_mars, ry_mars, rz_mars, vx_mars, vy_mars, vz_mars] = int_orb_eq(kep_mars,ksun);
-
-ibody_saturn = 6;
-[kep_saturn,ksun] = uplanet(date, ibody_saturn);
-[rx_saturn, ry_saturn, rz_saturn, vx_saturn, vy_saturn, vz_saturn] = int_orb_eq(kep_saturn,ksun);
-
-ibody_neptune = 8;
-[kep_neptune,ksun] = uplanet(date, ibody_neptune);
-[rx_neptune, ry_neptune, rz_neptune, vx_neptune, vy_neptune, vz_neptune] = int_orb_eq(kep_neptune,ksun);
-
-figure
-grid on
-hold on
-whitebg(figure(1), 'black')
-plot3(rx_mars,ry_mars,rz_mars);
-hold on
-plot3(rx_neptune,ry_neptune,rz_neptune);
-plot3(rx_saturn,ry_saturn,rz_saturn);
-
-%% TIMES
+%% TIMES MATRIX COMPUTATION
 
 starting_departure_time = [2016 1 1 12 0 0];
 final_departure_time = [2055 1 1 12 0 0];
@@ -78,8 +56,22 @@ for q = 1: numel(TOF_matrix)
     end
 end
 
+%% DEFINE ORBITS
 
-% Ephemeris
+% Generic for plotting
+ibody_mars = 4;
+[kep_mars,ksun] = uplanet(date, ibody_mars);
+[rx_mars, ry_mars, rz_mars, vx_mars, vy_mars, vz_mars] = int_orb_eq(kep_mars,ksun);
+
+ibody_saturn = 6;
+[kep_saturn,ksun] = uplanet(date, ibody_saturn);
+[rx_saturn, ry_saturn, rz_saturn, vx_saturn, vy_saturn, vz_saturn] = int_orb_eq(kep_saturn,ksun);
+
+ibody_neptune = 8;
+[kep_neptune,ksun] = uplanet(date, ibody_neptune);
+[rx_neptune, ry_neptune, rz_neptune, vx_neptune, vy_neptune, vz_neptune] = int_orb_eq(kep_neptune,ksun);
+
+% From ephemeris compute position and velocity for the entire window
 parfor i = 1 : length(t_dep)
     [kep_dep_vect_mars(i,:),~] = uplanet(t_dep(i),ibody_mars);
     [r_dep_vect_mars(i,:),v_dep_vect_mars(i,:)] = kep2car(kep_dep_vect_mars(i,:),ksun);
@@ -95,12 +87,16 @@ parfor i = 1 : length(t_dep)
     [r_dep_vect_neptune(i,:),v_dep_vect_neptune(i,:)] = kep2car(kep_dep_vect_neptune(i,:),ksun);
 end
 
+%% MAIN ROUTINE
+
+% Preallocation
 Dv_matrix_1 = zeros(size(t_dep));
 Dv_matrix_2 = zeros(size(t_dep));
 v_inf_matrix_1 = zeros(size(t_dep));
 v_inf_matrix_2 = zeros(size(t_dep));
 DV_Tensor = zeros(length(t_dep),length(t_dep),length(t_dep));
 
+% Computation of the 3D-Tensor of deltav with 3 nested for cycles
 for i = 1:length(t_dep)
     
     r_mars = r_dep_vect_mars(i,:);
@@ -185,3 +181,16 @@ v_saturn = v_dep_vect_saturn(column,:);
 
 v_inf_min = (v_saturn - VF_arc1);
 v_inf_plus = (VI_arc2 - v_saturn);
+
+%% FLYBY
+
+%% PLOTTING
+
+figure
+grid on
+hold on
+whitebg(figure(1), 'black')
+plot3(rx_mars,ry_mars,rz_mars);
+hold on
+plot3(rx_neptune,ry_neptune,rz_neptune);
+plot3(rx_saturn,ry_saturn,rz_saturn);
