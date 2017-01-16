@@ -6,6 +6,15 @@ clear all
 close all
 clc
 
+% File for saving datas
+if exist(fullfile(cd, 'results_flyby.txt'), 'file') == 2
+    delete(fullfile(cd, 'results_flyby.txt'))
+end
+filename = 'results_flyby.txt';
+fileID = fopen(filename,'w+');
+fprintf(fileID,'[ASSIGNMENT 2 : INTERPLANETARY FLYBY]\n');
+fclose(fileID);
+
 date =  [2016 1 1 12 0 0];
 date = date2mjd2000(date);
 
