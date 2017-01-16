@@ -1,0 +1,3461 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass report
+\begin_preamble
+\input{Settings.tex}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman palatino
+\font_sans helvet
+\font_typewriter lmtt
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 90
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement bph
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\rightmargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language french
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{Titlepage.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{Titleback.tex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{roman}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{arabic}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{page}{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\diff}{\text{{d}}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Derivazione dell'equazione del razzo
+\end_layout
+
+\begin_layout Standard
+La derivazione dell'equazione di moto del razzo può essere affrontata in
+ diversi modi.
+\end_layout
+
+\begin_layout Standard
+In questo testo presenteremo due dei metodi più comuni per ottenerla.
+\end_layout
+
+\begin_layout Section
+Derivazione tramite 
+\shape italic
+Legge della conservazione della quantità di moto
+\end_layout
+
+\begin_layout Quotation
+
+\shape italic
+In un sistema isolato la quantità di moto si mantiene costante nel tempo
+\shape default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+per sistema meccanico isolato si intende un sistema non sottoposto a forze
+ esterne
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+o equivalentemente
+\end_layout
+
+\begin_layout Quotation
+
+\shape italic
+la variazione nel tempo della quantità di moto di un sistema isolato è nulla.
+
+\shape default
+ 
+\end_layout
+
+\begin_layout Standard
+Le ipotesi adottate sono :
+\end_layout
+
+\begin_layout Itemize
+Trascurare forza di gravità
+\end_layout
+
+\begin_layout Itemize
+Trascurare resistenza aerodinamica
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/full_rocket.eps
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/empty_rocket.eps
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sistema Razzo + Gas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Immaginiamo di analizzare il nostro sistema composto dal razzo e dai gas
+ espulsi dall'ugello agli istanti 
+\begin_inset Formula $t$
+\end_inset
+
+ e 
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+, osservandolo da un sistema di riferimento inerziale, solidale alla base
+ di lancio :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="left" valignment="middle" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Razzo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Velocità
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V(t+\Delta t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Massa
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $M(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $M(t+\Delta t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="left" valignment="middle" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Gas
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Velocità
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V(t+\Delta t)-u_{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Massa
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Delta M=M(t)-M(t+\Delta t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dati sistema
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All'istante 
+\begin_inset Formula $t$
+\end_inset
+
+ avremo una quantità di moto dell'intero sistema pari a solo quella del
+ razzo:
+\begin_inset Formula 
+\begin{equation}
+Q(t)=Q_{R}(t)=M(t)V(t)
+\end{equation}
+
+\end_inset
+
+all'istante 
+\begin_inset Formula $t+\Delta t$
+\end_inset
+
+ avremo invece:
+\begin_inset Formula 
+\begin{gather}
+Q(t+\Delta t)=Q_{R}(t+\Delta t)+Q_{\text{gas}}(t+\Delta t)=\\
+M(t+\Delta t)V(t+\Delta t)+V_{\text{gas}}\Delta M\nonumber 
+\end{gather}
+
+\end_inset
+
+dove con 
+\begin_inset Formula $V_{\text{gas}}$
+\end_inset
+
+ si è considerata la velocità dei gas nel sistema di riferimento dell'osservator
+e
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Ponendoci nel sistema di riferimento solidale alla base di lancio, i gas
+ appena prima di essere espulsi hanno già una velocità 
+\begin_inset Formula $V(t+\Delta t)$
+\end_inset
+
+ che è appunto quella del razzo a quell'istante.
+ Accelerati dall'ugello con velocità 
+\begin_inset Formula $u_{e}$
+\end_inset
+
+ essi quindi risulteranno muoversi, ad un osservatore a terra, con velocità
+ netta pari a 
+\begin_inset Formula $V(t+\Delta t)-u_{e}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+V_{\text{gas }}=V(t+\Delta t)-u_{e}
+\]
+
+\end_inset
+
+scrivendo la variazione nel tempo della quantità di moto del sistema
+\begin_inset Formula 
+\[
+\frac{\Delta Q}{\Delta t}=\frac{Q(t+\Delta t)-Q(t)}{\Delta t}=\frac{M(t+\Delta t)V(t+\Delta t)+V_{\text{gas}}\Delta M-M(t)V(t)}{\Delta t}
+\]
+
+\end_inset
+
+espandendo 
+\begin_inset Formula $V_{\text{gas}}$
+\end_inset
+
+ e 
+\begin_inset Formula $\Delta M$
+\end_inset
+
+, raggruppando poi opportunamente otteniamo:
+\begin_inset Formula 
+\begin{align*}
+\frac{\Delta Q}{\Delta t} & =\frac{M(t+\Delta t)V(t+\Delta t)+M(t)V(t+\Delta t)}{\Delta t}+\\
+ & +\frac{-M(t+\Delta t)V(t+\Delta t)-M(t)u_{e}+M(t+\Delta t)u_{e}-M(t)V(t)}{\Delta t}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+il termine 
+\begin_inset Formula $M(t+\Delta t)V(t+\Delta t)$
+\end_inset
+
+ si annulla con il suo opposto, raccogliendo il resto
+\begin_inset Formula 
+\[
+\frac{\Delta Q}{\Delta t}=\frac{M(t+\Delta t)-M(t)}{\Delta t}u_{e}+\frac{V(t+\Delta t)-V(t)}{\Delta t}M(t)
+\]
+
+\end_inset
+
+facendo ora tendere il 
+\begin_inset Formula $\Delta t\rightarrow0$
+\end_inset
+
+ :
+\begin_inset Formula 
+\begin{equation}
+\frac{\diff Q}{\diff t}=\frac{\diff M(t)}{\diff t}u_{e}+\frac{\diff V(t)}{\diff t}M(t)
+\end{equation}
+
+\end_inset
+
+essendo il sistema isolato per ipotesi, 
+\begin_inset Formula $\frac{\diff Q}{\diff t}=0$
+\end_inset
+
+, dunque risulta :
+\begin_inset Formula 
+\[
+\frac{\diff M}{\diff t}u_{e}=-\frac{\diff V}{\diff t}M
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula $\diff t$
+\end_inset
+
+ può essere semplificato, essendo esso infinitesimo ma non nullo
+\begin_inset Formula 
+\begin{equation}
+\diff V=-u_{e}\frac{\diff M}{M}
+\end{equation}
+
+\end_inset
+
+Quello che abbiamo ottenuto è sostanzialmente l'equazione di Tsiolkovsky
+ in forma differenziale.
+ 
+\end_layout
+
+\begin_layout Standard
+Affinchè sia possibile integrare nel tempo questa equazione differenziale,
+ occore tuttavia analizzare meglio il termine 
+\begin_inset Formula $u_{e}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+La velocità con cui i gas fuoriescono dall'ugello dipende dalla temperatura
+ 
+\series bold
+totale
+\series default
+ che si raggiunge in camera di combustione
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+per camera di combustione si intende la zona subito a monte dell'ugello
+ in cui avviene la combustione del propellente (endoreattore a propellente
+ solido) o la combustione di ossidante e combustibile (endoreattore a propellent
+e ibrido, liquido o esoreattore)
+\end_layout
+
+\end_inset
+
+.
+ La reazione di espansione attraverso un ugello può essere considerata in
+ prima approssimazione come isoentropica
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+ovviamente ci si trova in un caso ideale.
+ Il corretto dimensionamento del divergente dell'ugello gioca un ruolo chiave
+ in tutta l'analisi qui discussa
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In una trasformazione adiabatica si conserva la temperatura totale: 
+\begin_inset Formula 
+\[
+T_{0\text{c}}=T_{0e}
+\]
+
+\end_inset
+
+dove col pedice 
+\begin_inset Formula $(.)_{\text{c}}$
+\end_inset
+
+ indichiamo grandezze relative alla camera di combustione, 
+\begin_inset Formula $(.)_{e}$
+\end_inset
+
+ per le grandezze d'efflusso (all'estremità dell'ugello).
+ Essendo 
+\begin_inset Formula $T_{0}=T+\frac{u^{2}}{2c_{p}}$
+\end_inset
+
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+In quanto, considerando un bilancio energetico possiamo scrivere che 
+\begin_inset Formula $mc_{p}\Delta T=\frac{1}{2}mu^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, si può quindi trovare un'espressione per la velocità di efflusso:
+\begin_inset Formula 
+\begin{equation}
+T_{0\text{c}}=T_{e}+\frac{u_{e}^{2}}{2c_{p}}\rightarrow u_{e}=\sqrt{2c_{p}\left(T_{0\text{c}}-T_{e}\right)}
+\end{equation}
+
+\end_inset
+
+la velocità di efflusso dunque dipende dal 
+\begin_inset Formula $c_{p}$
+\end_inset
+
+ dei gas di combustione, sostanzialmente costante, da 
+\begin_inset Formula $T_{0\text{c}}\approx T_{c}$
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+la velocità dei gas in camera di combustione è molto bassa
+\end_layout
+
+\end_inset
+
+ anch'essa costante, e da 
+\begin_inset Formula $T_{e}$
+\end_inset
+
+ che si può ritenere costante nell'intervallo di tempo di combustione.
+ Deduciamo quindi che 
+\begin_inset Formula $u_{e}$
+\end_inset
+
+ non dipende da nulla in prima approssimazione, e dunque è costante nel
+ tempo.
+\end_layout
+
+\begin_layout Standard
+Possiamo quindi tornare alla nostra equazione del razzo in forma differenziale
+ ed integrarla, portando fuori dall'integrale 
+\begin_inset Formula $u_{e}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{V(t_{o})}^{V(t)}\diff V=-u_{e}\int_{M(t_{0})}^{M(t)}\frac{\diff M}{M}
+\]
+
+\end_inset
+
+da cui, infine, si ottiene l'equazione del razzo in forma integrale
+\begin_inset Formula 
+\[
+V(t)-V_{0}=-u_{e}\ln\left(\frac{M(t)}{M_{0}}\right)=u_{e}\ln\frac{M_{0}}{M(t)}
+\]
+
+\end_inset
+
+o come tradizionalmente viene scritta
+\begin_inset Formula 
+\begin{equation}
+\boxed{\Delta V=u_{e}\ln\left(\frac{M_{0}}{M(t)}\right)}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Derivazione tramite II Principio della Dinamica, con aggiunta della forza
+ gravitazionale
+\end_layout
+
+\begin_layout Standard
+Ora cercheremo di capire cosa succede se viene aggiunta la forza di gravità.
+\end_layout
+
+\begin_layout Standard
+Affronteremo il problema da un altro punto di vista,
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+l'aggiunta della forza di gravità può essere comunque analizzata con la
+ legge di conservazione della quantità di moto purché la si consideri come
+ forza agente sul sistema 
+\begin_inset Formula $\frac{\diff Q}{dt}=\sum_{i}F_{i}^{\text{ext}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ partendo dal II principio della Dinamica, il cui enunciato recita : 
+\end_layout
+
+\begin_layout Quotation
+
+\shape italic
+l'accelerazione di un corpo è direttamente proporziale e nella stessa direzione
+ della forza netta agente su di esso, è invece proporzionale alla sua massa
+\end_layout
+
+\begin_layout Standard
+Applicando il secondo principio della dinamica al razzo otteniamo:
+\begin_inset Formula 
+\begin{equation}
+\frac{\diff V(t)}{\diff t}=\frac{\sum F_{i}}{M\left(t\right)}
+\end{equation}
+
+\end_inset
+
+Le forze agenti sul nostro veicolo sono la 
+\series bold
+spinta 
+\series default
+e la 
+\series bold
+forza gravitazionale
+\series default
+.
+\begin_inset Formula 
+\[
+\sum_{i}F_{i}=T-W
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{cases}
+T & =\dot{m}_{\text{gas}}\tilde{u}+A_{e}\left(p_{e}-p_{a}\right)\\
+W & =Mg
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Considerando che l'ugello sia adattato (e cioè che l'espansione avvenga
+ fino a pressione atmosferica), il secondo termine dell'espressione della
+ spinta risulterà pari a zero, e può essere riscritta come 
+\begin_inset Formula 
+\[
+T=\dot{m}_{\text{gas}}u_{e}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Quello che otteniamo è quindi:
+\begin_inset Formula 
+\[
+\frac{\diff V(t)}{\diff t}=\frac{\dot{m}_{\text{gas}}u_{e}}{M(t)}-g
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La quantità di massa di gas espulsi nel tempo (portata) 
+\begin_inset Formula $\frac{\diff m_{\text{gas}}}{\diff t}=\dot{m}_{\text{gas}}$
+\end_inset
+
+ è uguale alla quantità di massa persa dal razzo 
+\begin_inset Formula $\frac{\diff m_{\text{gas}}}{\diff t}=-\frac{\diff M}{\diff t}$
+\end_inset
+
+, per cui:
+\begin_inset Formula 
+\begin{equation}
+\frac{\diff V}{\diff t}=-\frac{1}{M}\frac{\diff M}{\diff t}u_{e}-g
+\end{equation}
+
+\end_inset
+
+Siamo di nuovo arrivati ad un espressione differenziale dell'equazione di
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+mbox{Tsiolkovsky}
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+I discorsi fatti per 
+\begin_inset Formula $u_{e}$
+\end_inset
+
+ ovviamente restano analoghi, resta da capire cosa fare di 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ 
+\begin_inset Formula 
+\[
+g(z(t))=G\frac{M_{\oplus}}{z(t)^{2}}
+\]
+
+\end_inset
+
+In linea teorica 
+\begin_inset Formula $g$
+\end_inset
+
+ dipenderebbe dall'altezza a cui ci troviamo con il nostro razzo nel generico
+ istante 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ L'altezza, a sua volta, è una funzione del tempo che si trova integrando
+ l'equazioni del moto del nostro veicolo.
+ Immaginando di bruciare molto velocemente il propellente (imprimendo un
+ dunque un 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ impulsivo al missile) è ragionevole pensare che il missile, nell'intervallo
+ di tempo in cui brucia il suo propellente, non si allontani molto dalla
+ posizione iniziale, permettendoci quindi di considerare 
+\begin_inset Formula 
+\begin{equation}
+g(z)\approx g_{0}=9.81\;\left[\frac{\text{N}}{\text{Kg}}\right]
+\end{equation}
+
+\end_inset
+
+possiamo quindi integrare, moltiplicando preventivamente ambo i membri per
+ 
+\begin_inset Formula $\diff t$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{V(t_{0})}^{V(t)}\diff V=-\int_{M(t_{0})}^{M(t)}\frac{\diff M}{M}u_{e}-\int_{t_{0}}^{t}\bar{g}\;\diff t
+\]
+
+\end_inset
+
+da cui:
+\begin_inset Formula 
+\begin{equation}
+\boxed{\Delta V=u_{e}\ln\frac{M_{0}}{M(t)}-\bar{g}t}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Supponiamo ora di voler integrare nuovamente l'equazione per ottenere un'espress
+ione che ci dia informazioni sulla quota, piuttosto che sulla velocità.
+ Per fare ciò dobbiamo dare consistenza all'espressione 
+\begin_inset Formula $M(t)$
+\end_inset
+
+ della massa.
+ Presumento che la sua variazione nel tempo durante la combustione sia lineare:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M(t)=M_{0}-\dot{m}_{\text{gas}}t
+\]
+
+\end_inset
+
+possiamo dunque procedere all'integrazione dell'equazione differenziale
+ precedentemente ottenuta :
+\begin_inset Formula 
+\[
+\int_{t_{0}}^{t}v(t)\diff t=v_{0}t-\bar{g}\frac{t^{2}}{2}+u_{e}\int_{t_{0}}^{t}\ln\left(\frac{M_{0}}{M_{0}-\dot{m}t}\right)\diff t
+\]
+
+\end_inset
+
+la funzione 
+\begin_inset Formula $\ln\left(\frac{M_{o}}{M_{0}-\dot{m}t}\right)$
+\end_inset
+
+ è integrabile analiticamente per parti
+\begin_inset Formula 
+\begin{equation}
+\int_{t_{0}}^{t}\ln\left(\frac{M_{0}}{M_{0}-\dot{m}t}\right)=\left(t-\frac{M_{0}}{\dot{m}}\right)\ln\left(\frac{M_{0}}{M_{0}-\dot{m}t}\right)+t
+\end{equation}
+
+\end_inset
+
+per cui otteniamo un'espressione che ci esprime l'altitudine in funzione
+ del tempo
+\begin_inset Formula 
+\begin{equation}
+z(t)=z_{0}+v_{0}t-\bar{g}\frac{t^{2}}{2}+u_{e}\left[\left(t-\frac{M_{0}}{\dot{m}}\right)\ln\left(\frac{M_{0}}{M_{0}-\dot{m}t}\right)+t\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Di quanto sbagliamo?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/R1X_I_STAGE.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Confronto Soluzione Tsiolkovsky e Numerica R1X
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Come visibile dai grafici sopramostrati, seppur preliminare e per una quota
+ massima limitata, l'equazione di Tsiolkovsky è uno strumento abbastanza
+ valido per la stima delle grandezze caratteristiche di un lanciatore spaziale
+ nelle prime fasi di progetto.
+\end_layout
+
+\begin_layout Chapter
+Esercizi
+\end_layout
+
+\begin_layout Section
+Esercizio 1 - 
+\begin_inset Quotes eld
+\end_inset
+
+Missione Rockssane I-X
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/Esploso.bmp
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Falcon 9 vs R1X
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dati i dettagli del missile Rocksanne I-X in Tab.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Parametri-Rocksanne-I-X"
+
+\end_inset
+
+ si calcoli la massa di propellente 
+\begin_inset Formula $m_{p}$
+\end_inset
+
+ e il tempo necessario a bruciarla 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ affinché il missile sonda raggiunga la quota 
+\begin_inset Formula $z_{b}$
+\end_inset
+
+ alla fine della fase propulsa ad una velocità a cui è associato un numero
+ di Mach 
+\begin_inset Formula $M_{\text{max}}$
+\end_inset
+
+.
+ 
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Grandezza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Valore
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Unità di Misura
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\frac{\text{m}}{s}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Kg}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $M_{\text{max}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+/
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $z_{b}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Kg}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{b}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+?
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Parametri-Rocksanne-I-X"
+
+\end_inset
+
+Parametri 
+\shape smallcaps
+Rocksanne I-X
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Risolvere il sistema di equazioni (per 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ e 
+\series bold
+
+\begin_inset Formula $z(t)$
+\end_inset
+
+) 
+\series default
+nelle incognite 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ e 
+\begin_inset Formula $m_{p}$
+\end_inset
+
+ considerando anche le perdite per gravità è abbastanza difficoltoso in
+ quanto il sistema di equazioni è non lineare e accoppiato (ricordando 
+\begin_inset Formula $M_{0}=m_{s}+m_{p}$
+\end_inset
+
+ dove 
+\begin_inset Formula $m_{s}$
+\end_inset
+
+ è la 
+\begin_inset Quotes eld
+\end_inset
+
+massa strutturale
+\begin_inset Quotes erd
+\end_inset
+
+, ovvero la massa del missile a secco, senza propellente.
+ 
+\begin_inset Formula $m_{p}$
+\end_inset
+
+ è la massa del propellente).
+\begin_inset Formula 
+\[
+\begin{cases}
+z_{b} & =z_{0}+v_{0}t_{b}-\bar{g}\frac{t_{b}^{2}}{2}+u_{e}t_{b}\left[\left(1-\frac{m_{s}+m_{p}}{m_{p}}\right)\ln\left(\frac{m_{s}+m_{p}}{m_{s}}\right)+1\right]\\
+v_{\text{max}} & =v_{0}+u_{e}\ln\frac{m_{s}+m_{p}}{m_{s}}-\bar{g}t_{b}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dove la velocità massima è la velocità che si ha al burnout.
+\end_layout
+
+\begin_layout Standard
+Possiamo notare che la prima equazione è non lineare in 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+, e la risoluzione può essere affrontata numericamente (MATLAB).
+ 
+\end_layout
+
+\begin_layout Standard
+Oppure possiamo considerare una soluzione approssimata, trascurando la gravità,
+ in questo caso le due equazioni risultano disaccoppiate e sono facilmente
+ risolvibili (per 
+\begin_inset Formula $t=t_{b}$
+\end_inset
+
+):
+\begin_inset Formula 
+\[
+\begin{cases}
+\widetilde{m}_{p} & =m_{s}\left(e^{\frac{\Delta V}{u_{e}}}-1\right)\\
+\widetilde{t}_{b} & =z_{b}\left\{ u_{e}\left[\left(1-\frac{m_{s}+m_{p}}{m_{p}}\right)\ln\left(\frac{m_{s}+m_{p}}{m_{s}}\right)+1\right]\right\} ^{-1}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Grandezza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Risultato
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Unità di Misura
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widetilde{m}_{p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.42$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Kg}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $\widetilde{t}_{b}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4.8$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Kg}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{b}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $19.2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Risultati
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Il punto su cui vogliamo focalizzare la nostra attenzione è, però, che in
+ questo modo, in base alle condizioni di vincolo sull'altitudine d'arrivo
+ a termine della fase propulsa e sulla velocità, si ottengono valori di
+ 
+\begin_inset Formula $m_{p}$
+\end_inset
+
+ e 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ diversi.
+ In un endoreattore a propellente solido, com'è 
+\shape smallcaps
+Rocksanne I-X,
+\shape default
+ tendenzialmente la portata di gas espulsi è costante, fissata l'area di
+ gola 
+\begin_inset Formula $A_{t}$
+\end_inset
+
+ ed la tipo di propellente usato, ed è conosciuta
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Bruci un tot.
+ di propellente e misuri il tempo di combustione
+\end_layout
+
+\end_inset
+
+.
+ Pertanto potrebbe essere più sensato risolvere solo una delle equazioni,
+ legando 
+\begin_inset Formula $m_{p}$
+\end_inset
+
+ e 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ tramite la portata:
+\begin_inset Formula 
+\[
+\dot{m}=\frac{m_{p}}{t_{b}}\Rightarrow m_{p}=t_{b}\dot{m}
+\]
+
+\end_inset
+
+ed usare quindi una delle due equazioni; la quota (garantendo il raggiungimento
+ dell'altitudine di vincolo) o la velocità (garantendo una velocità alla
+ fine del tempo di combustione (
+\begin_inset Formula $t=t_{b})$
+\end_inset
+
+ pari a quella imposta che però non garantisce il vincolo sull'altitudine).
+ 
+\end_layout
+
+\begin_layout Standard
+Impostando quindi una portata pari a 
+\begin_inset Formula $\dot{m}=0.67\,\left[\frac{\text{Kg}}{s}\right]$
+\end_inset
+
+ otteniamo i seguenti risultati
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Grandezza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Risultato
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Unità di Misura
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6.63$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{Kg}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{b}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9.9$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Risultati (risolti numericamente)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Un'ultima riflessione
+\end_layout
+
+\begin_layout Standard
+In questi conti che abbiamo svolto, abbiamo imposto che la fase propulsa
+ 
+\begin_inset Formula $\left(0<t<t_{b}\right)$
+\end_inset
+
+ portasse il nostro missile fino alla quota di missione; è davvero necessario?
+ Che succede dopo che il motore smette di spingere 
+\begin_inset Formula $\left(t=t_{b}\right)$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+Durante la fase propulsa la nostra equazione del moto è (trascurando la
+ fase di apertura del drag):
+\begin_inset Formula 
+\begin{equation}
+m(t)\ddot{z}=T-m(t)g
+\end{equation}
+
+\end_inset
+
+appena si spegne il nostro propulsore, scompare il termine di spinta, e
+ la massa diventa costante rimanendo al valore 
+\begin_inset Formula $m_{s}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+m_{s}\ddot{z}=-m_{s}g
+\]
+
+\end_inset
+
+ottenendo un'accelerazione negativa
+\begin_inset Formula 
+\begin{equation}
+\ddot{z}=-g
+\end{equation}
+
+\end_inset
+
+Un ulteriore riflessione può essere condotta anche per quanto riguarda la
+ velocità.
+\end_layout
+
+\begin_layout Standard
+La velocità nell'istante 
+\begin_inset Formula $t=t_{b}$
+\end_inset
+
+ è uguale al 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ dato dall'equazione del razzo, quindi a partire dal nostro spegnimento,
+ l'equazione che descrive l'andamento della velocità sarà:
+\begin_inset Formula 
+\begin{equation}
+v(t)=-gt+V_{burnout}
+\end{equation}
+
+\end_inset
+
+un andamento lineare a decrescere, dunque.
+ Nel momento in cui la velocità sara nulla 
+\begin_inset Formula $\left(t_{\text{apo}}=\frac{\Delta V}{g}+t_{b}\right)$
+\end_inset
+
+ saremo arrivati all'apogeo, cioè alla quota di missione.
+ Tutto questo per dire che bisogna considerare anche la cosiddetta fase
+ balistica, in cui non abbiamo più spinta ma il missile continua ad avanzare
+ con velocità sempre minore e la quota da usare con Tsiolkovsky sarà inferiore
+ (orientativamente 
+\begin_inset Formula $250\text{m}$
+\end_inset
+
+) con conseguente 
+\begin_inset Formula $m_{p}$
+\end_inset
+
+ necessaria inferiore.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Esercizio 2 - 
+\begin_inset Quotes eld
+\end_inset
+
+La stadiazione
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Il vettore Rocksanne 9 di Skyward Experimental Rocketry deve rifornire la
+ Skyward Space Station, orbitante intorno alla terra.
+ Verificare la possibilità di raggiungere la stazione nei casi di configurazione
+ monostadio e bistadio, date le caratteristiche nelle tabelle.
+ 
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Grandezza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Valore
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Unità di Misura
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $v_{sss}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\frac{m}{s}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{pay}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $400$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dettagli di Missione
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Grandezza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Valore
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Unità di Misura
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $20000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $313000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2982$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\frac{m}{s}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{b}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $220$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dettagli Monostadio
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Grandezza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Valore
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Unità di Misura
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{s1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $12000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{p1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $240800$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{e1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2982$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\frac{m}{s}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{b1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $170$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{s2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4900$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m_{p2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $75500$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{b1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3355$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\frac{m}{s}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{b2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $345$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dettagli Bistadio
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Al fine di trovare la velocità massima raggiunta dalla prima configurazione
+ si può utilizzare l'equazione di Tsiolkovsky
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{mono}=v_{0}+u_{e}\ln\left(\frac{m_{s}+m_{p}+m_{pay}}{m_{s}+m_{pay}}\right)-\bar{g}t_{b}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Per quanto riguarda la configurazione a bistadio invece, dovrà innanzitutto
+ essere calcolata la velocità raggiunta dal vettore per via della combustione
+ del propellente contenuto nel primo stadio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{bi1}=v_{0}+u_{e1}\ln\left(\frac{m_{s1}+m_{p1}+m_{s2}+m_{p2}+m_{pay}}{m_{s1}+m_{s2}+m_{p2}+m_{pay}}\right)-\bar{g}t_{b1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+e in seguito sostituirla nell'equazione della velocità del secondo stadio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{bi2}=v_{bi1}+u_{e2}\ln\left(\frac{m_{s2}+m_{p2}+m_{pay}}{m_{s2}+m_{pay}}\right)-\bar{g}t_{b2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I risultati ottenuti sono riportati nella tabella seguente
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Grandezza
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Risultato
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Unità di Misura
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $v_{mono}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6231$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{\left[\frac{m}{s}\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $v_{bi1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2512$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\frac{m}{s}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $v_{bi2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8137$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\frac{m}{s}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Risultati
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Come si può evincere dai risultati, la velocità raggiunta dal monostadio
+ non è sufficiente a raggiungere l'orbita della stazione spaziale mentre
+ quella del bistadio si, da una analisi fatta considerando un problema monodimen
+sionale.
+ 
+\end_layout
+
+\begin_layout Standard
+Il vantaggio della stadiazione sta nel fatto che dopo il primo tempo di
+ combustione 
+\begin_inset Formula $t_{b1}$
+\end_inset
+
+ è possibile scartare una frazione della massa strutturale 
+\begin_inset Formula $m_{s}$
+\end_inset
+
+, che di fatto limita il 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ a parità di propellente imbarcato (o equivalentemente aumenta la massa
+ necessaria 
+\begin_inset Formula $m_{p}$
+\end_inset
+
+ di propellente a parità di 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/monostage.eps
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/bistage.eps
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Monostadio - Bistadio
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Il grafico seguente mostra le differenze dei profili di velocità delle configura
+zioni appena analizzate.
+ Si può notare che le curve hanno un asintoto in corrispondenza del tempo
+ per il quale sussiste la seguente condizione:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\lang english
+\begin_inset Formula $m_{0}-\left(\frac{m_{0}}{t_{bo}}\right)t=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/confrontovelocitamonobi.jpeg
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

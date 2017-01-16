@@ -1,0 +1,79 @@
+% Customization file for the titlepage and document
+%************************************************************
+% Required stuff
+%************************************************************
+\usepackage{graphicx}
+\usepackage{euler}
+\usepackage[detect-all]{siunitx}
+\usepackage{sectsty}
+\usepackage[font={footnotesize }]{caption}
+\usepackage{multicol}
+\usepackage{prettyref}
+
+\allsectionsfont{\rmfamily}
+
+% Page customization
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Color
+\usepackage{color}
+\definecolor{light-gray}{gray}{0.85}
+\definecolor{dark-gray}{gray}{0.75}
+
+\fancyhead{}  % clear all header fields
+\fancyhead[LO,RE]{\rule[-2ex]{0pt}{2ex}\fontsize{9}{11} \selectfont \myPhase : \myTitle}
+\fancyhead[RO,LE]{\includegraphics[height=1.5cm,keepaspectratio]{gfx/Skyward_logo}}
+\fancyhead[CO,CE]{\fontsize{9}{11} \selectfont \myIPT}
+\fancyfoot{}  % clear all footer fields
+\fancyfoot[RO,LE]{\fontsize{6}{11} \selectfont \includegraphics[height=0.2cm]{gfx/CC} This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.}
+\fancyheadoffset[LE,RO]{0.2pt}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.2pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+   \leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{%
+    \leaders\hrule height \headrulewidth\hfill}}
+\hypersetup{colorlinks=true, linkcolor=blue ,linktoc=page,citecolor=black}
+
+%************************************************************
+% Redefining numbering for sections
+%************************************************************
+%\renewcommand*\thesection{\arabic{section}}
+
+%************************************************************
+% Cross reference set-up
+%************************************************************
+\newrefformat{tab}{Table\,\ref{#1}}
+\newrefformat{fig}{Figure\,\ref{#1}}
+\newrefformat{eq}{Eq.\,\textup{(\ref{#1})}}
+\newrefformat{sec}{Sec.\,\ref{#1}}
+\newrefformat{sub}{Sec.\,\ref{#1}}
+
+%************************************************************
+% Fancy stuff
+%************************************************************
+\newcommand{\titlecap}[1]{\Huge{\textrm{#1}}}
+\newcommand{\subtitlecap}[1]{\Large{\textsc{#1}}}
+\newcommand{\sscap}[1]{\textbf{#1}}
+\newcommand{\strong}[1]{\textbf{#1}}
+\setlength{\headheight}{60pt} %%or
+
+%************************************************************
+% Helpful stuff to modify here, not in the LyX Document
+%************************************************************
+\newcommand{\myDate}{\today}
+\newcommand{\myGroup}{POLIMI SPACE AGENCY}
+\newcommand{\myUrl}{\url{https://github.com/fcuzzocrea/OrbitalMechanics2016}}
+\newcommand{\myUni}{Politecnico di Milano}
+
+\newcommand{\myPhase}{Orbital Mechanics}
+\newcommand{\myProject}{}
+\newcommand{\myIPT}{}
+\newcommand{\myTitle}{Mission Analisys Final Report}
+\newcommand{\myAuthorf}{Alfonso Collogrosso}
+\newcommand{\myAuthors}{Francescodario Cuzzocrea}
+\newcommand{\myAuthort}{Benedetto Lui}
+\newcommand{\myEmail}{}
+
+\newcommand{\mail}[1]{\href{mailto:#1}{\texttt{#1}}}
