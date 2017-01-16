@@ -1,17 +1,29 @@
 function [delta_V,theta_2,theta_3] = anoperichange(a,e,omega_1,omega_2,theta_0,mu_p)
 
-%questa funzione calcola il cambio di anomalia di pericentro tra 2 orbite
-%aventi stesso semiassethet maggiore a e stessa eccentricità e. I parametri in
-%input sono: a,e,anomalia pericentro iniziale e finale, anomalia vera
-%orbita iniziale
+% anoperichange.m
+% 
+% PROTOTYPE:
+%   [delta_V,theta_2,theta_3] = anoperichange(a,e,omega_1,omega_2,theta_0,mu_p)
 %
-%La funzione fornisce in uscita il delta velocità necessario a compiere la
-%manovra, l'anomalia vera sulla nuova orbita e il parametro gravitazionale
-%di riferimento
+% DESCRIPTION:
+% 	This function implements the change of the anomaly of pericenter
 %
-%[delta_V,theta2] = cambio_anom_pericentro(a,e,omega1,omega2,theta1,mu)
+% INPUT:
+%	a[1]           Semimajoraxis first orbit
+%   e[1]           Eccentricity first orbit
+%   omega_1[1]     Argument of pericenter first orbit
+%   omega_2 [2]    Argument of pericenter arrival orbit
+%   theta_0[1]     True anomaly of maneuver point
+%   mu_p [1]
 %
-%delta_V in KM/S e theta2 in radianti
+% OUTPUT:
+%   delta_V        Delta V reguired in KM\s
+%   theta_2        True anomaly of maneuver
+%   theta_3        True anomaly after maneuver
+%
+% AUTHOR:
+%   Francescodario Cuzzocrea
+
 
 delta_omega = abs(omega_2 - omega_1);
 

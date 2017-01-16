@@ -1,20 +1,37 @@
 function [a,e,i,OMG,omg,theta]=car2kep(r,v,mu)
 
-%% This function switch cartesian coordinates to kepler parameters
+% car2kep.m
+% 
+% PROTOTYPE:
+%   [a,e,i,OMG,omg,theta]=car2kep(r,v,mu)
+%
+% DESCRIPTION:
+% 	This function switch cartesian coordinates to kepler parameters
+%
+% INPUT:
+%	r[3]           Position vector
+%   v[3]           Velocity vector
+%   mu[1]          
+%
+% OUTPUT:
+%	a[1]           Semimajoraxis 
+%   e[1]           Eccentricity 
+%   OMEGA[1]       Right Ascension 
+%   omega[1]       Argument of pericenter
+%   theta[1]     True anomaly
+%
+% AUTHOR:
+%   Alfonso Collogrosso
+%  
 
-%1) Compute norm of r
 rn=norm(r);
 
-%2) Compute norm of v
 vn=norm(v);
 
-%3) Compute the specific angular momentum
 h=cross(r,v);
 
-%4) Compute norm of h
 hn=norm(h);
 
-%5) Compute the inclination angle i
 hz=h(3);
 i=acos(hz/hn);
 
@@ -26,12 +43,10 @@ elseif i==0
     disp('Orbital plane = Equatorial Plane, the line of node coincide with the direction i* (i*,j,k)')
 end
 
-%6) Identify the line of node
 k=[0,0,1];
 
 N=cross(k,h);
 
-%7) Compute nodal Vector
 if N==0
     Nn=0;
     N_hat=[0 0 0];
@@ -39,8 +54,7 @@ else
     Nn=norm(N);
     N_hat=N/Nn;
 end
-
-%8) Compute right ascension OMG 
+ 
 Nx=N_hat(1);
 Ny=N_hat(2);
 
@@ -50,10 +64,8 @@ elseif Ny<0
     OMG=(2*pi)-acos(Nx);
 end
 
-%9) Compute the eccentricity vector ev
 ev= 1/mu.*(cross(v,h)-mu*(r/rn));
 
-%10) Compute norm of ev = eccentricity 
 e=norm(ev);
 
 if e==0
@@ -66,7 +78,6 @@ elseif e>1
     disp('Hyperbolic Orbit')
 end
 
-%11) Compute pericenter anomaly omg
 ek=ev(3);
 
 if ek>=0
@@ -75,7 +86,6 @@ elseif ek<0
     omg=(2*pi)-acos(dot(N_hat,ev)/e);
 end
 
-%12)Compute the true anomaly theta
 vr=(dot(r,v))/rn;
 
 if vr>=0
@@ -84,7 +94,6 @@ elseif vr<0
     theta=(2*pi)-acos(dot(ev,r)/(rn*e));
 end
 
-%13) Compute the semi major axis a
 a=1/(2/rn-vn^2/mu);
 end
 
