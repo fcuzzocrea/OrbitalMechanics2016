@@ -1,6 +1,6 @@
 %% ASSIGNMENT 1 - EXPRESS TRANSFER
 %  Asteroid : Florance
-%  (C) Collogrosso, Cuzzocrea, Lui - POLIMI SPACE AGENCY
+%  (C) Collogrosso Alfonso, Cuzzocrea Francescodario, Lui Benedetto - POLIMI SPACE AGENCY
 %  WEB : https://github.com/fcuzzocrea/OrbitalMechanics2016
 
 clear 

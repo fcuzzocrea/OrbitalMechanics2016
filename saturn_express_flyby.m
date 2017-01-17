@@ -1,6 +1,6 @@
 %% ASSIGNMENT 2 - INTERPLANETARY FLYBY
 %  Planetes : Mars, Saturn, Neptune
-%  (C) Collogrosso, Cuzzocrea, Lui - POLIMI SPACE AGENCY
+%  (C) Collogrosso Alfonso, Cuzzocrea Francescodario, Lui Benedetto - POLIMI SPACE AGENCY
 %  WEB : https://github.com/fcuzzocrea/OrbitalMechanics2016
 
 clear
@@ -158,7 +158,7 @@ v_inf_matrix_2(1,:) = nan;
 DV_MIN = min(min(min(DV_Tensor)));
 [row,column,depth] = ind2sub(size(DV_Tensor),find(DV_Tensor == DV_MIN));
 fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] DELTAV MIN : \n',DV_MIN);
+fprintf(fileID,'[LOG] DELTAV MIN %f: \n',DV_MIN);
 fclose(fileID);
 
 % Find best arcs
@@ -191,7 +191,7 @@ v_inf_plus = (VI_arc2 - v_saturn);
 r_soi_saturn = 1433449370*((5.683e26)/(1.989e30))^(2/5);
 
 fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] Saturn SOI radius : \n',r_soi_saturn);
+fprintf(fileID,'[LOG] Saturn SOI radius %f : \n',r_soi_saturn);
 fclose(fileID);
 
 if norm(v_inf_min) - norm(v_inf_plus) == 0
@@ -201,9 +201,9 @@ end
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
 ksaturn = astroConstants(16);
 f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn))) - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn)));
-r_p = fzero(f,700000) %Shitty IC because of shitty matlab solver
+r_p = fzero(f,700000); %Shitty IC because of shitty MATLAB solver
 fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola : \n',r_p);
+fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola %f: \n',r_p);
 fclose(fileID);
 
 % Entering Hyperbola 
@@ -211,26 +211,30 @@ e_min = 1 + (r_p*norm(v_inf_min)^2)/ksaturn;
 delta_min = 2*(1/e_min);
 DELTA_min = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_min)^2)));
 theta_inf_min = acos(-1/e_min);
-h_min = (ksaturn(sqrt(e_min^2 - 1))/norm(v_inf_min));
+beta_min = acos(1/e_min);
+
+%h_min = (ksaturn(sqrt(e_min^2 - 1))/norm(v_inf_min));
 
 % Exiting Hyperbola
 e_plus = 1 + (r_p*norm(v_inf_plus)^2)/ksaturn;
 delta_plus = 2*(1/e_plus);
-DELTA_plus = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_plus)^2))),
+DELTA_plus = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_plus)^2)));
 theta_inf_plus = acos(-1/e_plus);
-h_plus = (ksaturn(sqrt(e_plus^2 - 1))/norm(v_inf_plus));
+beta_plus = acos(1/e_plus);
+
+%h_plus = (ksaturn(sqrt(e_plus^2 - 1))/norm(v_inf_plus));
 
 %DeltaV Pericenter
 vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
 vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
 
+DELTA_VPLANET_norm(v_inf_plus - v_inf_min);
 DELTA_VP = abs(vp_plus - vp_min);
-
 fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] DeltaV to give : \n',DELTA_VP);
+fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
 fclose(fileID);
 
-
+% PLOT HYPERBOLA
 
 figure
 grid on
