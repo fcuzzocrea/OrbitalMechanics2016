@@ -1,6 +1,5 @@
 function [Y] = dyn_orb_eq(t,X,mu)
 
-
 % dyn_orb_eq.m
 % 
 % PROTOTYPE:
