@@ -211,20 +211,26 @@ e_min = 1 + (r_p*norm(v_inf_min)^2)/ksaturn;
 delta_min = 2*(1/e_min);
 DELTA_min = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_min)^2)));
 theta_inf_min = acos(-1/e_min);
+h_min = (ksaturn(sqrt(e_min^2 - 1))/norm(v_inf_min));
 
 % Exiting Hyperbola
 e_plus = 1 + (r_p*norm(v_inf_plus)^2)/ksaturn;
 delta_plus = 2*(1/e_plus);
 DELTA_plus = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_plus)^2))),
 theta_inf_plus = acos(-1/e_plus);
+h_plus = (ksaturn(sqrt(e_plus^2 - 1))/norm(v_inf_plus));
 
 %DeltaV Pericenter
 vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
 vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
+
 DELTA_VP = abs(vp_plus - vp_min);
+
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DeltaV to give : \n',DELTA_VP);
 fclose(fileID);
+
+
 
 figure
 grid on
