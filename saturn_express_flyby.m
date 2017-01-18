@@ -213,8 +213,6 @@ DELTA_min = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_min)^2)));
 theta_inf_min = acos(-1/e_min);
 beta_min = acos(1/e_min);
 
-%h_min = (ksaturn(sqrt(e_min^2 - 1))/norm(v_inf_min));
-
 % Exiting Hyperbola
 e_plus = 1 + (r_p*norm(v_inf_plus)^2)/ksaturn;
 delta_plus = 2*(1/e_plus);
@@ -222,19 +220,43 @@ DELTA_plus = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_plus)^2)));
 theta_inf_plus = acos(-1/e_plus);
 beta_plus = acos(1/e_plus);
 
-%h_plus = (ksaturn(sqrt(e_plus^2 - 1))/norm(v_inf_plus));
-
-%DeltaV Pericenter
+%DeltaV Pericenter 
 vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
 vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
 
-DELTA_VPLANET_norm(v_inf_plus - v_inf_min);
-DELTA_VP = abs(vp_plus - vp_min);
+% DELTA_FLYBY = norm(v_inf_plus - v_inf_min);
+% DELTA_VP = abs(vp_plus - vp_min);
+% DELTA_VPLANET = DELTA_FLYBY - DELTA_VP;
+
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
 fclose(fileID);
 
-% PLOT HYPERBOLA
+%% FERRARI PLOT
+
+% Rotation matrix : heliocentric -> saturnocentric
+[kep_saturn,ksun] = uplanet(t_dep(column), ibody_saturn);
+i_sat = kep_saturn(3);
+OMG_sat = kep_saturn(4);
+omg_sat = kep_saturn(5);
+theta_sat = kep_saturn(6);
+RM_theta = [cos(theta_sat), sin(theta_sat), 0; -sin(theta_sat), cos(theta_sat),0; 0,0,1];
+RM_OMG = [ cos(OMG_sat),sin(OMG_sat), 0; -sin(OMG_sat), cos(OMG_sat), 0; 0, 0, 1];
+RM_i = [1, 0, 0; 0, cos(i_sat), sin(i_sat);  0, -sin(i_sat), cos(i_sat)];
+RM_omg = [cos(omg_sat), sin(omg_sat), 0; -sin(omg_sat), cos(omg_sat), 0; 0, 0, 1];
+T = RM_theta*RM_omg*RM_i*RM_OMG;
+
+[A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
+rx_arc_1_saturn = A(1,:);
+ry_arc_1_saturn = A(2,:);
+rz_arc_1_saturn = A(3,:);
+
+[B]=T*[rx_arc_2, ry_arc_2, rz_arc_2]';
+rx_arc_2_saturn = B(1,:);
+ry_arc_2_saturn = B(2,:);
+rz_arc_2_saturn = B(3,:);
+
+%% PLOTTING 
 
 figure
 grid on
@@ -245,3 +267,10 @@ plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
 plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
 plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
+
+figure
+grid on 
+hold on
+title('Ferrari plot')
+plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)
+plot3(rx_arc_2_saturn,ry_arc_2_saturn,rz_arc_2_saturn)
