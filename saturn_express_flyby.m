@@ -180,7 +180,6 @@ Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
     VI_arc2,ksun,Dv_min_TOF_2,86400);
 
 % V infinity 
-
 v_saturn = v_dep_vect_saturn(column,:);
 
 v_inf_min = (VF_arc1 - v_saturn );
@@ -224,15 +223,12 @@ beta_plus = acos(1/e_plus);
 vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
 vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
 
-% DELTA_FLYBY = norm(v_inf_plus - v_inf_min);
-% DELTA_VP = abs(vp_plus - vp_min);
-% DELTA_VPLANET = DELTA_FLYBY - DELTA_VP;
-
+% Si puo fare o no ?  Aureliano dice di si
+DELTA_FLYBY = norm(v_inf_plus - v_inf_min);
+DELTA_VP = abs(vp_plus - vp_min);
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
 fclose(fileID);
-
-%% FERRARI PLOT
 
 % Rotation matrix : heliocentric -> saturnocentric
 [kep_saturn,ksun] = uplanet(t_dep(column), ibody_saturn);
@@ -246,6 +242,20 @@ RM_i = [1, 0, 0; 0, cos(i_sat), sin(i_sat);  0, -sin(i_sat), cos(i_sat)];
 RM_omg = [cos(omg_sat), sin(omg_sat), 0; -sin(omg_sat), cos(omg_sat), 0; 0, 0, 1];
 T = RM_theta*RM_omg*RM_i*RM_OMG;
 
+v_inf_min_saturn = T*v_inf_min';
+v_inf_plus_saturn = T*v_inf_plus';
+
+
+% Fondamentalmente ho che il versore uscente dal piano e perpendicolare ad esso sara quello dato dal
+% prodotto scalare di vinfmeno x vinfplus. L'orienzione : sara quella tale
+% per cui le due vinf giacciono sullo stesso piano. Ok, dato questo come
+% continuo per plottare sta cazzo di iperbole ?
+direction = norm(cross(v_inf_min_saturn,v_inf_plus_saturn));
+
+
+%% FERRARI PLOT
+
+% Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
 rx_arc_1_saturn = A(1,:);
 ry_arc_1_saturn = A(2,:);
@@ -258,7 +268,7 @@ rz_arc_2_saturn = B(3,:);
 
 %% PLOTTING 
 
-figure
+figure(1)
 grid on
 hold on
 whitebg(figure(1), 'black')
@@ -267,10 +277,13 @@ plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
 plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
 plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
+legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit', 'First Transfer Arc','Second Transfer Arc')
 
-figure
+figure(2)
 grid on 
 hold on
 title('Ferrari plot')
 plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)
 plot3(rx_arc_2_saturn,ry_arc_2_saturn,rz_arc_2_saturn)
+legend('Before GA', 'After GA')
+axis equal
