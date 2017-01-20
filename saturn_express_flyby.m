@@ -76,17 +76,17 @@ ibody_neptune = 8;
 [rx_neptune, ry_neptune, rz_neptune, vx_neptune, vy_neptune, vz_neptune] = int_orb_eq(kep_neptune,ksun);
 
 % From ephemeris compute position and velocity for the entire window
-parfor i = 1 : length(t_dep)
+for i = 1 : length(t_dep)
     [kep_dep_vect_mars(i,:),~] = uplanet(t_dep(i),ibody_mars);
     [r_dep_vect_mars(i,:),v_dep_vect_mars(i,:)] = kep2car(kep_dep_vect_mars(i,:),ksun);
 end
 
-parfor i = 1 : length(t_dep)
+for i = 1 : length(t_dep)
     [kep_dep_vect_saturn(i,:),~] = uplanet(t_dep(i),ibody_saturn);
     [r_dep_vect_saturn(i,:),v_dep_vect_saturn(i,:)] = kep2car(kep_dep_vect_saturn(i,:),ksun); 
 end
 
-parfor i = 1 : length(t_dep)
+for i = 1 : length(t_dep)
     [kep_dep_vect_neptune(i,:),~] = uplanet(t_dep(i),ibody_neptune);
     [r_dep_vect_neptune(i,:),v_dep_vect_neptune(i,:)] = kep2car(kep_dep_vect_neptune(i,:),ksun);
 end
@@ -187,12 +187,6 @@ v_inf_plus = (VI_arc2 - v_saturn);
 
 %% FLYBY
 
-r_soi_saturn = 1433449370*((5.683e26)/(1.989e30))^(2/5);
-
-fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] Saturn SOI radius %f : \n',r_soi_saturn);
-fclose(fileID);
-
 if norm(v_inf_min) - norm(v_inf_plus) == 0
     disp('Powered gravity assist is not needed')
 end
@@ -200,7 +194,7 @@ end
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
 ksaturn = astroConstants(16);
 f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn))) - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn)));
-r_p = fzero(f,700000); %Shitty IC because of shitty MATLAB solver
+r_p = fzero(f,700000);
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola %f: \n',r_p);
 fclose(fileID);
@@ -211,6 +205,9 @@ delta_min = 2*(1/e_min);
 DELTA_min = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_min)^2)));
 theta_inf_min = acos(-1/e_min);
 beta_min = acos(1/e_min);
+a_min = DELTA_min /(e_min^2 -1);
+b_min = a_min*(sqrt(e_min^2 -1));
+h_min = sqrt(ksaturn*a_min*(e_min^2 -1));
 
 % Exiting Hyperbola
 e_plus = 1 + (r_p*norm(v_inf_plus)^2)/ksaturn;
@@ -218,17 +215,40 @@ delta_plus = 2*(1/e_plus);
 DELTA_plus = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_plus)^2)));
 theta_inf_plus = acos(-1/e_plus);
 beta_plus = acos(1/e_plus);
+a_plus = DELTA_plus /(e_plus^2 -1);
+h_plus = sqrt(ksaturn*a_plus*(e_plus^2 -1));
+b_plus = a_plus*(sqrt(e_plus^2 -1));
 
 %DeltaV Pericenter 
 vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
 vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
 
-% Si puo fare o no ?  Aureliano dice di si
+% DeltaV Flyby
 DELTA_FLYBY = norm(v_inf_plus - v_inf_min);
 DELTA_VP = abs(vp_plus - vp_min);
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
 fclose(fileID);
+
+% SOI Data
+r_soi_saturn = astroConstants(2)*59.879*((astroConstants(16)/astroConstants(1))/(astroConstants(4)/astroConstants(1)))^(2/5);
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Saturn SOI radius %f : \n',r_soi_saturn);
+fclose(fileID);
+
+theta_SOI_min = acos((h_min^2/(ksaturn*r_soi_saturn*e_min))-1/e_min);
+theta_min = -theta_SOI_min:0.01:0;
+theta_min = [theta_min 0];
+x_hyp_min = -a_min*((e_min+cos(theta_min))./(1+e_min*cos(theta_min)))+a_min+r_p;
+y_hyp_min = b_min*((sqrt(e_min)^2*sin(theta_min))./(1+e_min*cos(theta_min)));
+
+theta_SOI_plus = acos((h_plus^2/(ksaturn*r_soi_saturn*e_plus))-1/e_plus);
+theta_plus = 0:0.01:theta_SOI_plus;
+theta_plus = [theta_plus theta_SOI_plus];
+x_hyp_plus = -a_plus*((e_plus+cos(theta_plus))./(1+e_plus*cos(theta_plus)))+a_plus+r_p;
+y_hyp_plus = b_plus*((sqrt(e_plus)^2*sin(theta_plus))./(1+e_plus*cos(theta_plus)));
+
+%% SATURNOCENTRIC FRAME PLOT
 
 % Rotation matrix : heliocentric -> saturnocentric
 [kep_saturn,ksun] = uplanet(t_dep(column), ibody_saturn);
@@ -242,18 +262,13 @@ RM_i = [1, 0, 0; 0, cos(i_sat), sin(i_sat);  0, -sin(i_sat), cos(i_sat)];
 RM_omg = [cos(omg_sat), sin(omg_sat), 0; -sin(omg_sat), cos(omg_sat), 0; 0, 0, 1];
 T = RM_theta*RM_omg*RM_i*RM_OMG;
 
-v_inf_min_saturn = T*v_inf_min';
-v_inf_plus_saturn = T*v_inf_plus';
-
-
 % Fondamentalmente ho che il versore uscente dal piano e perpendicolare ad esso sara quello dato dal
 % prodotto scalare di vinfmeno x vinfplus. L'orienzione : sara quella tale
 % per cui le due vinf giacciono sullo stesso piano. Ok, dato questo come
 % continuo per plottare sta cazzo di iperbole ?
-direction = norm(cross(v_inf_min_saturn,v_inf_plus_saturn));
-
-
-%% FERRARI PLOT
+% v_inf_min_saturn = T*v_inf_min';
+% v_inf_plus_saturn = T*v_inf_plus';
+% k_direction = norm(cross(v_inf_min_saturn,v_inf_plus_saturn));
 
 % Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
@@ -278,12 +293,23 @@ plot3(rx_saturn,ry_saturn,rz_saturn);
 plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
 plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
 legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit', 'First Transfer Arc','Second Transfer Arc')
+title('Orbits and Lamberts Arc in Heliocentric Frame')
 
 figure(2)
 grid on 
 hold on
-title('Ferrari plot')
+title('Lambert Arcs in Planetocentric Frame')
 plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)
 plot3(rx_arc_2_saturn,ry_arc_2_saturn,rz_arc_2_saturn)
 legend('Before GA', 'After GA')
 axis equal
+
+figure(3)
+hold on
+plot(x_hyp_min,y_hyp_min)
+plot(x_hyp_plus,y_hyp_plus)
+plot(0,0,'*')
+grid on
+axis equal
+title('Flyby Hyperbola')
+legend('Entering Hyperbola', 'Exiting Hyperbola')
