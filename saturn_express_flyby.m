@@ -76,17 +76,17 @@ ibody_neptune = 8;
 [rx_neptune, ry_neptune, rz_neptune, vx_neptune, vy_neptune, vz_neptune] = int_orb_eq(kep_neptune,ksun);
 
 % From ephemeris compute position and velocity for the entire window
-for i = 1 : length(t_dep)
+parfor i = 1 : length(t_dep)
     [kep_dep_vect_mars(i,:),~] = uplanet(t_dep(i),ibody_mars);
     [r_dep_vect_mars(i,:),v_dep_vect_mars(i,:)] = kep2car(kep_dep_vect_mars(i,:),ksun);
 end
 
-for i = 1 : length(t_dep)
+parfor i = 1 : length(t_dep)
     [kep_dep_vect_saturn(i,:),~] = uplanet(t_dep(i),ibody_saturn);
     [r_dep_vect_saturn(i,:),v_dep_vect_saturn(i,:)] = kep2car(kep_dep_vect_saturn(i,:),ksun); 
 end
 
-for i = 1 : length(t_dep)
+parfor i = 1 : length(t_dep)
     [kep_dep_vect_neptune(i,:),~] = uplanet(t_dep(i),ibody_neptune);
     [r_dep_vect_neptune(i,:),v_dep_vect_neptune(i,:)] = kep2car(kep_dep_vect_neptune(i,:),ksun);
 end
@@ -265,10 +265,10 @@ T = RM_theta*RM_omg*RM_i*RM_OMG;
 % Fondamentalmente ho che il versore uscente dal piano e perpendicolare ad esso sara quello dato dal
 % prodotto scalare di vinfmeno x vinfplus. L'orienzione : sara quella tale
 % per cui le due vinf giacciono sullo stesso piano. Ok, dato questo come
-% continuo per plottare sta cazzo di iperbole ?
-% v_inf_min_saturn = T*v_inf_min';
-% v_inf_plus_saturn = T*v_inf_plus';
-% k_direction = norm(cross(v_inf_min_saturn,v_inf_plus_saturn));
+% continuo per plottare l'iperbole ?
+v_inf_min_saturn = T*v_inf_min';
+v_inf_plus_saturn = T*v_inf_plus';
+k_direction = cross(v_inf_min_saturn,v_inf_plus_saturn);
 
 % Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
@@ -307,7 +307,9 @@ axis equal
 figure(3)
 hold on
 plot(x_hyp_min,y_hyp_min)
+zoomPlot (3,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(x_hyp_plus,y_hyp_plus)
+zoomPlot (3,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(0,0,'*')
 grid on
 axis equal
