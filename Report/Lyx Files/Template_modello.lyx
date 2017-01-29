@@ -257,6 +257,34 @@ n distance is lesser than Eart's aphoelion distance.
 \end_layout
 
 \begin_layout Standard
+The procedure applied in order to design the transfer is divided in three
+ main steps : 
+\end_layout
+
+\begin_layout Enumerate
+Set all known parameters and computation of Earth's and Florence's orbits;
+\end_layout
+
+\begin_layout Enumerate
+Solve the Lambert's problem for every possible combination of TOFs at intervals
+ of one week;
+\end_layout
+
+\begin_layout Enumerate
+Evaluation of the best Lambert's arc .
+\end_layout
+
+\begin_layout Standard
+A sub optimal solution is then chosen due to assigned launcher's C3 costrain.
+ A qualitative comparison with a classical Hohmann transfer is then carried
+ in order to evaluate the differences in terms of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ between the two solutions.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
@@ -268,8 +296,8 @@ Given Datas
 \end_layout
 
 \begin_layout Standard
-The assigned windows for departure from Earth and arrival to Florance are
- the following :
+The assigned windows for departure from the Earth and arrival to Florance
+ are reported in the following table :
 \end_layout
 
 \begin_layout Standard
@@ -411,7 +439,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename gfx/orbits.png
-	scale 40
+	scale 30
 
 \end_inset
 
@@ -445,9 +473,9 @@ Design Strategy
 
 \begin_layout Standard
 In order to obtain the best orbital transfer we have developed a MATLAB
- script that basically launch a main routine in wich are evaluated Lambert's
- solutions for each possibile combinations of departure days and arrival
- days at intervals of one week.
+ script that, once all the possible combinations of TOFs are evaluated,
+ launch a main routine in wich are evaluated Lambert's arcs for each possibile
+ combinations of departure days and arrival days at intervals of one week.
 \end_layout
 
 \begin_layout Subsection
@@ -456,8 +484,8 @@ TOFs Calculation
 
 \begin_layout Standard
 Since the computation should be done for every possible combination departure
- and arrival dates, a functions has been developed that basically build
- a matrix with all the TOFs :
+ and arrival dates, a function has been developed that basically build a
+ matrix with all the TOFs in the following way :
 \end_layout
 
 \begin_layout Standard
@@ -553,8 +581,28 @@ TOFs Matrix Computation
 
 \end_layout
 
+\begin_layout Standard
+Obviously, all the negative TOFs are automatically setted to NaN in the
+ main script.
+ The TOFs matrix is then passed to the main routine in order to solve the
+ Lambert's problem.
+ 
+\end_layout
+
+\begin_layout Standard
+From ephemeris then position vector and velocity vector are calculated for
+ the entire departure and arrival windows at intervals of one week.
+\end_layout
+
 \begin_layout Subsection
 The Lambert Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-Lambert-Problem"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -565,7 +613,7 @@ For the Lamber'ts problem, two position vectors and the time of flight between
 \begin_layout Standard
 The MATLAB function that given initial and final position vector gives as
  outputs the orbital parameters of the transfer ellipse is given, and is
- called at every step of the routine.
+ called at every step of the main routine.
  Once the initial velocity and the final velocity of the Lambert's arc are
  evaluated by the funcion, the total cost of the transfer ellipse in terms
  of 
@@ -609,7 +657,14 @@ The MATLAB function that given initial and final position vector gives as
 \end_layout
 
 \begin_layout Standard
-with respect to figure 1.1 below 
+with respect to figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lambert's-Arc"
+
+\end_inset
+
+ :
 \end_layout
 
 \begin_layout Standard
@@ -635,7 +690,13 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Lambert's Arc
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Lambert's-Arc"
+
+\end_inset
+
+ Lambert's Arc
 \end_layout
 
 \end_inset
@@ -649,7 +710,14 @@ Lambert's Arc
 \end_layout
 
 \begin_layout Standard
-The main routine has been implemented as following : 
+The main routine has been implemented as it is showed in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:DV-Matrix-Computation"
+
+\end_inset
+
+ : 
 \end_layout
 
 \begin_layout Standard
@@ -770,6 +838,13 @@ end
 
 \begin_layout Plain Layout
 DV Matrix Computation
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:DV-Matrix-Computation"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -783,11 +858,13 @@ DV Matrix Computation
 \end_layout
 
 \begin_layout Standard
-The for cycle pass through each day (at intervals of one week) and compute
- the Lambert's arcs for all the combinations of launch date and arrival
- date.
- The total delta v for each of the arc is computed and stored in a 2D tensor,
- the DV_matrix.
+As we can see, the for cycle pass through each day and compute the Lambert's
+ arcs for all the combinations of launch date and arrival date.
+ Then the total 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ for each of the arc is computed and stored in a 2D matrix.
 \end_layout
 
 \begin_layout Subsection
@@ -796,9 +873,15 @@ The Pork Chop Plot
 
 \begin_layout Standard
 A pork chop plot is a data visualization tool that can be used in interplanetary
- mission design, wich displays contours of various quantities as a function
- of departure and arrival date, and can be used to get insights on the best
- departure/arrival window.
+ mission design, the 3D pork chop plot for Earth-Florance mission is showed
+ in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3D-Pork-Chop"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -830,7 +913,14 @@ status collapsed
 \begin_layout Plain Layout
 
 \lang english
-3D Pork Chop Plot
+3D Pork Chop Plot 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3D-Pork-Chop"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -844,9 +934,24 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
-A pork chop plot has been produced for the interplanetary mission assigned
- and is shown in figure 1.3.
- 
+A pork chop plot wich displays contours of various quantities as a function
+ of departure and arrival date, and can be used to get insights on the best
+ departure/arrival window.
+ By drawing contour lines on figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3D-Pork-Chop"
+
+\end_inset
+
+ we get figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pork-Chop-Plot"
+
+\end_inset
+
+,
 \end_layout
 
 \begin_layout Standard
@@ -878,7 +983,14 @@ status collapsed
 \begin_layout Plain Layout
 
 \lang english
-Pork Chop Plot
+Pork Chop Plot 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pork-Chop-Plot"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -892,8 +1004,8 @@ Pork Chop Plot
 \end_layout
 
 \begin_layout Standard
-The x-axis is the Earth departure date, the y-axis is the Florence arrival
- date.
+in wich the x-axis is the Earth departure date, the y-axis is the Florence
+ arrival date.
  The contour lines show the sum of Earth departure C3 and Florence arrival
  C3, where C3 is the 
 \begin_inset Quotes eld
@@ -912,7 +1024,116 @@ characteristic energy
  solver shown in the previous section).
  A given contour, called a porkchop curve, represents constant C3, and the
  center of the porkchop the optimal minimum C3, and thus optimal transfers.
- On top of the Pork Chop Plot we have superimposed also the 
+ On top of the Pork Chop Plot we have also superimposed the TOFs constant
+ lines that are visible in red.
+ As we can see from the pork chop plot there are different zones of minimum
+ wich can be selected as possible departure window and arrival window.
+\end_layout
+
+\begin_layout Subsection
+Best Transfer Arc
+\end_layout
+
+\begin_layout Standard
+The best 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be extracted from the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix by simply taking is minimum, then using the MATLAB function 
+\begin_inset listings
+lstparams "language=Matlab"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+find
+\end_layout
+
+\end_inset
+
+ we can retrieve its position in terms of rows and columns in the matrix
+ itself so we can retrieve departure position and arrival position from
+ its respective vectors : 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Dv_min = min(min(Dv_matrix)); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+[ROW,COLUMN] = find(Dv_matrix == Dv_min); 
+\end_layout
+
+\begin_layout Plain Layout
+
+Dv_min_TOF = (TOF_matrix(ROW,COLUMN)*86400);
+\end_layout
+
+\begin_layout Plain Layout
+
+r1_arc = r_dep_vect(ROW,:); 
+\end_layout
+
+\begin_layout Plain Layout
+
+r2_arc = r_arr_vect(COLUMN,:); 
+\end_layout
+
+\begin_layout Plain Layout
+
+[~,~,~,~,v1_arc,v2_arc,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+[rx_arc, ry_arc, rz_arc, vx_arc, vy_arc, vz_arc] = intARC_lamb(r1_arc,v1_arc,ksu
+n,Dv_min_TOF,86400);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Best Transfer Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
