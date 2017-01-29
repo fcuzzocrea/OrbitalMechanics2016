@@ -1,22 +1,35 @@
 function []= plotorbit(a,e,i,OMG,omg,mu,color_orbit)
-%% This Script plot the orbit calculatede after using kep2car to obtain the position vector.
 %
-% Input
-% a              - semimajor axis
-% e              - eccentricity
-% i              - inclination
-% OMG            - right ascension
-% omg            - pericenter anomaly
-% mu             - planetary constant
-% color_orbit    - Color orbit selection
-                    % color_orbit = 1   - blue
-                    % color_orbit = 2   - green
-                    % color_orbit = 3   - yellow
-                    % color_orbit = 4   - red
-                    % color_orbit = 5   - magenta
-                    % color_orbit = 6   - cyan
-                    % color_orbit = 7   - black
-                    % color_orbit = 8   - white
+% plotorbit.m 
+% 
+% PROTOTYPE:
+%     []= plotorbit(a,e,i,OMG,omg,mu,color_orbit)
+% 
+% DESCRIPTION:
+%     This function plot the orbit computed after using kep2car to obtain the position vector.
+%
+% INPUT:
+%     a[1]               Semimajor axis
+%     e[1]               Eccentricity
+%     i[1]               Inclination
+%     OMG[1]             Right Ascension
+%     omg[1]             Pericenter Anomaly
+%     mu[1]              Planetary Constant
+%     color_orbit[1]     Color selection :
+%                                         color_orbit = 1   - blue
+%                                         color_orbit = 2   - green
+%                                         color_orbit = 3   - yellow
+%                                         color_orbit = 4   - red
+%                                         color_orbit = 5   - magenta
+%                                         color_orbit = 6   - cyan
+%                                         color_orbit = 7   - black
+%                                         color_orbit = 8   - white
+%
+% OUTPUT:
+%     Plotting of the orbit 
+%
+% AUTHOR:
+%     Alfonso Collogrosso
 
 
 % Definition of true anomaly  
