@@ -1,24 +1,31 @@
 function [TOF] = tof_calculator (t_dep_vect,t_arr_vect)
 
-%% This function evaluates a vector of all "Time of flight"
-% for each date of departure and arrival
+% tof_calculator.m
+% 
+% PROTOTYPE:
+%   [rx_vect, ry_vect, rz_vect, vx_vect, vy_vect, vz_vect] = intARC_lamb(r_1,VI,mu,time,n)
 %
-% Input:
-% t_dep_vect       - vector of departure's dates
-% t_arr_vect       - vector of arrival's dates
+% DESCRIPTION:
+% 	This function implements the integration of the dynamics orbit equations
 %
-% Output:
-% TOF              - vector of all times of flight
+% INPUT:
+%   t_dep_vect[]       Vector of departure's dates
+%   t_arr_vect[]       Vector of arrival's dates
+%
+% OUTPUT :
+%   TOF[]              Vector of all times of flight
+%
+% AUTHOR:
+%   Alfonso Collogrosso
+%
 
-
-%% Preallocation 
+% Preallocation 
 l1 = length(t_dep_vect);
 l2 = length(t_arr_vect);
 
 TOF = zeros(l1,l2);
 
-%% Implementation of a for cycle to obtain the TOF vector
-
+% For cycle to obtain the TOF vector
 for i = 1 : l1
     TOF(i,:) = t_arr_vect - t_dep_vect(i);
 end
