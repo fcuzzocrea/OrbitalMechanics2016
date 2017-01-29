@@ -9,6 +9,9 @@
 \input{Settings.tex}
 \end_preamble
 \use_default_options true
+\begin_modules
+enumitem
+\end_modules
 \maintain_unincluded_children false
 \language british
 \language_package default
@@ -67,9 +70,9 @@
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 2cm
-\rightmargin 2cm
-\secnumdepth 3
+\leftmargin 1.5cm
+\rightmargin 1.5cm
+\secnumdepth 1
 \tocdepth 3
 \paragraph_separation skip
 \defskip smallskip
@@ -176,22 +179,6 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-\begin_inset FloatList algorithm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FloatList figure
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Newpage clearpage
 \end_inset
 
@@ -242,10 +229,13 @@ Orbital Maneuvers
 \end_layout
 
 \begin_layout Section
+\noindent
 Introduction
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing single
+\noindent
 The aim of this chapter is to explain the design of an oribital transfer
  between the Earth and the asteroid Florance 35, an Apollo class asteroid.
  The Apollo asteroids are a group of NEO asteroids that orbit on an orbit
@@ -253,27 +243,38 @@ The aim of this chapter is to explain the design of an oribital transfer
 n distance is lesser than Eart's aphoelion distance.
  As main consequence of this fact the cross the Earth's orbit around the
  Sun.
+ 
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing single
+\noindent
 The procedure applied in order to design the transfer is divided in three
  main steps : 
 \end_layout
 
 \begin_layout Enumerate
+\paragraph_spacing single
+\noindent
 Set all known parameters and computation of Earth's and Florence's orbits;
 \end_layout
 
 \begin_layout Enumerate
+\paragraph_spacing single
+\noindent
 Solve the Lambert's problem for every possible combination of TOFs at intervals
  of one week;
 \end_layout
 
 \begin_layout Enumerate
+\paragraph_spacing single
+\noindent
 Evaluation of the best Lambert's arc .
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing single
+\noindent
 A sub optimal solution is then chosen due to assigned launcher's C3 costrain.
  A qualitative comparison with a classical Hohmann transfer is then carried
  in order to evaluate the differences in terms of 
@@ -283,17 +284,16 @@ A sub optimal solution is then chosen due to assigned launcher's C3 costrain.
  between the two solutions.
 \end_layout
 
-\begin_layout Subsection
-Given Datas
-\end_layout
-
 \begin_layout Standard
+\noindent
+\align block
 The assigned windows for departure from the Earth and arrival to Florance
  are reported in the following table :
 \end_layout
 
 \begin_layout Standard
 \noindent
+\align block
 \begin_inset Float table
 placement H
 wide false
@@ -415,11 +415,15 @@ Given datas
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 and in the below plot we can see the path of the Florance orbit and the
  Earth orbit in an heliocentric reference frame :
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float figure
 placement H
 wide false
@@ -450,7 +454,126 @@ Earth's and Florence 35 orbits
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\noindent
+The Lambert's Problem
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+For the Lamber'ts problem, two position vectors and the time of flight between
+ each position are known, but the orbit between the endpoints is unknown.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+The MATLAB function that given initial and final position vector gives as
+ outputs the orbital parameters of the transfer ellipse is given, and is
+ called at every step of the main routine.
+ Once the initial velocity and the final velocity of the Lambert's arc are
+ evaluated by the funcion, the total cost of the transfer ellipse in terms
+ of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be easily evaluated by the following calculation : 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Formula 
+\[
+\triangle V_{a}=V_{trans_{A}}-V_{sat}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Formula 
+\[
+\triangle V_{b}=V_{sat}-V_{trans_{B}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Formula 
+\[
+\triangle V_{TOT}=\triangle V_{a}+\triangle V_{b}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+with respect to figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lambert's-Arc"
+
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
 \begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/Lambert_ARC.png
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Lambert's-Arc"
+
+\end_inset
+
+ Lambert's Arc
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -460,10 +583,13 @@ Earth's and Florence 35 orbits
 \end_layout
 
 \begin_layout Section
+\noindent
 Design Strategy
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 In order to obtain the best orbital transfer we have developed a MATLAB
  script that, once all the possible combinations of TOFs are evaluated,
  launch a main routine in wich are evaluated Lambert's arcs for each possibile
@@ -471,16 +597,21 @@ In order to obtain the best orbital transfer we have developed a MATLAB
 \end_layout
 
 \begin_layout Subsection
+\noindent
 TOFs Calculation
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 Since the computation should be done for every possible combination departure
  and arrival dates, a function has been developed that basically build a
  matrix with all the TOFs in the following way :
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float algorithm
 placement H
 wide false
@@ -574,6 +705,8 @@ TOFs Matrix Computation
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 Obviously, all the negative TOFs are automatically setted to NaN in the
  main script.
  The TOFs matrix is then passed to the main routine in order to solve the
@@ -582,119 +715,18 @@ Obviously, all the negative TOFs are automatically setted to NaN in the
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 From ephemeris then position vector and velocity vector are calculated for
  the entire departure and arrival windows at intervals of one week.
 \end_layout
 
 \begin_layout Subsection
-The Lambert's Problem
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:The-Lambert-Problem"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-For the Lamber'ts problem, two position vectors and the time of flight between
- each position are known, but the orbit between the endpoints is unknown.
-\end_layout
-
-\begin_layout Standard
-The MATLAB function that given initial and final position vector gives as
- outputs the orbital parameters of the transfer ellipse is given, and is
- called at every step of the main routine.
- Once the initial velocity and the final velocity of the Lambert's arc are
- evaluated by the funcion, the total cost of the transfer ellipse in terms
- of 
-\begin_inset Formula $\triangle V$
-\end_inset
-
- can be easily evaluated by the following calculation : 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\triangle V_{a}=V_{trans_{A}}-V_{sat}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\triangle V_{b}=V_{sat}-V_{trans_{B}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\triangle V_{TOT}=\triangle V_{a}+\triangle V_{b}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-with respect to figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Lambert's-Arc"
-
-\end_inset
-
- :
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
 \noindent
-\align center
-\begin_inset Graphics
-	filename gfx/Lambert_ARC.png
-	scale 20
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
+The Main Routine
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:Lambert's-Arc"
-
-\end_inset
-
- Lambert's Arc
-\end_layout
-
-\end_inset
-
-
-\end_layout
+name "subsec:The-Main-Routine"
 
 \end_inset
 
@@ -702,6 +734,8 @@ name "fig:Lambert's-Arc"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 The main routine has been implemented as it is showed in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -713,6 +747,8 @@ reference "alg:DV-Matrix-Computation"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float algorithm
 placement H
 wide false
@@ -853,6 +889,8 @@ name "alg:DV-Matrix-Computation"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 As we can see, the for cycle pass through each day and compute the Lambert's
  arcs for all the combinations of launch date and arrival date.
  Then the total 
@@ -863,10 +901,13 @@ As we can see, the for cycle pass through each day and compute the Lambert's
 \end_layout
 
 \begin_layout Subsection
+\noindent
 The Pork Chop Plot
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 A pork chop plot is a data visualization tool that can be used in interplanetary
  mission design, the 3D pork chop plot for Earth-Florance mission is showed
  in figure 
@@ -880,6 +921,8 @@ reference "fig:3D-Pork-Chop"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 
 \lang english
 \begin_inset Float figure
@@ -929,6 +972,8 @@ name "fig:3D-Pork-Chop"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 A pork chop plot wich displays contours of various quantities as a function
  of departure and arrival date, and can be used to get insights on the best
  departure/arrival window.
@@ -950,6 +995,8 @@ reference "fig:Pork-Chop-Plot"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 
 \lang english
 \begin_inset Float figure
@@ -999,6 +1046,8 @@ name "fig:Pork-Chop-Plot"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 in wich the x-axis is the Earth departure date, the y-axis is the Florence
  arrival date.
  The contour lines show the sum of Earth departure C3 and Florence arrival
@@ -1026,10 +1075,13 @@ characteristic energy
 \end_layout
 
 \begin_layout Subsection
+\noindent
 Best Transfer Arc
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 The best 
 \begin_inset Formula $\triangle V$
 \end_inset
@@ -1057,6 +1109,8 @@ find
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float algorithm
 placement H
 wide false
@@ -1125,6 +1179,8 @@ Minimum
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 As result we can see that the minimu 
 \begin_inset Formula $\triangle V$
 \end_inset
@@ -1146,6 +1202,8 @@ As result we can see that the minimu
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 The transfer arc that correspond to the minimum 
 \begin_inset Formula $\triangle V$
 \end_inset
@@ -1161,6 +1219,8 @@ reference "fig:Best-Transfer-Arc"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float algorithm
 placement H
 wide false
@@ -1211,6 +1271,8 @@ Best Ttransfer Arc Integration
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float figure
 placement H
 wide false
@@ -1254,6 +1316,8 @@ Best Transfer Arc
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 We can also compute a suboptimal transfer arc by taking the 
 \begin_inset Formula $V_{\infty}$
 \end_inset
@@ -1288,6 +1352,8 @@ reference "fig:Best-Transfer-Arc-1"
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float figure
 placement H
 wide false
@@ -1334,7 +1400,10 @@ Suboptimal Transfer Arc
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status collapsed
@@ -1379,10 +1448,13 @@ Best Transfer Arc and Suboptimal Transfer Arc
 \end_layout
 
 \begin_layout Subsection
-Hohman Transfer Comparison
+\noindent
+Hohmann Transfer Comparison
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 For doing the Hohmann transfer comparison, the MATLAB functions 
 \begin_inset listings
 lstparams "basicstyle={\ttfamily}"
@@ -1428,6 +1500,8 @@ anoperichange.m
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 Since the two orbits are on different planes, a change of inclination 
 \begin_inset Formula $i$
 \end_inset
@@ -1446,17 +1520,21 @@ Since the two orbits are on different planes, a change of inclination
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 As expected however, the overall cost of an Hohmann transfer is greater
  than the Lambert's arc strategy due to the change of plane, in fact the
  results are :
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float table
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -1622,6 +1700,8 @@ Hohmann Transfer
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Newpage newpage
 \end_inset
 
@@ -1629,10 +1709,13 @@ Hohmann Transfer
 \end_layout
 
 \begin_layout Chapter
+\noindent
 Interplanetary Flyby
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Newpage newpage
 \end_inset
 
@@ -1640,16 +1723,21 @@ Interplanetary Flyby
 \end_layout
 
 \begin_layout Section
+\noindent
 Introduction
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 The aim of this chapter is to explain to design an interplanetary trajectory
  from Mars to Neptune with a flyby on Saturn.
  
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 \begin_inset Float figure
 wide false
 sideways false
@@ -1688,6 +1776,8 @@ Given Orbits
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 The three orbits are all on different planes, so Lambert's solution from
  Mars orbit to Saturn orbit and from Saturn orbit to Neptune orbit will
  be evaluated for the entire time window, ad interval of 100 days due to
@@ -1696,30 +1786,208 @@ The three orbits are all on different planes, so Lambert's solution from
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 The procedure applied in order to design the transfer is divided in three
  main steps : 
 \end_layout
 
 \begin_layout Enumerate
+\noindent
+\align block
 Set all known parameters and computation of orbits of both of the three
  planets;
 \end_layout
 
 \begin_layout Enumerate
+\noindent
+\align block
 Solve the Lambert's problem for every possible combination of TOFs at intervals
  of 100 days both for the path Mars-Saturn and the path Saturn-Neptune;
 \end_layout
 
 \begin_layout Enumerate
+\noindent
+\align block
 Evaluation of the more energy efficent Lambert's arcs;
 \end_layout
 
 \begin_layout Enumerate
-Evaulation of the powered gravity assist.
+\noindent
+\align block
+Evaluation of the powered gravity assist.
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 The given time window goes from January 1, 2016 to December 31, 2055.
+\end_layout
+
+\begin_layout Subsection
+\noindent
+The method of the patched conics
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+Interplanetary mission no longer conform to the idealized two-body problem.
+ Just the fact that some vehicle is attempting to leave one planet to traverse
+ the solar system which revolves about the Sun in order to reach another
+ planet introduces at least four bodies.
+ To make matters worse, interplanetary travel is also subject to the forces
+ of other planets and objects which may be near to or in between the initial
+ and final locations.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+In order to simplify interplanetary missions design, a method knwon as patched
+ (or linked) conics method has been developed, taht break the multibody
+ system into three differente sections of two body problems.
+ We define the sphere of influence (from now on SOI) of the planet as an
+ attempt to mark the location where the Sun's gravitational effects become
+ dominant with respect to te planet's one.
+ We assume that when the spacecraft is outside the SOI of a planet it follows
+ an unperturbed keplerian orbit around the sun.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+So the method is splitted into three segments : 
+\end_layout
+
+\begin_layout Itemize
+\noindent
+\align block
+Initial planet's SOI where the spacecraft leaves planet's on hyperbolic
+ escape trajectory;
+\end_layout
+
+\begin_layout Itemize
+\noindent
+\align block
+Elliptical trajectory about the sun from initial planet toward the final
+ planet;
+\end_layout
+
+\begin_layout Itemize
+\noindent
+\align block
+Entering into the final planet's SOI on an hyperbolic capture trajectory
+ and maneuvering in order to enter into an elliptical parking orbit about
+ the final planet or descend to the planet surface.
+ Or flyby to another destination.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/patched_conics.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Method of Patched Conics
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+The expression of the SOI of a planet orbiting the sun is given by : 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Formula 
+\[
+R_{SOI}=R_{planet}\left(\frac{m_{planet}}{m_{sun}}\right)^{\nicefrac{2}{5}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+where 
+\begin_inset Formula $R_{planet}$
+\end_inset
+
+ is the radius that goes from the Sun to the planet.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+Although this method gives a good approximation of trajectories for interplaneta
+ry spacecraft missions, there are missions for which this approximation
+ does not provide sufficiently accurate results.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Design Strategy
+\end_layout
+
+\begin_layout Subsection
+TOFs Calculation
+\end_layout
+
+\begin_layout Subsection
+The Main Routine
+\end_layout
+
+\begin_layout Subsection
+Transfer Arcs
+\end_layout
+
+\begin_layout Subsection
+Flyby
 \end_layout
 
 \end_body
