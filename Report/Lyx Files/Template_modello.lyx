@@ -234,6 +234,13 @@ setcounter{page}{1}
 Orbital Maneuvers
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
@@ -274,13 +281,6 @@ A sub optimal solution is then chosen due to assigned launcher's C3 costrain.
 \end_inset
 
  between the two solutions.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -1632,6 +1632,13 @@ Hohmann Transfer
 Interplanetary Flyby
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
@@ -1640,6 +1647,79 @@ Introduction
 The aim of this chapter is to explain to design an interplanetary trajectory
  from Mars to Neptune with a flyby on Saturn.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/saturn_mars_neptune_2d.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Given-Orbits"
+
+\end_inset
+
+Given Orbits
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The three orbits are all on different planes, so Lambert's solution from
+ Mars orbit to Saturn orbit and from Saturn orbit to Neptune orbit will
+ be evaluated for the entire time window, ad interval of 100 days due to
+ computing costraint.
+ 
+\end_layout
+
+\begin_layout Standard
+The procedure applied in order to design the transfer is divided in three
+ main steps : 
+\end_layout
+
+\begin_layout Enumerate
+Set all known parameters and computation of orbits of both of the three
+ planets;
+\end_layout
+
+\begin_layout Enumerate
+Solve the Lambert's problem for every possible combination of TOFs at intervals
+ of 100 days both for the path Mars-Saturn and the path Saturn-Neptune;
+\end_layout
+
+\begin_layout Enumerate
+Evaluation of the more energy efficent Lambert's arcs;
+\end_layout
+
+\begin_layout Enumerate
+Evaulation of the powered gravity assist.
+\end_layout
+
+\begin_layout Standard
+The given time window goes from January 1, 2016 to December 31, 2055.
 \end_layout
 
 \end_body
