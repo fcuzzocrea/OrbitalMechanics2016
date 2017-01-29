@@ -176,23 +176,15 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-\begin_inset FloatList figure
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FloatList table
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset FloatList algorithm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
 
 \end_inset
 
@@ -239,7 +231,7 @@ setcounter{page}{1}
 \end_layout
 
 \begin_layout Chapter
-Assignment 1
+Orbital Maneuvers
 \end_layout
 
 \begin_layout Section
@@ -247,7 +239,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The aim of this assignment is to explain the design of an oribital transfer
+The aim of this chapter is to explain the design of an oribital transfer
  between the Earth and the asteroid Florance 35, an Apollo class asteroid.
  The Apollo asteroids are a group of NEO asteroids that orbit on an orbit
  that have a semimajor axis greater than the one of the Earth, but the perihelio
@@ -439,7 +431,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename gfx/orbits.png
-	scale 30
+	scale 40
 
 \end_inset
 
@@ -595,7 +587,7 @@ From ephemeris then position vector and velocity vector are calculated for
 \end_layout
 
 \begin_layout Subsection
-The Lambert Problem
+The Lambert's Problem
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:The-Lambert-Problem"
@@ -837,7 +829,10 @@ end
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-DV Matrix Computation
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ Matrix Computation
 \begin_inset CommandInset label
 LatexCommand label
 name "alg:DV-Matrix-Computation"
@@ -1066,7 +1061,7 @@ find
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset listings
@@ -1103,6 +1098,81 @@ r1_arc = r_dep_vect(ROW,:);
 r2_arc = r_arr_vect(COLUMN,:); 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As result we can see that the minimu 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ is about 
+\begin_inset Formula $11.277354\:km/s$
+\end_inset
+
+, while the maximum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ is about 
+\begin_inset Formula $99.997552\:km/s$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The transfer arc that correspond to the minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be now integrated and the path is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Best-Transfer-Arc"
+
+\end_inset
+
+ in yellow
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+inline false
+status open
+
 \begin_layout Plain Layout
 
 [~,~,~,~,v1_arc,v2_arc,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF,ksun);
@@ -1110,8 +1180,12 @@ r2_arc = r_arr_vect(COLUMN,:);
 
 \begin_layout Plain Layout
 
-[rx_arc, ry_arc, rz_arc, vx_arc, vy_arc, vz_arc] = intARC_lamb(r1_arc,v1_arc,ksu
-n,Dv_min_TOF,86400);
+[rx_arc, ry_arc, rz_arc, vx_arc, vy_arc, vz_arc] = 
+\end_layout
+
+\begin_layout Plain Layout
+
+			= intARC_lamb(r1_arc,v1_arc,ksun,Dv_min_TOF,86400);
 \end_layout
 
 \end_inset
@@ -1123,6 +1197,45 @@ n,Dv_min_TOF,86400);
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+Best Ttransfer Arc Integration
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/best_arc.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Best-Transfer-Arc"
+
+\end_inset
+
 Best Transfer Arc
 \end_layout
 
@@ -1131,9 +1244,401 @@ Best Transfer Arc
 
 \end_layout
 
+\begin_layout Plain Layout
+
+\end_layout
+
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+We can also compute a suboptimal transfer arc by taking the 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ nearest to the 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ given, that in our case is 
+\begin_inset Formula $5.789149\:km/s$
+\end_inset
+
+.
+ As a result we get a 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ of 
+\begin_inset Formula $12.0893\:km/s$
+\end_inset
+
+, that is slightly larger of the one founded for the best transfer arc.
+ As result also the path is more or less equal, as it can be seen from figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Best-Transfer-Arc-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/suboptimal_transfer_arc.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Suboptimal-Transfer-Arc"
+
+\end_inset
+
+Suboptimal Transfer Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/bestvssub.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Best-Transfer-Arc-1"
+
+\end_inset
+
+Best Transfer Arc and Suboptimal Transfer Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Hohman Transfer Comparison
+\end_layout
+
+\begin_layout Standard
+For doing the Hohmann transfer comparison, the MATLAB functions 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hohmann.m
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+inclinationchange.m
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+anoperichange.m
+\end_layout
+
+\end_inset
+
+ have been developed, that are then called in the main script in order to
+ compute the cost of an hypotetically Hohmann transfer from the Earth to
+ Florance asteroids.
+\end_layout
+
+\begin_layout Standard
+Since the two orbits are on different planes, a change of inclination 
+\begin_inset Formula $i$
+\end_inset
+
+ is needed, and then a change of the anomaly of the pericenter 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is done in order to put the spacecraft in the Florance orbit.
+ In order to reach the maximum efficiency in terms of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ , te change of inclination is done after the change of semimajor axis.
+\end_layout
+
+\begin_layout Standard
+As expected however, the overall cost of an Hohmann transfer is greater
+ than the Lambert's arc strategy due to the change of plane, in fact the
+ results are :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\triangle V\:[km/s]$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Change of 
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.9186$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Change of 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $11.3541$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Change of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.7596$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ Total Cost
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $18.032333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Hohmann Transfer
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Interplanetary Flyby
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The aim of this chapter is to explain to design an interplanetary trajectory
+ from Mars to Neptune with a flyby on Saturn.
+ 
 \end_layout
 
 \end_body
