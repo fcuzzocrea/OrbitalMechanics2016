@@ -235,11 +235,10 @@ legend('Earth Orbit','Florence Orbit','Location', 'NorthWest')
 
 % Orbits
 figure(2)
-whitebg(figure(1), 'black')
+whitebg(figure(2), 'black')
 hold on
 grid on
 axis equal
-title('Orbits and best transfer arc rapresentation ')
 plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
 plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
 
@@ -254,9 +253,15 @@ plot3(r2_sub_arc(1),r2_sub_arc(2),r2_sub_arc(3),'m*')
 plot3(rx_sub_arc, ry_sub_arc, rz_sub_arc,'g')
 
 legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
+    'Florence Arrival Position','Suboptimal Transfer Arc')
+title('Suboptimal Transfer Arc')
+
+legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
     'Florence Arrival Position','Transfer arc',...
     'Earth sub-optimal departure','Florence sub-optimal arrival',...
     'Transfer arc for c3~c3_max', 'Location', 'NorthWest')
+
+title('Best Transfer Arc against Suboptimal')
 
 % Time of departure, Time of fligt, Delta v plot. 
 figure(3)
