@@ -269,6 +269,7 @@ T = RM_theta*RM_omg*RM_i*RM_OMG;
 v_inf_min_saturn = T*v_inf_min';
 v_inf_plus_saturn = T*v_inf_plus';
 k_direction = cross(v_inf_min_saturn,v_inf_plus_saturn);
+k_direction = k_direction/norm(k_direction);
 
 % Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
