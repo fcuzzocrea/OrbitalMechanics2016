@@ -221,9 +221,20 @@ r2_sub_arc = r_arr_vect(COLUMN_v_inf,:);
 
 
 %% PLOTTING
-
 % Orbits
 figure(1)
+whitebg(figure(1), 'black')
+hold on
+grid on
+axis equal
+title('Given Orbits ')
+plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
+plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
+
+legend('Earth Orbit','Florence Orbit','Location', 'NorthWest')
+
+% Orbits
+figure(2)
 whitebg(figure(1), 'black')
 hold on
 grid on
@@ -248,7 +259,7 @@ legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
     'Transfer arc for c3~c3_max', 'Location', 'NorthWest')
 
 % Time of departure, Time of fligt, Delta v plot. 
-figure(2)
+figure(3)
 hold on
 grid on
 title('Pork chop plot');
@@ -258,7 +269,7 @@ zlabel('DeltaV')
 plot3(t_dep_sec,TOF_matrix*86400,Dv_matrix);
 
 % Pork chop plot contour. 
-figure(3)
+figure(4)
 hold on
 grid on
 title('Pork chop plot contour')
@@ -273,7 +284,7 @@ set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
 %  Pork chop plot DV,TOF.
-figure(4)
+figure(5)
 hold on
 grid on
 title('Pork chop plot contour and TOF')
@@ -290,7 +301,7 @@ set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
 % Pork chop plot V infinity.
-figure(5)
+figure(6)
 hold on
 grid on
 title('Pork chop plot V infinity')
@@ -308,14 +319,14 @@ set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
 % 3D Pork chop plot contour.
-figure(6)
+figure(7)
 hold on
 grid on
 title('3D Pork chop plot')
 xlabel('Time of arrivals');
 ylabel('Time of departure');
 zlabel('Delta V')
-axis equal
+%axis vis3d
 contour3(t_arr,t_dep,Dv_matrix,125);
 caxis([Dv_min Dv_max]);
 [X,Y]=meshgrid(t_arr,t_dep);
