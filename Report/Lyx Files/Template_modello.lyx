@@ -176,6 +176,30 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList table
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList algorithm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage clearpage
 \end_inset
 
@@ -215,7 +239,680 @@ setcounter{page}{1}
 \end_layout
 
 \begin_layout Chapter
-Prova
+Assignment 1
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The aim of this assignment is to explain the design of an oribital transfer
+ between the Earth and the asteroid Florance 35, an Apollo class asteroid.
+ The Apollo asteroids are a group of NEO asteroids that orbit on an orbit
+ that have a semimajor axis greater than the one of the Earth, but the perihelio
+n distance is lesser than Eart's aphoelion distance.
+ As main consequence of this fact the cross the Earth's orbit around the
+ Sun.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Given Datas
+\end_layout
+
+\begin_layout Standard
+The assigned windows for departure from Earth and arrival to Florance are
+ the following :
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Target
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+T1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+T2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Florance (35)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2024/31/1 - 2027/1/1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2024/11/1 - 2029/6/1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Given datas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and in the below plot we can see the path of the Florance orbit and the
+ Earth orbit in an heliocentric reference frame :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/orbits.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Earth's and Florence 35 orbits
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Design Strategy
+\end_layout
+
+\begin_layout Standard
+In order to obtain the best orbital transfer we have developed a MATLAB
+ script that basically launch a main routine in wich are evaluated Lambert's
+ solutions for each possibile combinations of departure days and arrival
+ days at intervals of one week.
+\end_layout
+
+\begin_layout Subsection
+TOFs Calculation
+\end_layout
+
+\begin_layout Standard
+Since the computation should be done for every possible combination departure
+ and arrival dates, a functions has been developed that basically build
+ a matrix with all the TOFs :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function [TOF] = tof_calculator (t_dep_vect,t_arr_vect)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Preallocation  
+\end_layout
+
+\begin_layout Plain Layout
+
+l1 = length(t_dep_vect); 
+\end_layout
+
+\begin_layout Plain Layout
+
+l2 = length(t_arr_vect);
+\end_layout
+
+\begin_layout Plain Layout
+
+TOF = zeros(l1,l2);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% For cycle to obtain the TOF matrix 
+\end_layout
+
+\begin_layout Plain Layout
+
+for i = 1 : l1     
+\end_layout
+
+\begin_layout Plain Layout
+
+	TOF(i,:) = t_arr_vect - t_dep_vect(i); 
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+TOFs Matrix Computation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The Lambert Problem
+\end_layout
+
+\begin_layout Standard
+For the Lamber'ts problem, two position vectors and the time of flight between
+ each position are known, but the orbit between the endpoints is unknown.
+\end_layout
+
+\begin_layout Standard
+The MATLAB function that given initial and final position vector gives as
+ outputs the orbital parameters of the transfer ellipse is given, and is
+ called at every step of the routine.
+ Once the initial velocity and the final velocity of the Lambert's arc are
+ evaluated by the funcion, the total cost of the transfer ellipse in terms
+ of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be easily evaluated by the following calculation : 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\triangle V_{a}=V_{trans_{A}}-V_{sat}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\triangle V_{b}=V_{sat}-V_{trans_{B}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\triangle V_{TOT}=\triangle V_{a}+\triangle V_{b}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with respect to figure 1.1 below 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/Lambert_ARC.png
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Lambert's Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main routine has been implemented as following : 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+for i = 1 : length(t_dep)
+\end_layout
+
+\begin_layout Plain Layout
+
+	r_e = r_dep_vect(i,:);
+\end_layout
+
+\begin_layout Plain Layout
+
+	v_e = v_dep_vect(i,:);
+\end_layout
+
+\begin_layout Plain Layout
+
+		for j = 1 : length(t_arr)
+\end_layout
+
+\begin_layout Plain Layout
+
+			tof = TOF_matrix(i,j)*86400;
+\end_layout
+
+\begin_layout Plain Layout
+
+			if tof > 0
+\end_layout
+
+\begin_layout Plain Layout
+
+				r_f = r_arr_vect(j,:);
+\end_layout
+
+\begin_layout Plain Layout
+
+				v_f=v_arr_vect(j,:);			
+\end_layout
+
+\begin_layout Plain Layout
+
+				[~,~,~,~,VI,VF,~,~]=lambertMR(r_e,r_f,tof,ksun);   			
+\end_layout
+
+\begin_layout Plain Layout
+
+				dv1 = norm(VI - v_e);
+\end_layout
+
+\begin_layout Plain Layout
+
+				dv2 = norm(v_f - VF);
+\end_layout
+
+\begin_layout Plain Layout
+
+				Dv_matrix(i,j)=abs(dv1)+abs(dv2);
+\end_layout
+
+\begin_layout Plain Layout
+
+				v_inf_matrix(i,j) = dv1;
+\end_layout
+
+\begin_layout Plain Layout
+
+			else    
+\end_layout
+
+\begin_layout Plain Layout
+
+				Dv_matrix(i,j) = nan;            
+\end_layout
+
+\begin_layout Plain Layout
+
+				v_inf_matrix(i,j) = nan;        
+\end_layout
+
+\begin_layout Plain Layout
+
+			end    
+\end_layout
+
+\begin_layout Plain Layout
+
+		end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+DV Matrix Computation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The for cycle pass through each day (at intervals of one week) and compute
+ the Lambert's arcs for all the combinations of launch date and arrival
+ date.
+ The total delta v for each of the arc is computed and stored in a 2D tensor,
+ the DV_matrix.
+\end_layout
+
+\begin_layout Subsection
+The Pork Chop Plot
+\end_layout
+
+\begin_layout Standard
+A pork chop plot is a data visualization tool that can be used in interplanetary
+ mission design, wich displays contours of various quantities as a function
+ of departure and arrival date, and can be used to get insights on the best
+ departure/arrival window.
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/3d_porkchopplot.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang english
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\lang english
+3D Pork Chop Plot
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A pork chop plot has been produced for the interplanetary mission assigned
+ and is shown in figure 1.3.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/PorkChop_contour.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\lang english
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\lang english
+Pork Chop Plot
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The x-axis is the Earth departure date, the y-axis is the Florence arrival
+ date.
+ The contour lines show the sum of Earth departure C3 and Florence arrival
+ C3, where C3 is the 
+\begin_inset Quotes eld
+\end_inset
+
+characteristic energy
+\begin_inset Quotes erd
+\end_inset
+
+ of the departure or arrival, and is equal to the 
+\begin_inset Formula $V_{\infty}^{2}$
+\end_inset
+
+ of the hyperbolic trajectory.
+ So, each point on the curve represents a transfer (computed using the Lambert
+ solver shown in the previous section).
+ A given contour, called a porkchop curve, represents constant C3, and the
+ center of the porkchop the optimal minimum C3, and thus optimal transfers.
+ On top of the Pork Chop Plot we have superimposed also the 
 \end_layout
 
 \end_body
