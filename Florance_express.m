@@ -220,127 +220,6 @@ r2_sub_arc = r_arr_vect(COLUMN_v_inf,:);
     ] = intARC_lamb(r1_sub_arc,v1_sub_arc,ksun,v_inf_TOF,86400);
 
 
-%% PLOTTING
-% Orbits
-figure(1)
-whitebg(figure(1), 'black')
-hold on
-grid on
-axis equal
-title('Given Orbits ')
-plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
-plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
-
-legend('Earth Orbit','Florence Orbit','Location', 'NorthWest')
-
-% Orbits
-figure(2)
-whitebg(figure(2), 'black')
-hold on
-grid on
-axis equal
-plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
-plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
-
-% Best transfer arc plot.
-plot3(r1_arc(1),r1_arc(2),r1_arc(3),'b*')
-plot3(r2_arc(1),r2_arc(2),r2_arc(3),'r*')
-plot3(rx_arc, ry_arc, rz_arc,'y')
-
-% V infinity nearest to assigned V infinity transfer arc plot
-plot3(r1_sub_arc(1),r1_sub_arc(2),r1_sub_arc(3),'w*')
-plot3(r2_sub_arc(1),r2_sub_arc(2),r2_sub_arc(3),'m*')
-plot3(rx_sub_arc, ry_sub_arc, rz_sub_arc,'g')
-
-legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
-    'Florence Arrival Position','Suboptimal Transfer Arc')
-title('Suboptimal Transfer Arc')
-
-legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
-    'Florence Arrival Position','Transfer arc',...
-    'Earth sub-optimal departure','Florence sub-optimal arrival',...
-    'Transfer arc for c3~c3_max', 'Location', 'NorthWest')
-
-title('Best Transfer Arc against Suboptimal')
-
-% Time of departure, Time of fligt, Delta v plot. 
-figure(3)
-hold on
-grid on
-title('Pork chop plot');
-xlabel('Time of departure');
-ylabel('Time of Fligth');
-zlabel('DeltaV')
-plot3(t_dep_sec,TOF_matrix*86400,Dv_matrix);
-
-% Pork chop plot contour. 
-figure(4)
-hold on
-grid on
-title('Pork chop plot contour')
-xlabel('Time of arrival');
-ylabel('Time of departure');
-axis equal
-contour(t_arr,t_dep,Dv_matrix,50);
-colormap jet
-datetick('x','yy/mm/dd','keepticks','keeplimits')
-datetick('y','yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
-set(gca,'YTickLabelRotation',45)
-
-%  Pork chop plot DV,TOF.
-figure(5)
-hold on
-grid on
-title('Pork chop plot contour and TOF')
-xlabel('Time of arrival');
-ylabel('Time of departure');
-axis equal
-contour(t_arr,t_dep,Dv_matrix,50);
-contour(t_arr,t_dep,TOF_matrix,20,'r','ShowText','on');
-caxis([Dv_min Dv_max]);
-colormap jet
-datetick('x','yy/mm/dd','keepticks','keeplimits')
-datetick('y','yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
-set(gca,'YTickLabelRotation',45)
-
-% Pork chop plot V infinity.
-figure(6)
-hold on
-grid on
-title('Pork chop plot V infinity')
-xlabel('Time of arrivals');
-ylabel('Time of departure');
-axis equal
-contour(t_arr,t_dep,Dv_matrix,50);
-caxis([Dv_min Dv_max]);
-colormap jet
-contour(t_arr,t_dep,TOF_matrix,20,'r');
-contour(t_arr,t_dep,v_inf_matrix,10,'ShowText','on')
-datetick('x','yy/mm/dd','keepticks','keeplimits')
-datetick('y','yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
-set(gca,'YTickLabelRotation',45)
-
-% 3D Pork chop plot contour.
-figure(7)
-hold on
-grid on
-title('3D Pork chop plot')
-xlabel('Time of arrivals');
-ylabel('Time of departure');
-zlabel('Delta V')
-%axis vis3d
-contour3(t_arr,t_dep,Dv_matrix,125);
-caxis([Dv_min Dv_max]);
-[X,Y]=meshgrid(t_arr,t_dep);
-surface(X,Y,Dv_matrix); 
-datetick('x','yy/mm/dd','keepticks','keeplimits')
-datetick('y','yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
-set(gca,'YTickLabelRotation',45)
-
 %% HOHMANN TRANSFER FOR DELTAV COMPARISON
 
 % Change of a and e whith an ohman transfer
@@ -358,3 +237,149 @@ delta_V_TOT = delta_v_inc + delta_v_w + deltaV_a_t1;
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Total DV required in the case of Hohmann transfer : %f\n',delta_V_TOT);
 fclose(fileID);
+
+%% PLOTTING
+% Orbits
+figure(1)
+whitebg(figure(1), 'black')
+hold on
+grid on
+axis equal
+plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
+plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
+legend('Earth Orbit','Florence Orbit','Location', 'NorthWest')
+title('Earth and Florence Orbits ')
+
+% Optimal Arc
+figure(2)
+whitebg(figure(2), 'black')
+hold on
+grid on
+axis equal
+plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
+plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
+plot3(r1_arc(1),r1_arc(2),r1_arc(3),'b*')
+plot3(r2_arc(1),r2_arc(2),r2_arc(3),'r*')
+plot3(rx_arc, ry_arc, rz_arc,'y')
+title('Best Transfer Arc')
+legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
+    'Florence Arrival Position','Best Transfer Arc')
+
+% Suboptimal Arc
+figure(3)
+whitebg(figure(3), 'black')
+hold on
+grid on
+axis equal
+plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
+plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
+plot3(r1_sub_arc(1),r1_sub_arc(2),r1_sub_arc(3),'w*')
+plot3(r2_sub_arc(1),r2_sub_arc(2),r2_sub_arc(3),'m*')
+plot3(rx_sub_arc, ry_sub_arc, rz_sub_arc,'g')
+legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
+    'Florence Arrival Position','Suboptimal Transfer Arc')
+title('Suboptimal Transfer Arc')
+
+% Both of them
+figure(4)
+whitebg(figure(4), 'black')
+hold on
+grid on
+axis equal
+plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
+plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
+
+% Best transfer arc plot.
+plot3(r1_arc(1),r1_arc(2),r1_arc(3),'b*')
+plot3(r2_arc(1),r2_arc(2),r2_arc(3),'r*')
+plot3(rx_arc, ry_arc, rz_arc,'y')
+
+% V infinity nearest to assigned V infinity transfer arc plot
+plot3(r1_sub_arc(1),r1_sub_arc(2),r1_sub_arc(3),'w*')
+plot3(r2_sub_arc(1),r2_sub_arc(2),r2_sub_arc(3),'m*')
+plot3(rx_sub_arc, ry_sub_arc, rz_sub_arc,'g')
+
+legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
+    'Florence Arrival Position','Transfer arc',...
+    'Earth sub-optimal departure','Florence sub-optimal arrival',...
+    'Transfer arc for c3~c3_max', 'Location', 'NorthWest')
+
+title('Best Transfer Arc against Suboptimal')
+
+% Time of departure, Time of fligt, Delta v plot. 
+figure(5)
+hold on
+grid on
+title('Pork chop plot');
+xlabel('Time of departure');
+ylabel('Time of Fligth');
+zlabel('DeltaV')
+plot3(t_dep_sec,TOF_matrix*86400,Dv_matrix);
+
+% Pork chop plot contour. 
+figure(6)
+hold on
+grid on
+title('Pork chop plot contour')
+xlabel('Time of arrival');
+ylabel('Time of departure');
+axis equal
+contour(t_arr,t_dep,Dv_matrix,50);
+colormap jet
+datetick('x','yy/mm/dd','keepticks','keeplimits')
+datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
+
+%  Pork chop plot DV,TOF.
+figure(7)
+hold on
+grid on
+title('Pork chop plot contour and TOF')
+xlabel('Time of arrival');
+ylabel('Time of departure');
+axis equal
+contour(t_arr,t_dep,Dv_matrix,50);
+contour(t_arr,t_dep,TOF_matrix,20,'r','ShowText','on');
+caxis([Dv_min Dv_max]);
+colormap jet
+datetick('x','yy/mm/dd','keepticks','keeplimits')
+datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
+
+% Pork chop plot V infinity.
+figure(8)
+hold on
+grid on
+title('Pork chop plot V infinity')
+xlabel('Time of arrivals');
+ylabel('Time of departure');
+axis equal
+contour(t_arr,t_dep,Dv_matrix,50);
+caxis([Dv_min Dv_max]);
+colormap jet
+contour(t_arr,t_dep,TOF_matrix,20,'r');
+contour(t_arr,t_dep,v_inf_matrix,10,'ShowText','on')
+datetick('x','yy/mm/dd','keepticks','keeplimits')
+datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
+
+% 3D Pork chop plot contour.
+figure(9)
+hold on
+grid on
+title('3D Pork chop plot')
+xlabel('Time of arrivals');
+ylabel('Time of departure');
+zlabel('Delta V')
+%axis vis3d
+contour3(t_arr,t_dep,Dv_matrix,125);
+caxis([Dv_min Dv_max]);
+[X,Y]=meshgrid(t_arr,t_dep);
+surface(X,Y,Dv_matrix); 
+datetick('x','yy/mm/dd','keepticks','keeplimits')
+datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)

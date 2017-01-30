@@ -295,41 +295,8 @@ plot3(rx_saturn,ry_saturn,rz_saturn);
 legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit')
 title('Orbits in Heliocentric Frame')
 
-figure(2)
-grid on
-hold on
-whitebg(figure(2), 'black')
-plot3(rx_mars,ry_mars,rz_mars);
-plot3(rx_neptune,ry_neptune,rz_neptune);
-plot3(rx_saturn,ry_saturn,rz_saturn);
-plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
-plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
-legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit', 'First Transfer Arc','Second Transfer Arc')
-title('Orbits and Lamberts Arc in Heliocentric Frame')
-
-figure(3)
-grid on 
-hold on
-title('Lambert Arcs in Planetocentric Frame')
-plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)
-plot3(rx_arc_2_saturn,ry_arc_2_saturn,rz_arc_2_saturn)
-legend('Before GA', 'After GA')
-axis equal
-
-figure(4)
-hold on
-plot(x_hyp_min,y_hyp_min)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
-plot(x_hyp_plus,y_hyp_plus)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
-plot(0,0,'*')
-grid on
-axis equal
-title('Flyby Hyperbola')
-legend('Entering Hyperbola', 'Exiting Hyperbola')
-
 %  Pork chop plot DV,TOF.
-figure(5)
+figure(2)
 hold on
 grid on
 title('Pork chop plot contour and TOF for Mars to Saturn')
@@ -346,7 +313,7 @@ set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
 %  Pork chop plot DV,TOF.
-figure(6)
+figure(3)
 hold on
 grid on
 title('Pork chop plot contour and TOF for Saturn to Neptune')
@@ -361,5 +328,43 @@ datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
+
+
+figure(4)
+grid on
+hold on
+whitebg(figure(4), 'black')
+plot3(rx_mars,ry_mars,rz_mars);
+plot3(rx_neptune,ry_neptune,rz_neptune);
+plot3(rx_saturn,ry_saturn,rz_saturn);
+plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
+plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
+legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit', 'First Transfer Arc','Second Transfer Arc')
+title('Orbits and Lamberts Arc in Heliocentric Frame')
+
+figure(5)
+grid on 
+hold on
+title('Lambert Arcs in Planetocentric Frame')
+plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)
+plot3(rx_arc_2_saturn,ry_arc_2_saturn,rz_arc_2_saturn)
+xlabel('Km')
+ylabel('Km')
+legend('Before GA', 'After GA')
+axis equal
+
+figure(6)
+hold on
+plot(x_hyp_min,y_hyp_min)
+zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+plot(x_hyp_plus,y_hyp_plus)
+zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+plot(0,0,'*')
+grid on
+axis equal
+xlabel('Km')
+ylabel('Km')
+title('Flyby Hyperbola')
+legend('Entering Hyperbola', 'Exiting Hyperbola')
 
 
