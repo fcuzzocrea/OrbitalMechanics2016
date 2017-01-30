@@ -7,8 +7,12 @@
 \textclass report
 \begin_preamble
 \input{Settings.tex}
+\setlength{\textfloatsep}{\baselineskip}
 \end_preamble
 \use_default_options true
+\begin_modules
+enumitem
+\end_modules
 \maintain_unincluded_children false
 \language british
 \language_package default
@@ -29,7 +33,7 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
-\float_placement bph
+\float_placement H
 \paperfontsize default
 \spacing single
 \use_hyperref true
@@ -67,9 +71,9 @@
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 2cm
-\rightmargin 2cm
-\secnumdepth 3
+\leftmargin 1.7cm
+\rightmargin 1.7cm
+\secnumdepth 1
 \tocdepth 3
 \paragraph_separation skip
 \defskip smallskip
@@ -176,30 +180,6 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-\begin_inset FloatList figure
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FloatList table
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FloatList algorithm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Newpage clearpage
 \end_inset
 
@@ -239,21 +219,7 @@ setcounter{page}{1}
 \end_layout
 
 \begin_layout Chapter
-Assignment 1
-\end_layout
-
-\begin_layout Section
-Introduction
-\end_layout
-
-\begin_layout Standard
-The aim of this assignment is to explain the design of an oribital transfer
- between the Earth and the asteroid Florance 35, an Apollo class asteroid.
- The Apollo asteroids are a group of NEO asteroids that orbit on an orbit
- that have a semimajor axis greater than the one of the Earth, but the perihelio
-n distance is lesser than Eart's aphoelion distance.
- As main consequence of this fact the cross the Earth's orbit around the
- Sun.
+Orbital Maneuvers
 \end_layout
 
 \begin_layout Standard
@@ -263,17 +229,89 @@ n distance is lesser than Eart's aphoelion distance.
 
 \end_layout
 
-\begin_layout Subsection
-Given Datas
+\begin_layout Section
+\noindent
+Introduction
 \end_layout
 
 \begin_layout Standard
-The assigned windows for departure from Earth and arrival to Florance are
- the following :
+\paragraph_spacing single
+\noindent
+
+\size small
+The aim of this chapter is to explain the design of an oribital transfer
+ between the Earth and the asteroid Florance 35, an Apollo class asteroid.
+ The Apollo asteroids are a group of NEO asteroids have an orbit characterized
+ by a a semimajor axis greater than the one of the Earth; the perihelion
+ distance instead, is lesser than Eart's aphoelion distance.
+ As main consequence of this fact, they cross the Earth's orbit around the
+ Sun.
+ 
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing single
+\noindent
+
+\size small
+The procedure applied in order to design the transfer is divided in three
+ main steps : 
+\end_layout
+
+\begin_layout Enumerate
+\paragraph_spacing single
+\noindent
+
+\size small
+Set all known parameters and computation of Earth's and Florence's orbits;
+\end_layout
+
+\begin_layout Enumerate
+\paragraph_spacing single
+\noindent
+
+\size small
+Solve the Lambert's problem for every possible combination of TOFs at intervals
+ of one week;
+\end_layout
+
+\begin_layout Enumerate
+\paragraph_spacing single
+\noindent
+
+\size small
+Evaluation of the best Lambert's arc .
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing single
+\noindent
+
+\size small
+A suboptimal solution is then chosen in order to respect the assigned launcher's
+ C3 costrain.
+ A qualitative comparison with a classical Hohmann transfer is then carried
+ in order to evaluate the differences in terms of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ between the two solutions.
 \end_layout
 
 \begin_layout Standard
 \noindent
+\align block
+
+\size small
+The assigned windows for departure from the Earth and arrival to Florance
+ are reported in the following table :
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
 \begin_inset Float table
 placement H
 wide false
@@ -283,6 +321,8 @@ status collapsed
 \begin_layout Plain Layout
 \noindent
 \align center
+
+\size small
 \begin_inset Tabular
 <lyxtabular version="3" rows="2" columns="4">
 <features tabularvalignment="middle">
@@ -295,6 +335,8 @@ status collapsed
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 Target
 \end_layout
 
@@ -304,6 +346,8 @@ Target
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 T1
 \end_layout
 
@@ -313,6 +357,8 @@ T1
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 T2
 \end_layout
 
@@ -322,6 +368,8 @@ T2
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 \begin_inset Formula $V_{\infty}$
 \end_inset
 
@@ -336,6 +384,8 @@ T2
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 Florance (35)
 \end_layout
 
@@ -345,6 +395,8 @@ Florance (35)
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 2024/31/1 - 2027/1/1
 \end_layout
 
@@ -354,6 +406,8 @@ Florance (35)
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 2024/11/1 - 2029/6/1
 \end_layout
 
@@ -363,6 +417,8 @@ Florance (35)
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\size small
 5.8
 \end_layout
 
@@ -378,6 +434,8 @@ Florance (35)
 
 \begin_layout Plain Layout
 \noindent
+
+\size small
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -395,11 +453,26 @@ Given datas
 \end_layout
 
 \begin_layout Standard
-and in the below plot we can see the path of the Florance orbit and the
- Earth orbit in an heliocentric reference frame :
+\noindent
+\align block
+
+\size small
+In figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Earth's-and-Florence"
+
+\end_inset
+
+ the path of the Florence's orbit and the Earth's orbit in an heliocentric
+ around the sun is shown :
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
+
+\size small
 \begin_inset Float figure
 placement H
 wide false
@@ -409,9 +482,11 @@ status collapsed
 \begin_layout Plain Layout
 \noindent
 \align center
+
+\size small
 \begin_inset Graphics
 	filename gfx/orbits.png
-	scale 40
+	scale 35
 
 \end_inset
 
@@ -419,9 +494,17 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
+
+\size small
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Earth's-and-Florence"
+
+\end_inset
+
 Earth's and Florence 35 orbits
 \end_layout
 
@@ -430,7 +513,146 @@ Earth's and Florence 35 orbits
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\noindent
+
+\size normal
+The Lambert's Problem
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+For the Lamber'ts problem, two position vectors and the time of flight between
+ each of the two are known, but the orbit between the endpoints is unknown.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The MATLAB function that given initial and final position vector solve the
+ Lambert's problem and gives as outputs the orbital parameters of the transfer
+ ellipse is called at every step of the main routine.
+ Once the initial velocity and the final velocity of the Lambert's arc are
+ evaluated by the funcion, the total cost of the transfer ellipse in terms
+ of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be easily evaluated by the following calculation : 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Formula 
+\[
+\triangle V_{a}=V_{trans_{A}}-V_{sat}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Formula 
+\[
+\triangle V_{b}=V_{sat}-V_{trans_{B}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Formula 
+\[
+\triangle V_{TOT}=\triangle V_{a}+\triangle V_{b}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+with respect to figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lambert's-Arc"
+
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
 \begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Graphics
+	filename gfx/Lambert_ARC.png
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Lambert's-Arc"
+
+\end_inset
+
+ Lambert's Arc
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -440,27 +662,51 @@ Earth's and Florence 35 orbits
 \end_layout
 
 \begin_layout Section
+\noindent
 Design Strategy
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
+
+\size small
 In order to obtain the best orbital transfer we have developed a MATLAB
- script that basically launch a main routine in wich are evaluated Lambert's
- solutions for each possibile combinations of departure days and arrival
- days at intervals of one week.
+ script that, once all the possible combinations of TOFs are evaluated,
+ launch a main routine in wich are then evaluated Lambert's arcs for each
+ possibile combinations of departure days and arrival days at intervals
+ of one week.
 \end_layout
 
 \begin_layout Subsection
+\noindent
+
+\size normal
 TOFs Calculation
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:TOFs-Calculation"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
+
+\size small
 Since the computation should be done for every possible combination departure
- and arrival dates, a functions has been developed that basically build
- a matrix with all the TOFs :
+ and arrival dates, a function has been developed that basically build a
+ matrix with all the TOFs in the following way :
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
+
+\size small
 \begin_inset Float algorithm
 placement H
 wide false
@@ -468,13 +714,16 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+
+\size small
 \begin_inset listings
-lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
 inline false
 status open
 
 \begin_layout Plain Layout
 
+\size small
 function [TOF] = tof_calculator (t_dep_vect,t_arr_vect)
 \end_layout
 
@@ -484,21 +733,25 @@ function [TOF] = tof_calculator (t_dep_vect,t_arr_vect)
 
 \begin_layout Plain Layout
 
+\size small
 % Preallocation  
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 l1 = length(t_dep_vect); 
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 l2 = length(t_arr_vect);
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 TOF = zeros(l1,l2);
 \end_layout
 
@@ -508,26 +761,31 @@ TOF = zeros(l1,l2);
 
 \begin_layout Plain Layout
 
+\size small
 % For cycle to obtain the TOF matrix 
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 for i = 1 : l1     
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 	TOF(i,:) = t_arr_vect - t_dep_vect(i); 
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 end
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 end
 \end_layout
 
@@ -537,6 +795,8 @@ end
 \end_layout
 
 \begin_layout Plain Layout
+
+\size small
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -553,95 +813,26 @@ TOFs Matrix Computation
 
 \end_layout
 
-\begin_layout Subsection
-The Lambert Problem
-\end_layout
-
 \begin_layout Standard
-For the Lamber'ts problem, two position vectors and the time of flight between
- each position are known, but the orbit between the endpoints is unknown.
-\end_layout
-
-\begin_layout Standard
-The MATLAB function that given initial and final position vector gives as
- outputs the orbital parameters of the transfer ellipse is given, and is
- called at every step of the routine.
- Once the initial velocity and the final velocity of the Lambert's arc are
- evaluated by the funcion, the total cost of the transfer ellipse in terms
- of 
-\begin_inset Formula $\triangle V$
-\end_inset
-
- can be easily evaluated by the following calculation : 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\triangle V_{a}=V_{trans_{A}}-V_{sat}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\triangle V_{b}=V_{sat}-V_{trans_{B}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\triangle V_{TOT}=\triangle V_{a}+\triangle V_{b}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-with respect to figure 1.1 below 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
 \noindent
-\align center
-\begin_inset Graphics
-	filename gfx/Lambert_ARC.png
-	scale 20
+\align block
 
-\end_inset
-
-
+\size small
+Obviously, all the negative TOFs are automatically setted to NaN in the
+ main script so they aren't processed in the main routine.
+ The TOF matrix is then passed to the main routine in order to solve the
+ Lambert's problem.
+ 
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_layout Subsection
+\noindent
 
-\begin_layout Plain Layout
-Lambert's Arc
-\end_layout
-
-\end_inset
-
-
-\end_layout
+\size normal
+The Main Routine
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-Main-Routine"
 
 \end_inset
 
@@ -649,10 +840,25 @@ Lambert's Arc
 \end_layout
 
 \begin_layout Standard
-The main routine has been implemented as following : 
+\noindent
+\align block
+
+\size small
+The main routine has been implemented as it's shown in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:DV-Matrix-Computation"
+
+\end_inset
+
+ : 
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
+
+\size small
 \begin_inset Float algorithm
 placement H
 wide false
@@ -660,103 +866,124 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
+
+\size small
 \begin_inset listings
-lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
 inline false
 status open
 
 \begin_layout Plain Layout
 
+\size small
 for i = 1 : length(t_dep)
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 	r_e = r_dep_vect(i,:);
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 	v_e = v_dep_vect(i,:);
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 		for j = 1 : length(t_arr)
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 			tof = TOF_matrix(i,j)*86400;
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 			if tof > 0
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				r_f = r_arr_vect(j,:);
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				v_f=v_arr_vect(j,:);			
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				[~,~,~,~,VI,VF,~,~]=lambertMR(r_e,r_f,tof,ksun);   			
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				dv1 = norm(VI - v_e);
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				dv2 = norm(v_f - VF);
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				Dv_matrix(i,j)=abs(dv1)+abs(dv2);
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				v_inf_matrix(i,j) = dv1;
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 			else    
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				Dv_matrix(i,j) = nan;            
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 				v_inf_matrix(i,j) = nan;        
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 			end    
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 		end
 \end_layout
 
 \begin_layout Plain Layout
 
+\size small
 end
 \end_layout
 
@@ -766,10 +993,22 @@ end
 \end_layout
 
 \begin_layout Plain Layout
+
+\size small
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-DV Matrix Computation
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ Matrix Computation
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:DV-Matrix-Computation"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -783,26 +1022,50 @@ DV Matrix Computation
 \end_layout
 
 \begin_layout Standard
-The for cycle pass through each day (at intervals of one week) and compute
- the Lambert's arcs for all the combinations of launch date and arrival
- date.
- The total delta v for each of the arc is computed and stored in a 2D tensor,
- the DV_matrix.
+\noindent
+\align block
+
+\size small
+As we can see, the for cycle pass through each day and compute the Lambert's
+ arcs for all the combinations of launch date and arrival date.
+ Then the total 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ for each of the arc is computed and stored in a 2D matrix.
 \end_layout
 
 \begin_layout Subsection
+\noindent
+
+\size normal
 The Pork Chop Plot
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
+
+\size small
 A pork chop plot is a data visualization tool that can be used in interplanetary
- mission design, wich displays contours of various quantities as a function
- of departure and arrival date, and can be used to get insights on the best
- departure/arrival window.
+ mission design, because displays contours of various quantities as a function
+ of departure and arrival date.
+ For the Earth-Florance transfer we get the pork chop plot shown in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pork-Chop-Plot"
+
+\end_inset
+
+,
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align block
 
+\size small
 \lang english
 \begin_inset Float figure
 placement H
@@ -813,8 +1076,17 @@ status collapsed
 \begin_layout Plain Layout
 \noindent
 \align center
+
+\size small
 \begin_inset Graphics
 	filename gfx/3d_porkchopplot.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename gfx/PorkChop_contour.png
 	scale 30
 
 \end_inset
@@ -823,62 +1095,24 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-
-\lang english
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\lang english
-3D Pork Chop Plot
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A pork chop plot has been produced for the interplanetary mission assigned
- and is shown in figure 1.3.
- 
-\end_layout
-
-\begin_layout Standard
-
-\lang english
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename gfx/PorkChop_contour.png
-	scale 40
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
 \noindent
 \align center
 
+\size small
 \lang english
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
 
 \lang english
-Pork Chop Plot
+Pork Chop Plot 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pork-Chop-Plot"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -892,8 +1126,12 @@ Pork Chop Plot
 \end_layout
 
 \begin_layout Standard
-The x-axis is the Earth departure date, the y-axis is the Florence arrival
- date.
+\noindent
+\align block
+
+\size small
+in wich the x-axis is the Earth departure date, the y-axis is the Florence
+ arrival date.
  The contour lines show the sum of Earth departure C3 and Florence arrival
  C3, where C3 is the 
 \begin_inset Quotes eld
@@ -912,7 +1150,2434 @@ characteristic energy
  solver shown in the previous section).
  A given contour, called a porkchop curve, represents constant C3, and the
  center of the porkchop the optimal minimum C3, and thus optimal transfers.
- On top of the Pork Chop Plot we have superimposed also the 
+ On top of the Pork Chop Plot we have also superimposed the TOFs constant
+ lines that are visible in red.
+ As we can see from the pork chop plot there are different zones of minimum
+ wich can be selected as possible departure window and arrival window.
+\end_layout
+
+\begin_layout Subsection
+\noindent
+
+\size normal
+Best Transfer Arc
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The best 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be extracted from the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix by simply taking is minimum, then using the MATLAB function 
+\begin_inset listings
+lstparams "language=Matlab"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+\size small
+find
+\end_layout
+
+\end_inset
+
+ we can retrieve its position in terms of rows and columns in the matrix
+ itself so we can retrieve departure position and arrival position from
+ its respective vectors : 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\size small
+Dv_min = min(min(Dv_matrix)); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+[ROW,COLUMN] = find(Dv_matrix == Dv_min); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+Dv_min_TOF = (TOF_matrix(ROW,COLUMN)*86400);
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+r1_arc = r_dep_vect(ROW,:); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+r2_arc = r_arr_vect(COLUMN,:); 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+As result we can see that the minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ is about 
+\begin_inset Formula $11.277354\:km/s$
+\end_inset
+
+, while the maximum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ is about 
+\begin_inset Formula $99.997552\:km/s$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The transfer arc that correspond to the minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be now integrated and it's path is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Transfer-Arcs"
+
+\end_inset
+
+ in yellow
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\size small
+[~,~,~,~,v1_arc,v2_arc,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+[rx_arc, ry_arc, rz_arc, vx_arc, vy_arc, vz_arc] = intARC_lamb(r1_arc,...
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+...v1_arc,ksun,Dv_min_TOF,86400);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Best Ttransfer Arc Integration
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+We can also compute a suboptimal transfer arc (that is the one in green
+ in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Transfer-Arcs"
+
+\end_inset
+
+) by taking the 
+\begin_inset Formula $V_{\infty}=$
+\end_inset
+
+
+\begin_inset Formula $5.789149\:km/s$
+\end_inset
+
+ that is the value in the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix that is nearest to the given 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+.
+ As a result we get a 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ of 
+\begin_inset Formula $12.0893\:km/s$
+\end_inset
+
+, that is slightly larger of the one founded for the best transfer arc.
+ As result also the path is more or less equal, as it can be seen from figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Best-Transfer-Arc-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Graphics
+	filename gfx/best_arc.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename gfx/suboptimal_transfer_arc.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Transfer-Arcs"
+
+\end_inset
+
+ Transfer Arcs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Graphics
+	filename gfx/bestvssub.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Best-Transfer-Arc-1"
+
+\end_inset
+
+Best Transfer Arc and Suboptimal Transfer Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\noindent
+
+\size normal
+Hohmann Transfer Comparison
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+For doing the Hohmann transfer comparison, the MATLAB functions 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+\size small
+hohmann.m
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+\size small
+inclinationchange.m
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+\size small
+anoperichange.m
+\end_layout
+
+\end_inset
+
+ have been developed, that are then called in the main script in order to
+ compute the cost of an hypotetically Hohmann transfer from the Earth to
+ Florance asteroids.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+Since the two orbits are on different planes, a change of inclination 
+\begin_inset Formula $i$
+\end_inset
+
+ is needed, and then a change of the anomaly of the pericenter 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is done in order to put the spacecraft in the Florance orbit since the
+ two orbits are not coaxial.
+ In order to reach the maximum efficiency in terms of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ , te change of inclination is done after the change of semimajor axis.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+As expected however, the overall cost of an Hohmann transfer is greater
+ than the Lambert's arc strategy due to the change of plane, in fact the
+ results are :
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\triangle V\:[km/s]$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Change of 
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $5.9186$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Change of 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $11.3541$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Change of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $0.7596$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+ Total Cost
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $18.032333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Hohmann Transfer
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+\noindent
+Interplanetary Flyby
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\noindent
+Introduction
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The aim of this chapter is to explain to design an interplanetary trajectory
+ from Mars to Neptune with a flyby on Saturn.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Graphics
+	filename gfx/saturn_mars_neptune_2d.png
+	scale 45
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Given-Orbits"
+
+\end_inset
+
+Given Orbits
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The three orbits, showed in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Given-Orbits"
+
+\end_inset
+
+ are all on different planes, so Lambert's solution from Mars orbit to Saturn
+ orbit and from Saturn orbit to Neptune orbit will be evaluated for the
+ entire time window, ad interval of 100 days due to computing costraint.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The procedure applied in order to design the transfer is divided in three
+ main steps : 
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+\align block
+
+\size small
+Set all known parameters and computation of orbits of both of the three
+ planets;
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+\align block
+
+\size small
+Solve the Lambert's problem for every possible combination of TOFs at intervals
+ of 100 days both for the path Mars-Saturn and the path Saturn-Neptune;
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+\align block
+
+\size small
+Evaluation of the more energy efficent Lambert's arcs;
+\end_layout
+
+\begin_layout Enumerate
+\noindent
+\align block
+
+\size small
+Evaluation of the powered gravity assist.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The given time window goes from January 1, 2016 to December 31, 2055.
+\end_layout
+
+\begin_layout Subsection
+\noindent
+
+\size normal
+The method of the patched conics
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+Interplanetary mission no longer conform to the idealized two-body problem.
+ Just the fact that some vehicle is attempting to leave one planet to traverse
+ the solar system which revolves about the Sun in order to reach another
+ planet introduces at least four bodies.
+ To make matters worse, interplanetary travel is also subject to the forces
+ of other planets and objects which may be near to or in between the initial
+ and final locations.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+In order to simplify interplanetary missions design, a method knwon as patched
+ (or linked) conics method has been developed, taht break the multibody
+ system into three differente sections of two body problems.
+ We define the sphere of influence (from now on SOI) of the planet as an
+ attempt to mark the location where the Sun's gravitational effects become
+ dominant with respect to te planet's one.
+ We assume that when the spacecraft is outside the SOI of a planet it follows
+ an unperturbed keplerian orbit around the sun.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+So the method is splitted into three segments : 
+\end_layout
+
+\begin_layout Itemize
+\noindent
+\align block
+
+\size small
+Initial planet's SOI where the spacecraft leaves planet's on hyperbolic
+ escape trajectory;
+\end_layout
+
+\begin_layout Itemize
+\noindent
+\align block
+
+\size small
+Elliptical trajectory about the sun from initial planet toward the final
+ planet;
+\end_layout
+
+\begin_layout Itemize
+\noindent
+\align block
+
+\size small
+Entering into the final planet's SOI on an hyperbolic capture trajectory
+ and maneuvering in order to enter into an elliptical parking orbit about
+ the final planet or descend to the planet surface.
+ Or flyby to another destination.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Graphics
+	filename gfx/patched_conics.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Method of Patched Conics
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The expression of the SOI of a planet orbiting the sun is given by : 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+\begin_inset Formula 
+\[
+R_{SOI}=R_{planet}\left(\frac{m_{planet}}{m_{sun}}\right)^{\nicefrac{2}{5}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+where 
+\begin_inset Formula $R_{planet}$
+\end_inset
+
+ is the radius that goes from the Sun to the planet.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+Although this method gives a good approximation of trajectories for interplaneta
+ry spacecraft missions, there are missions for which this approximation
+ does not provide sufficiently accurate results.
+\end_layout
+
+\begin_layout Section
+Design Strategy
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+To obtain the most energy efficent flyby, a MATLAB script has been developed.
+ Once all the possible TOFs are evaluated, a main routine is called, and
+ all the Lambert's arcs for each possible combinations of departure from
+ Mars and arrival to Saturn and departure from Saturn and arrival to Neptune
+ are evaluated at interval of 100 days, due to computing costraints.
+ Then the flyby is computed for the best energy efficent combination of
+ arrival/departure to/from Saturn.
+\end_layout
+
+\begin_layout Subsection
+
+\size normal
+TOFs Calculation
+\end_layout
+
+\begin_layout Standard
+
+\size small
+The TOFs matrix has been evaluated in the same way as in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:TOFs-Calculation"
+
+\end_inset
+
+.
+ The resultant TOFs matrix is diagonal because half of evaluated TOFs can't
+ be accepted mainly due to the fact that the two arcs have basically the
+ same window and the situation in wich the departure from Saturn to Neptune
+ happens before the depature from Mars to Saturn should be avoided.
+\end_layout
+
+\begin_layout Subsection
+
+\size normal
+The Main Routine
+\end_layout
+
+\begin_layout Standard
+
+\size small
+The main routine has been developed by modifying slightly the algorithm
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:DV-Matrix-Computation"
+
+\end_inset
+
+ showed in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-Main-Routine"
+
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\size small
+% Computation of the 3D-Tensor of deltav with 3 nested for cycles 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+for i = 1:length(t_dep)
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+	r_mars = r_dep_vect_mars(i,:);     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+	v_mars = v_dep_vect_mars(i,:);         
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+	for j = 1:length(t_dep)
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+		tof_1 = TOF_matrix(i,j)*86400;
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+		if tof_1 > 0
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			r_saturn = r_dep_vect_saturn(j,:);
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			v_saturn = v_dep_vect_saturn(j,:);             
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			[~,~,~,~,VI_mars,VF_saturn,~,~] = lambertMR(r_mars,r_saturn,tof_1,ksun);
+             
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			dv1_mars = norm(VI_mars - v_mars);             
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			dv2_saturn = norm(v_saturn - VF_saturn);             
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			Dv_matrix_1(i,j) = abs(dv1_mars) + abs(dv2_saturn);             
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			v_inf_matrix_1(i,j) = dv1_mars;
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			for k = 1:length(t_dep)
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+				tof_2 = TOF_matrix(j,k)*86400;
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+	        	if tof_2 > 0
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					r_neptune = r_dep_vect_neptune(k,:);                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					v_neptune = v_dep_vect_neptune(k,:);                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					[~,~,~,~,VI_saturn,VF_neptune,~,~] = ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					...
+ = lambertMR(r_saturn,r_neptune,tof_2,ksun);                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					dv1_saturn = norm(VI_saturn - v_saturn);                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					dv2_neptune = norm(v_neptune - VF_neptune);                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					Dv_matrix_2(j,k) = abs(dv1_saturn) + abs(dv2_neptune);            
+         
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					v_inf_matrix_2(j,k) = dv1_saturn;                                 
+          
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					dv_ga = abs(dv1_saturn - dv2_saturn);
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					DV_Tensor(i,j,k) = Dv_matrix_1(i,j)+dv_ga+Dv_matrix_2(j,k);       
+                            
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+				else                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					Dv_matrix_2(j,k) = nan;                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					v_inf_matrix_2(j,k) = nan;                     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+					DV_Tensor(i,j,k) = nan;                 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+				end
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			end
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+		else
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			Dv_matrix_1(i,j) = nan;             
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			v_inf_matrix_1(i,j) = nan;             
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+			DV_Tensor(i,j,:) = nan;		
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+		end
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+	end
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+end	
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:--Matrix_dv_3d"
+
+\end_inset
+
+
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ Matrix Computation for Flyby
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+as it can be seen from algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:--Matrix_dv_3d"
+
+\end_inset
+
+ there are three nested for cycle that passes trough each departure day.
+ The second cycle calculates the Lambert's arc that goes from Mars to Saturn,
+ while the third cycle calculates the arc that goes from Saturn to Neptune.
+ The total 
+\begin_inset Formula $\triangle Vs$
+\end_inset
+
+ that is computed by summation of the 
+\begin_inset Formula $\triangle Vs$
+\end_inset
+
+ riquired fot both arcs are then stored on a 3D tensor.
+ Inside the inner cycle is also computed the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ that is supplied for free by the planet.
+ If during the cycle any TOF is negative will be automatically skipped.
+ With respect to the previous 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix (the one of section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-Main-Routine"
+
+\end_inset
+
+), this time the matrix will be a 3D matrix because of the fact that all
+ the possible combinations are now taken for two Lambert's arcs, not for
+ one.
+\end_layout
+
+\begin_layout Standard
+
+\size small
+The pork chop plots for both arcs reflect the facts that half of the window
+ can't be used to avoid a departure before of an arrival : 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/mars_saturn.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename gfx/saturn_neptune.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pork Chop Plots of the Two Paths
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\size normal
+Transfer Arcs
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align block
+
+\size small
+The more energy efficient 
+\begin_inset Formula $\triangle Vs$
+\end_inset
+
+ for both arcs can be extracted from the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix by simply taking is minimum.
+ In order to retrive their position in terms of rows, columns and 
+\begin_inset Quotes eld
+\end_inset
+
+depth
+\begin_inset Quotes erd
+\end_inset
+
+ inside the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix the MATLAB command 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align block
+
+\size small
+ind2sub
+\end_layout
+
+\end_inset
+
+ is used before the 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+\size small
+find
+\end_layout
+
+\end_inset
+
+ command, due to the fact that 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+\size small
+find
+\end_layout
+
+\end_inset
+
+ does not work on 3D matrices :
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\size small
+% Find the minimum DV 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+DV_MIN = min(min(min(DV_Tensor))); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+DV_MAX = max(max(max(DV_Tensor))); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+[row,column,depth] = ind2sub(size(DV_Tensor),find(DV_Tensor == DV_MIN));
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+% Find best arcs 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+r1_arc = r_dep_vect_mars(row,:); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+r2_arc = r_dep_vect_saturn(column,:); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+r3_arc = r_dep_vect_neptune(depth,:);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+% Find correspondent TOFs 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+Dv_min_TOF_1 = (TOF_matrix(row,column)*86400); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+% Integration of arcs
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+[~,~,~,~,VI_arc1,VF_arc1,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF_1,ksun);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+[~,~,~,~,VI_arc2,VF_arc2,~,~] = lambertMR(r2_arc,r3_arc,Dv_min_TOF_2,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+[rx_arc_1, ry_arc_1, rz_arc_1, vx_arc_1, vy_arc_1, vz_arc_1] = intARC_lamb(r1_ar
+c,...
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+...VI_arc1,ksun,Dv_min_TOF_1,86400);
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+[rx_arc_2, ry_arc_2, rz_arc_2, vx_arc_2, vy_arc_2, vz_arc_2] = intARC_lamb(r2_ar
+c,...
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+...VI_arc2,ksun,Dv_min_TOF_2,86400); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Best Transfer Arcs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+The minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ (that is given by the sum of both the two arcs) found by analyzing the
+ 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix is 
+\begin_inset Formula $22.7448\:km/s$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size small
+In the below plots are shown the two correspondent Lambert's arcs in the
+ heliocentric reference frame and in the planetocentric reference frame
+ :
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Graphics
+	filename gfx/arcs_helio.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename gfx/arcs_planeto.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Lambert's Arcs Path
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\size normal
+Powered Gravity Assist
+\end_layout
+
+\begin_layout Standard
+
+\size small
+By examining the two 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ we can recognize that a small powered gravity assist is needed, since :
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula 
+\[
+\triangle V_{\infty}=V_{\infty^{-}}-V_{\infty^{+}}=(4.7556-4.6619)\:km/s=0.0937\:km/s
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+In order to compute the amount of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ that should be given at pericenter a constrained nonlinear system with
+ boundary value conditions has to be solved to retrive the radius of the
+ pericenter, that can be then used to compute all the value needed to estimate
+ the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ of the gravity assist.
+ The system can be solved numerically using the MATLAB function 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align block
+
+\size small
+fzero
+\end_layout
+
+\end_inset
+
+ as shown in algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Nonlinear-System"
+
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\size small
+delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+ksaturn = astroConstants(16); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn)))...
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+...
+ - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn))); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+r_p = fzero(f,700000);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Nonlinear-System"
+
+\end_inset
+
+Nonlinear System
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+where 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align block
+
+\size small
+delta
+\end_layout
+
+\end_inset
+
+ is the deviation angle 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ As result whe get : 
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula 
+\[
+r_{p}=8.1008e+05\:km
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+that is a reasonable result since the radius of Saturn's SOI is 
+\begin_inset Formula $3.4247e+08\:km$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+
+\size small
+The parameters of the entering and exiting hyperbola can be calculated and
+ are reported in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Hypebolas-Results"
+
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Entering Hyperbola
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+Exiting Hyperbola
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $e$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $1.4830$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $1.4642$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\delta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $1.4830\:rad$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $1.3660\:rad$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\Delta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $1.8367e+06\:km$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $1.8665e+06\:km$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\theta_{\infty}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $2.3108\:rad$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $2.3226\:rad$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $\beta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $0.8308\:rad$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $0.8189\:rad$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $v_{p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $10.7825\:km/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $10.7415\:km/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Hypebolas-Results"
+
+\end_inset
+
+Hypebolas Results
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+So the amount of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ that should be given at pericenter in order to perform the powererd gravity
+ assiste and inject the spacecraft into the second Lambert's arc is : 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\triangle V_{p}=v_{p^{+}}-v_{p^{-}}=0.0410\:km/s
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/flyby.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Hyperbolic Flyby
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

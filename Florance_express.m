@@ -220,6 +220,24 @@ r2_sub_arc = r_arr_vect(COLUMN_v_inf,:);
     ] = intARC_lamb(r1_sub_arc,v1_sub_arc,ksun,v_inf_TOF,86400);
 
 
+%% HOHMANN TRANSFER FOR DELTAV COMPARISON
+
+% Change of a and e whith an ohman transfer
+[deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
+
+% Change of inclination 
+[delta_v_inc,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun);
+
+% Change of w in order to adjust the shape of the orbit 
+[delta_v_w,theta_man,theta_after_man]= anoperichange(a_dep, e_dep, omega_2, omg_arr, theta_1, ksun);
+
+% Total deltaV
+delta_V_TOT = delta_v_inc + delta_v_w + deltaV_a_t1;
+
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Total DV required in the case of Hohmann transfer : %f\n',delta_V_TOT);
+fclose(fileID);
+
 %% PLOTTING
 % Orbits
 figure(1)
@@ -227,19 +245,47 @@ whitebg(figure(1), 'black')
 hold on
 grid on
 axis equal
-title('Given Orbits ')
 plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
 plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
-
 legend('Earth Orbit','Florence Orbit','Location', 'NorthWest')
+title('Earth and Florence Orbits ')
 
-% Orbits
+% Optimal Arc
 figure(2)
-whitebg(figure(1), 'black')
+whitebg(figure(2), 'black')
 hold on
 grid on
 axis equal
-title('Orbits and best transfer arc rapresentation ')
+plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
+plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
+plot3(r1_arc(1),r1_arc(2),r1_arc(3),'b*')
+plot3(r2_arc(1),r2_arc(2),r2_arc(3),'r*')
+plot3(rx_arc, ry_arc, rz_arc,'y')
+title('Best Transfer Arc')
+legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
+    'Florence Arrival Position','Best Transfer Arc')
+
+% Suboptimal Arc
+figure(3)
+whitebg(figure(3), 'black')
+hold on
+grid on
+axis equal
+plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
+plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
+plot3(r1_sub_arc(1),r1_sub_arc(2),r1_sub_arc(3),'w*')
+plot3(r2_sub_arc(1),r2_sub_arc(2),r2_sub_arc(3),'m*')
+plot3(rx_sub_arc, ry_sub_arc, rz_sub_arc,'g')
+legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
+    'Florence Arrival Position','Suboptimal Transfer Arc')
+title('Suboptimal Transfer Arc')
+
+% Both of them
+figure(4)
+whitebg(figure(4), 'black')
+hold on
+grid on
+axis equal
 plotorbit(a_dep,e_dep,i_dep,OMG_dep,omg_dep,ksun,5);
 plotorbit(a_arr,e_arr,i_arr,OMG_arr,omg_arr,ksun,4);
 
@@ -258,8 +304,10 @@ legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
     'Earth sub-optimal departure','Florence sub-optimal arrival',...
     'Transfer arc for c3~c3_max', 'Location', 'NorthWest')
 
+title('Best Transfer Arc against Suboptimal')
+
 % Time of departure, Time of fligt, Delta v plot. 
-figure(3)
+figure(5)
 hold on
 grid on
 title('Pork chop plot');
@@ -269,7 +317,7 @@ zlabel('DeltaV')
 plot3(t_dep_sec,TOF_matrix*86400,Dv_matrix);
 
 % Pork chop plot contour. 
-figure(4)
+figure(6)
 hold on
 grid on
 title('Pork chop plot contour')
@@ -284,7 +332,7 @@ set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
 %  Pork chop plot DV,TOF.
-figure(5)
+figure(7)
 hold on
 grid on
 title('Pork chop plot contour and TOF')
@@ -301,7 +349,7 @@ set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
 % Pork chop plot V infinity.
-figure(6)
+figure(8)
 hold on
 grid on
 title('Pork chop plot V infinity')
@@ -319,7 +367,7 @@ set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
 % 3D Pork chop plot contour.
-figure(7)
+figure(9)
 hold on
 grid on
 title('3D Pork chop plot')
@@ -335,21 +383,3 @@ datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
-
-%% HOHMANN TRANSFER FOR DELTAV COMPARISON
-
-% Change of a and e whith an ohman transfer
-[deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
-
-% Change of inclination 
-[delta_v_inc,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun);
-
-% Change of w in order to adjust the shape of the orbit 
-[delta_v_w,theta_man,theta_after_man]= anoperichange(a_dep, e_dep, omega_2, omg_arr, theta_1, ksun);
-
-% Total deltaV
-delta_V_TOT = delta_v_inc + delta_v_w + deltaV_a_t1;
-
-fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] Total DV required in the case of Hohmann transfer : %f\n',delta_V_TOT);
-fclose(fileID);

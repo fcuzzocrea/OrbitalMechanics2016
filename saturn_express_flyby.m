@@ -156,6 +156,7 @@ v_inf_matrix_2(1,:) = nan;
 
 % Find the minimum DV
 DV_MIN = min(min(min(DV_Tensor)));
+DV_MAX = max(max(max(DV_Tensor)));
 [row,column,depth] = ind2sub(size(DV_Tensor),find(DV_Tensor == DV_MIN));
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DELTAV MIN %f: \n',DV_MIN);
@@ -291,28 +292,79 @@ whitebg(figure(1), 'black')
 plot3(rx_mars,ry_mars,rz_mars);
 plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
+legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit')
+title('Orbits in Heliocentric Frame')
+
+%  Pork chop plot DV,TOF.
+figure(2)
+hold on
+grid on
+title('Pork chop plot contour and TOF for Mars to Saturn')
+xlabel('Time of arrival');
+ylabel('Time of departure');
+axis equal
+contour(t_arr,t_dep,Dv_matrix_1,50);
+contour(t_arr,t_dep,TOF_matrix,20,'r','ShowText','on');
+caxis([DV_MIN DV_MAX]);
+colormap jet
+datetick('x','yy/mm/dd','keepticks','keeplimits')
+datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
+
+%  Pork chop plot DV,TOF.
+figure(3)
+hold on
+grid on
+title('Pork chop plot contour and TOF for Saturn to Neptune')
+xlabel('Time of arrival');
+ylabel('Time of departure');
+axis equal
+contour(t_arr,t_dep,Dv_matrix_2,50);
+contour(t_arr,t_dep,TOF_matrix,20,'r','ShowText','on');
+caxis([DV_MIN DV_MAX]);
+colormap jet
+datetick('x','yy/mm/dd','keepticks','keeplimits')
+datetick('y','yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+set(gca,'YTickLabelRotation',45)
+
+
+figure(4)
+grid on
+hold on
+whitebg(figure(4), 'black')
+plot3(rx_mars,ry_mars,rz_mars);
+plot3(rx_neptune,ry_neptune,rz_neptune);
+plot3(rx_saturn,ry_saturn,rz_saturn);
 plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
 plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
 legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit', 'First Transfer Arc','Second Transfer Arc')
 title('Orbits and Lamberts Arc in Heliocentric Frame')
 
-figure(2)
+figure(5)
 grid on 
 hold on
 title('Lambert Arcs in Planetocentric Frame')
 plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)
 plot3(rx_arc_2_saturn,ry_arc_2_saturn,rz_arc_2_saturn)
+xlabel('Km')
+ylabel('Km')
 legend('Before GA', 'After GA')
 axis equal
 
-figure(3)
+figure(6)
 hold on
 plot(x_hyp_min,y_hyp_min)
-zoomPlot (3,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(x_hyp_plus,y_hyp_plus)
-zoomPlot (3,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(0,0,'*')
 grid on
 axis equal
+xlabel('Km')
+ylabel('Km')
 title('Flyby Hyperbola')
 legend('Entering Hyperbola', 'Exiting Hyperbola')
+
+
