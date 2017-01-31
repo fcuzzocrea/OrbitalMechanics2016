@@ -14,7 +14,7 @@
 enumitem
 \end_modules
 \maintain_unincluded_children false
-\language british
+\language american
 \language_package default
 \inputencoding auto
 \fontencoding global
@@ -239,11 +239,11 @@ Introduction
 \noindent
 
 \size small
-The aim of this chapter is to explain the design of an oribital transfer
- between the Earth and the asteroid Florance 35, an Apollo class asteroid.
- The Apollo asteroids are a group of NEO asteroids have an orbit characterized
- by a a semimajor axis greater than the one of the Earth; the perihelion
- distance instead, is lesser than Eart's aphoelion distance.
+The aim of this chapter is to explain the design of an orbital transfer
+ between the Earth and the asteroid Florence 35, an Apollo class asteroid.
+ The Apollo asteroids are a group of NEO asteroids that have an orbit characteri
+zed by a a semi major axis greater than the one of the Earth; the perihelion
+ distance instead, is lesser than Earth’s aphelion distance.
  As main consequence of this fact, they cross the Earth's orbit around the
  Sun.
  
@@ -289,9 +289,9 @@ Evaluation of the best Lambert's arc .
 
 \size small
 A suboptimal solution is then chosen in order to respect the assigned launcher's
- C3 costrain.
+ C3 constraint.
  A qualitative comparison with a classical Hohmann transfer is then carried
- in order to evaluate the differences in terms of 
+ out in order to evaluate the differences in terms of 
 \begin_inset Formula $\triangle V$
 \end_inset
 
@@ -303,7 +303,7 @@ A suboptimal solution is then chosen in order to respect the assigned launcher's
 \align block
 
 \size small
-The assigned windows for departure from the Earth and arrival to Florance
+The assigned windows for departure from the Earth and arrival to Florence
  are reported in the following table :
 \end_layout
 
@@ -386,7 +386,7 @@ T2
 \begin_layout Plain Layout
 
 \size small
-Florance (35)
+Florence (35)
 \end_layout
 
 \end_inset
@@ -439,7 +439,7 @@ Florance (35)
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Given datas
+Given data
 \end_layout
 
 \end_inset
@@ -530,7 +530,7 @@ The Lambert's Problem
 \align block
 
 \size small
-For the Lamber'ts problem, two position vectors and the time of flight between
+For the Lambert's problem, two position vectors and the time of flight between
  each of the two are known, but the orbit between the endpoints is unknown.
 \end_layout
 
@@ -543,7 +543,7 @@ The MATLAB function that given initial and final position vector solve the
  Lambert's problem and gives as outputs the orbital parameters of the transfer
  ellipse is called at every step of the main routine.
  Once the initial velocity and the final velocity of the Lambert's arc are
- evaluated by the funcion, the total cost of the transfer ellipse in terms
+ evaluated by the function, the total cost of the transfer ellipse in terms
  of 
 \begin_inset Formula $\triangle V$
 \end_inset
@@ -588,7 +588,7 @@ The MATLAB function that given initial and final position vector solve the
 \size small
 \begin_inset Formula 
 \[
-\triangle V_{TOT}=\triangle V_{a}+\triangle V_{b}
+\triangle V_{TOT}=|\triangle V_{a}|+|\triangle V_{b}|
 \]
 
 \end_inset
@@ -673,9 +673,9 @@ Design Strategy
 \size small
 In order to obtain the best orbital transfer we have developed a MATLAB
  script that, once all the possible combinations of TOFs are evaluated,
- launch a main routine in wich are then evaluated Lambert's arcs for each
- possibile combinations of departure days and arrival days at intervals
- of one week.
+ launch a main routine in which are then evaluated Lambert's arcs for each
+ possible combinations of departure days and arrival days at intervals of
+ one week.
 \end_layout
 
 \begin_layout Subsection
@@ -723,7 +723,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 function [TOF] = tof_calculator (t_dep_vect,t_arr_vect)
 \end_layout
 
@@ -733,25 +732,21 @@ function [TOF] = tof_calculator (t_dep_vect,t_arr_vect)
 
 \begin_layout Plain Layout
 
-\size small
 % Preallocation  
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 l1 = length(t_dep_vect); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 l2 = length(t_arr_vect);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 TOF = zeros(l1,l2);
 \end_layout
 
@@ -761,31 +756,26 @@ TOF = zeros(l1,l2);
 
 \begin_layout Plain Layout
 
-\size small
 % For cycle to obtain the TOF matrix 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 for i = 1 : l1     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	TOF(i,:) = t_arr_vect - t_dep_vect(i); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 end
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 end
 \end_layout
 
@@ -818,8 +808,8 @@ TOFs Matrix Computation
 \align block
 
 \size small
-Obviously, all the negative TOFs are automatically setted to NaN in the
- main script so they aren't processed in the main routine.
+Obviously, all the negative TOFs are automatically set to NaN in the main
+ script so they aren't processed in the main routine.
  The TOF matrix is then passed to the main routine in order to solve the
  Lambert's problem.
  
@@ -875,115 +865,96 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 for i = 1 : length(t_dep)
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	r_e = r_dep_vect(i,:);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	v_e = v_dep_vect(i,:);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 		for j = 1 : length(t_arr)
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			tof = TOF_matrix(i,j)*86400;
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			if tof > 0
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				r_f = r_arr_vect(j,:);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				v_f=v_arr_vect(j,:);			
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				[~,~,~,~,VI,VF,~,~]=lambertMR(r_e,r_f,tof,ksun);   			
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				dv1 = norm(VI - v_e);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				dv2 = norm(v_f - VF);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				Dv_matrix(i,j)=abs(dv1)+abs(dv2);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				v_inf_matrix(i,j) = dv1;
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			else    
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				Dv_matrix(i,j) = nan;            
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				v_inf_matrix(i,j) = nan;        
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			end    
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 		end
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 end
 \end_layout
 
@@ -1050,7 +1021,7 @@ The Pork Chop Plot
 A pork chop plot is a data visualization tool that can be used in interplanetary
  mission design, because displays contours of various quantities as a function
  of departure and arrival date.
- For the Earth-Florance transfer we get the pork chop plot shown in figure
+ For the Earth-Florence transfer we get the pork chop plot shown in figure
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1130,7 +1101,7 @@ name "fig:Pork-Chop-Plot"
 \align block
 
 \size small
-in wich the x-axis is the Earth departure date, the y-axis is the Florence
+in which the x-axis is the Earth departure date, the y-axis is the Florence
  arrival date.
  The contour lines show the sum of Earth departure C3 and Florence arrival
  C3, where C3 is the 
@@ -1148,12 +1119,12 @@ characteristic energy
  of the hyperbolic trajectory.
  So, each point on the curve represents a transfer (computed using the Lambert
  solver shown in the previous section).
- A given contour, called a porkchop curve, represents constant C3, and the
- center of the porkchop the optimal minimum C3, and thus optimal transfers.
+ A given contour, called a pork chop curve, represents constant C3, and
+ the center of the pork chop the optimal minimum C3, and thus optimal transfers.
  On top of the Pork Chop Plot we have also superimposed the TOFs constant
  lines that are visible in red.
  As we can see from the pork chop plot there are different zones of minimum
- wich can be selected as possible departure window and arrival window.
+ which can be selected as possible departure window and arrival window.
 \end_layout
 
 \begin_layout Subsection
@@ -1184,7 +1155,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 find
 \end_layout
 
@@ -1216,7 +1186,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 Dv_min = min(min(Dv_matrix)); 
 \end_layout
 
@@ -1226,25 +1195,21 @@ Dv_min = min(min(Dv_matrix));
 
 \begin_layout Plain Layout
 
-\size small
 [ROW,COLUMN] = find(Dv_matrix == Dv_min); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 Dv_min_TOF = (TOF_matrix(ROW,COLUMN)*86400);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 r1_arc = r_dep_vect(ROW,:); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 r2_arc = r_arr_vect(COLUMN,:); 
 \end_layout
 
@@ -1341,19 +1306,16 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 [~,~,~,~,v1_arc,v2_arc,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF,ksun);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 [rx_arc, ry_arc, rz_arc, vx_arc, vy_arc, vz_arc] = intARC_lamb(r1_arc,...
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 ...v1_arc,ksun,Dv_min_TOF,86400);
 \end_layout
 
@@ -1368,7 +1330,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Best Ttransfer Arc Integration
+Best Transfer Arc Integration
 \end_layout
 
 \end_inset
@@ -1568,7 +1530,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 hohmann.m
 \end_layout
 
@@ -1582,7 +1543,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 inclinationchange.m
 \end_layout
 
@@ -1596,15 +1556,14 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 anoperichange.m
 \end_layout
 
 \end_inset
 
  have been developed, that are then called in the main script in order to
- compute the cost of an hypotetically Hohmann transfer from the Earth to
- Florance asteroids.
+ compute the cost of an hypothetically Hohmann transfer from the Earth to
+ Florence asteroids.
 \end_layout
 
 \begin_layout Standard
@@ -1620,13 +1579,13 @@ Since the two orbits are on different planes, a change of inclination
 \begin_inset Formula $\omega$
 \end_inset
 
- is done in order to put the spacecraft in the Florance orbit since the
+ is done in order to put the spacecraft in the Florence orbit since the
  two orbits are not coaxial.
  In order to reach the maximum efficiency in terms of 
 \begin_inset Formula $\triangle V$
 \end_inset
 
- , te change of inclination is done after the change of semimajor axis.
+ , the change of inclination is done after the change of semi major axis.
 \end_layout
 
 \begin_layout Standard
@@ -1931,7 +1890,7 @@ reference "fig:Given-Orbits"
 
  are all on different planes, so Lambert's solution from Mars orbit to Saturn
  orbit and from Saturn orbit to Neptune orbit will be evaluated for the
- entire time window, ad interval of 100 days due to computing costraint.
+ entire time window, ad interval of 100 days due to computing constraint.
  
 \end_layout
 
@@ -1967,7 +1926,7 @@ Solve the Lambert's problem for every possible combination of TOFs at intervals
 \align block
 
 \size small
-Evaluation of the more energy efficent Lambert's arcs;
+Evaluation of the more energy efficient Lambert's arcs;
 \end_layout
 
 \begin_layout Enumerate
@@ -2001,7 +1960,7 @@ The method of the patched conics
 Interplanetary mission no longer conform to the idealized two-body problem.
  Just the fact that some vehicle is attempting to leave one planet to traverse
  the solar system which revolves about the Sun in order to reach another
- planet introduces at least four bodies.
+ planet introduces at least three bodies.
  To make matters worse, interplanetary travel is also subject to the forces
  of other planets and objects which may be near to or in between the initial
  and final locations.
@@ -2012,12 +1971,12 @@ Interplanetary mission no longer conform to the idealized two-body problem.
 \align block
 
 \size small
-In order to simplify interplanetary missions design, a method knwon as patched
- (or linked) conics method has been developed, taht break the multibody
- system into three differente sections of two body problems.
+In order to simplify interplanetary missions design, a method known as patched
+ (or linked) conics method has been developed, that break the multy-body
+ system into three different sections of two body problems.
  We define the sphere of influence (from now on SOI) of the planet as an
  attempt to mark the location where the Sun's gravitational effects become
- dominant with respect to te planet's one.
+ dominant with respect to the planet's one.
  We assume that when the spacecraft is outside the SOI of a planet it follows
  an unperturbed keplerian orbit around the sun.
 \end_layout
@@ -2027,7 +1986,7 @@ In order to simplify interplanetary missions design, a method knwon as patched
 \align block
 
 \size small
-So the method is splitted into three segments : 
+So the method is split into three segments : 
 \end_layout
 
 \begin_layout Itemize
@@ -2162,12 +2121,12 @@ Design Strategy
 \align block
 
 \size small
-To obtain the most energy efficent flyby, a MATLAB script has been developed.
+To obtain the most energy efficient flyby, a MATLAB script has been developed.
  Once all the possible TOFs are evaluated, a main routine is called, and
  all the Lambert's arcs for each possible combinations of departure from
  Mars and arrival to Saturn and departure from Saturn and arrival to Neptune
- are evaluated at interval of 100 days, due to computing costraints.
- Then the flyby is computed for the best energy efficent combination of
+ are evaluated at interval of 100 days, due to computing constraints.
+ Then the flyby is computed for the best energy efficient combination of
  arrival/departure to/from Saturn.
 \end_layout
 
@@ -2190,8 +2149,8 @@ reference "subsec:TOFs-Calculation"
 .
  The resultant TOFs matrix is diagonal because half of evaluated TOFs can't
  be accepted mainly due to the fact that the two arcs have basically the
- same window and the situation in wich the departure from Saturn to Neptune
- happens before the depature from Mars to Saturn should be avoided.
+ same window and the situation in which the departure from Saturn to Neptune
+ happens before the departure from Mars to Saturn should be avoided.
 \end_layout
 
 \begin_layout Subsection
@@ -2240,7 +2199,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 % Computation of the 3D-Tensor of deltav with 3 nested for cycles 
 \end_layout
 
@@ -2250,240 +2208,201 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 for i = 1:length(t_dep)
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	r_mars = r_dep_vect_mars(i,:);     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	v_mars = v_dep_vect_mars(i,:);         
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	for j = 1:length(t_dep)
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 		tof_1 = TOF_matrix(i,j)*86400;
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 		if tof_1 > 0
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			r_saturn = r_dep_vect_saturn(j,:);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			v_saturn = v_dep_vect_saturn(j,:);             
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			[~,~,~,~,VI_mars,VF_saturn,~,~] = lambertMR(r_mars,r_saturn,tof_1,ksun);
              
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			dv1_mars = norm(VI_mars - v_mars);             
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			dv2_saturn = norm(v_saturn - VF_saturn);             
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			Dv_matrix_1(i,j) = abs(dv1_mars) + abs(dv2_saturn);             
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			v_inf_matrix_1(i,j) = dv1_mars;
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			for k = 1:length(t_dep)
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				tof_2 = TOF_matrix(j,k)*86400;
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	        	if tof_2 > 0
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					r_neptune = r_dep_vect_neptune(k,:);                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					v_neptune = v_dep_vect_neptune(k,:);                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					[~,~,~,~,VI_saturn,VF_neptune,~,~] = ...
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					...
  = lambertMR(r_saturn,r_neptune,tof_2,ksun);                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					dv1_saturn = norm(VI_saturn - v_saturn);                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					dv2_neptune = norm(v_neptune - VF_neptune);                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					Dv_matrix_2(j,k) = abs(dv1_saturn) + abs(dv2_neptune);            
          
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					v_inf_matrix_2(j,k) = dv1_saturn;                                 
           
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					dv_ga = abs(dv1_saturn - dv2_saturn);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					DV_Tensor(i,j,k) = Dv_matrix_1(i,j)+dv_ga+Dv_matrix_2(j,k);       
                             
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				else                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					Dv_matrix_2(j,k) = nan;                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					v_inf_matrix_2(j,k) = nan;                     
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 					DV_Tensor(i,j,k) = nan;                 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 				end
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			end
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 		else
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			Dv_matrix_1(i,j) = nan;             
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			v_inf_matrix_1(i,j) = nan;             
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 			DV_Tensor(i,j,:) = nan;		
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 		end
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 	end
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 end	
 \end_layout
 
@@ -2543,7 +2462,7 @@ reference "alg:--Matrix_dv_3d"
 \begin_inset Formula $\triangle Vs$
 \end_inset
 
- riquired fot both arcs are then stored on a 3D tensor.
+ required for both arcs are then stored on a 3D tensor.
  Inside the inner cycle is also computed the 
 \begin_inset Formula $\triangle V$
 \end_inset
@@ -2640,7 +2559,7 @@ The more energy efficient
 \end_inset
 
  matrix by simply taking is minimum.
- In order to retrive their position in terms of rows, columns and 
+ In order to retrieve their position in terms of rows, columns and 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2662,7 +2581,6 @@ status open
 \noindent
 \align block
 
-\size small
 ind2sub
 \end_layout
 
@@ -2676,7 +2594,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 find
 \end_layout
 
@@ -2690,7 +2607,6 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 find
 \end_layout
 
@@ -2718,25 +2634,21 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 % Find the minimum DV 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 DV_MIN = min(min(min(DV_Tensor))); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 DV_MAX = max(max(max(DV_Tensor))); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 [row,column,depth] = ind2sub(size(DV_Tensor),find(DV_Tensor == DV_MIN));
 \end_layout
 
@@ -2746,25 +2658,21 @@ DV_MAX = max(max(max(DV_Tensor)));
 
 \begin_layout Plain Layout
 
-\size small
 % Find best arcs 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 r1_arc = r_dep_vect_mars(row,:); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 r2_arc = r_dep_vect_saturn(column,:); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 r3_arc = r_dep_vect_neptune(depth,:);
 \end_layout
 
@@ -2774,19 +2682,16 @@ r3_arc = r_dep_vect_neptune(depth,:);
 
 \begin_layout Plain Layout
 
-\size small
 % Find correspondent TOFs 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 Dv_min_TOF_1 = (TOF_matrix(row,column)*86400); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
 \end_layout
 
@@ -2796,26 +2701,22 @@ Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
 
 \begin_layout Plain Layout
 
-\size small
 % Integration of arcs
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 [~,~,~,~,VI_arc1,VF_arc1,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF_1,ksun);
  
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 [~,~,~,~,VI_arc2,VF_arc2,~,~] = lambertMR(r2_arc,r3_arc,Dv_min_TOF_2,ksun);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 [rx_arc_1, ry_arc_1, rz_arc_1, vx_arc_1, vy_arc_1, vz_arc_1] = intARC_lamb(r1_ar
 c,...
      
@@ -2823,13 +2724,11 @@ c,...
 
 \begin_layout Plain Layout
 
-\size small
 ...VI_arc1,ksun,Dv_min_TOF_1,86400);
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 [rx_arc_2, ry_arc_2, rz_arc_2, vx_arc_2, vy_arc_2, vz_arc_2] = intARC_lamb(r2_ar
 c,...
      
@@ -2837,7 +2736,6 @@ c,...
 
 \begin_layout Plain Layout
 
-\size small
 ...VI_arc2,ksun,Dv_min_TOF_2,86400); 
 \end_layout
 
@@ -2991,7 +2889,7 @@ In order to compute the amount of
 \end_inset
 
  that should be given at pericenter a constrained nonlinear system with
- boundary value conditions has to be solved to retrive the radius of the
+ boundary value conditions has to be solved to retrieve the radius of the
  pericenter, that can be then used to compute all the value needed to estimate
  the 
 \begin_inset Formula $\triangle V$
@@ -3008,7 +2906,6 @@ status open
 \noindent
 \align block
 
-\size small
 fzero
 \end_layout
 
@@ -3043,33 +2940,28 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
  
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 ksaturn = astroConstants(16); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn)))...
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 ...
  - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn))); 
 \end_layout
 
 \begin_layout Plain Layout
 
-\size small
 r_p = fzero(f,700000);
 \end_layout
 
@@ -3120,7 +3012,6 @@ status open
 \noindent
 \align block
 
-\size small
 delta
 \end_layout
 
@@ -3131,7 +3022,7 @@ delta
 \end_inset
 
 .
- As result whe get : 
+ As result we get : 
 \end_layout
 
 \begin_layout Standard
@@ -3506,7 +3397,7 @@ name "tab:Hypebolas-Results"
 
 \end_inset
 
-Hypebolas Results
+Hyperbolas Results
 \end_layout
 
 \end_inset
@@ -3526,8 +3417,8 @@ So the amount of
 \begin_inset Formula $\triangle V$
 \end_inset
 
- that should be given at pericenter in order to perform the powererd gravity
- assiste and inject the spacecraft into the second Lambert's arc is : 
+ that should be given at pericenter in order to perform the powered gravity
+ assist and inject the spacecraft into the second Lambert's arc is : 
 \end_layout
 
 \begin_layout Standard
