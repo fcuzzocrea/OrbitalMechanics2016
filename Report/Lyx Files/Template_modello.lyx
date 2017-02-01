@@ -176,23 +176,15 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-\begin_inset FloatList figure
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FloatList table
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset FloatList algorithm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
 
 \end_inset
 
@@ -239,21 +231,7 @@ setcounter{page}{1}
 \end_layout
 
 \begin_layout Chapter
-Assignment 1
-\end_layout
-
-\begin_layout Section
-Introduction
-\end_layout
-
-\begin_layout Standard
-The aim of this assignment is to explain the design of an oribital transfer
- between the Earth and the asteroid Florance 35, an Apollo class asteroid.
- The Apollo asteroids are a group of NEO asteroids that orbit on an orbit
- that have a semimajor axis greater than the one of the Earth, but the perihelio
-n distance is lesser than Eart's aphoelion distance.
- As main consequence of this fact the cross the Earth's orbit around the
- Sun.
+Orbital Maneuvers
 \end_layout
 
 \begin_layout Standard
@@ -263,13 +241,55 @@ n distance is lesser than Eart's aphoelion distance.
 
 \end_layout
 
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The aim of this chapter is to explain the design of an oribital transfer
+ between the Earth and the asteroid Florance 35, an Apollo class asteroid.
+ The Apollo asteroids are a group of NEO asteroids that orbit on an orbit
+ that have a semimajor axis greater than the one of the Earth, but the perihelio
+n distance is lesser than Eart's aphoelion distance.
+ As main consequence of this fact the cross the Earth's orbit around the
+ Sun.
+\end_layout
+
+\begin_layout Standard
+The procedure applied in order to design the transfer is divided in three
+ main steps : 
+\end_layout
+
+\begin_layout Enumerate
+Set all known parameters and computation of Earth's and Florence's orbits;
+\end_layout
+
+\begin_layout Enumerate
+Solve the Lambert's problem for every possible combination of TOFs at intervals
+ of one week;
+\end_layout
+
+\begin_layout Enumerate
+Evaluation of the best Lambert's arc .
+\end_layout
+
+\begin_layout Standard
+A sub optimal solution is then chosen due to assigned launcher's C3 costrain.
+ A qualitative comparison with a classical Hohmann transfer is then carried
+ in order to evaluate the differences in terms of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ between the two solutions.
+\end_layout
+
 \begin_layout Subsection
 Given Datas
 \end_layout
 
 \begin_layout Standard
-The assigned windows for departure from Earth and arrival to Florance are
- the following :
+The assigned windows for departure from the Earth and arrival to Florance
+ are reported in the following table :
 \end_layout
 
 \begin_layout Standard
@@ -445,9 +465,9 @@ Design Strategy
 
 \begin_layout Standard
 In order to obtain the best orbital transfer we have developed a MATLAB
- script that basically launch a main routine in wich are evaluated Lambert's
- solutions for each possibile combinations of departure days and arrival
- days at intervals of one week.
+ script that, once all the possible combinations of TOFs are evaluated,
+ launch a main routine in wich are evaluated Lambert's arcs for each possibile
+ combinations of departure days and arrival days at intervals of one week.
 \end_layout
 
 \begin_layout Subsection
@@ -456,8 +476,8 @@ TOFs Calculation
 
 \begin_layout Standard
 Since the computation should be done for every possible combination departure
- and arrival dates, a functions has been developed that basically build
- a matrix with all the TOFs :
+ and arrival dates, a function has been developed that basically build a
+ matrix with all the TOFs in the following way :
 \end_layout
 
 \begin_layout Standard
@@ -553,8 +573,28 @@ TOFs Matrix Computation
 
 \end_layout
 
+\begin_layout Standard
+Obviously, all the negative TOFs are automatically setted to NaN in the
+ main script.
+ The TOFs matrix is then passed to the main routine in order to solve the
+ Lambert's problem.
+ 
+\end_layout
+
+\begin_layout Standard
+From ephemeris then position vector and velocity vector are calculated for
+ the entire departure and arrival windows at intervals of one week.
+\end_layout
+
 \begin_layout Subsection
-The Lambert Problem
+The Lambert's Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-Lambert-Problem"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -565,7 +605,7 @@ For the Lamber'ts problem, two position vectors and the time of flight between
 \begin_layout Standard
 The MATLAB function that given initial and final position vector gives as
  outputs the orbital parameters of the transfer ellipse is given, and is
- called at every step of the routine.
+ called at every step of the main routine.
  Once the initial velocity and the final velocity of the Lambert's arc are
  evaluated by the funcion, the total cost of the transfer ellipse in terms
  of 
@@ -609,7 +649,14 @@ The MATLAB function that given initial and final position vector gives as
 \end_layout
 
 \begin_layout Standard
-with respect to figure 1.1 below 
+with respect to figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Lambert's-Arc"
+
+\end_inset
+
+ :
 \end_layout
 
 \begin_layout Standard
@@ -635,7 +682,13 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Lambert's Arc
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Lambert's-Arc"
+
+\end_inset
+
+ Lambert's Arc
 \end_layout
 
 \end_inset
@@ -649,7 +702,14 @@ Lambert's Arc
 \end_layout
 
 \begin_layout Standard
-The main routine has been implemented as following : 
+The main routine has been implemented as it is showed in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:DV-Matrix-Computation"
+
+\end_inset
+
+ : 
 \end_layout
 
 \begin_layout Standard
@@ -769,7 +829,17 @@ end
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-DV Matrix Computation
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ Matrix Computation
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:DV-Matrix-Computation"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -783,11 +853,13 @@ DV Matrix Computation
 \end_layout
 
 \begin_layout Standard
-The for cycle pass through each day (at intervals of one week) and compute
- the Lambert's arcs for all the combinations of launch date and arrival
- date.
- The total delta v for each of the arc is computed and stored in a 2D tensor,
- the DV_matrix.
+As we can see, the for cycle pass through each day and compute the Lambert's
+ arcs for all the combinations of launch date and arrival date.
+ Then the total 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ for each of the arc is computed and stored in a 2D matrix.
 \end_layout
 
 \begin_layout Subsection
@@ -796,9 +868,15 @@ The Pork Chop Plot
 
 \begin_layout Standard
 A pork chop plot is a data visualization tool that can be used in interplanetary
- mission design, wich displays contours of various quantities as a function
- of departure and arrival date, and can be used to get insights on the best
- departure/arrival window.
+ mission design, the 3D pork chop plot for Earth-Florance mission is showed
+ in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3D-Pork-Chop"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -830,7 +908,14 @@ status collapsed
 \begin_layout Plain Layout
 
 \lang english
-3D Pork Chop Plot
+3D Pork Chop Plot 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:3D-Pork-Chop"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -844,9 +929,24 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
-A pork chop plot has been produced for the interplanetary mission assigned
- and is shown in figure 1.3.
- 
+A pork chop plot wich displays contours of various quantities as a function
+ of departure and arrival date, and can be used to get insights on the best
+ departure/arrival window.
+ By drawing contour lines on figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:3D-Pork-Chop"
+
+\end_inset
+
+ we get figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Pork-Chop-Plot"
+
+\end_inset
+
+,
 \end_layout
 
 \begin_layout Standard
@@ -878,7 +978,14 @@ status collapsed
 \begin_layout Plain Layout
 
 \lang english
-Pork Chop Plot
+Pork Chop Plot 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Pork-Chop-Plot"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -892,8 +999,8 @@ Pork Chop Plot
 \end_layout
 
 \begin_layout Standard
-The x-axis is the Earth departure date, the y-axis is the Florence arrival
- date.
+in wich the x-axis is the Earth departure date, the y-axis is the Florence
+ arrival date.
  The contour lines show the sum of Earth departure C3 and Florence arrival
  C3, where C3 is the 
 \begin_inset Quotes eld
@@ -912,7 +1019,707 @@ characteristic energy
  solver shown in the previous section).
  A given contour, called a porkchop curve, represents constant C3, and the
  center of the porkchop the optimal minimum C3, and thus optimal transfers.
- On top of the Pork Chop Plot we have superimposed also the 
+ On top of the Pork Chop Plot we have also superimposed the TOFs constant
+ lines that are visible in red.
+ As we can see from the pork chop plot there are different zones of minimum
+ wich can be selected as possible departure window and arrival window.
+\end_layout
+
+\begin_layout Subsection
+Best Transfer Arc
+\end_layout
+
+\begin_layout Standard
+The best 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be extracted from the 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ matrix by simply taking is minimum, then using the MATLAB function 
+\begin_inset listings
+lstparams "language=Matlab"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+find
+\end_layout
+
+\end_inset
+
+ we can retrieve its position in terms of rows and columns in the matrix
+ itself so we can retrieve departure position and arrival position from
+ its respective vectors : 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Dv_min = min(min(Dv_matrix)); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+[ROW,COLUMN] = find(Dv_matrix == Dv_min); 
+\end_layout
+
+\begin_layout Plain Layout
+
+Dv_min_TOF = (TOF_matrix(ROW,COLUMN)*86400);
+\end_layout
+
+\begin_layout Plain Layout
+
+r1_arc = r_dep_vect(ROW,:); 
+\end_layout
+
+\begin_layout Plain Layout
+
+r2_arc = r_arr_vect(COLUMN,:); 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As result we can see that the minimu 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ is about 
+\begin_inset Formula $11.277354\:km/s$
+\end_inset
+
+, while the maximum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ is about 
+\begin_inset Formula $99.997552\:km/s$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The transfer arc that correspond to the minimum 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ can be now integrated and the path is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Best-Transfer-Arc"
+
+\end_inset
+
+ in yellow
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\small\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[~,~,~,~,v1_arc,v2_arc,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+[rx_arc, ry_arc, rz_arc, vx_arc, vy_arc, vz_arc] = 
+\end_layout
+
+\begin_layout Plain Layout
+
+			= intARC_lamb(r1_arc,v1_arc,ksun,Dv_min_TOF,86400);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Best Ttransfer Arc Integration
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/best_arc.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Best-Transfer-Arc"
+
+\end_inset
+
+Best Transfer Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can also compute a suboptimal transfer arc by taking the 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ nearest to the 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ given, that in our case is 
+\begin_inset Formula $5.789149\:km/s$
+\end_inset
+
+.
+ As a result we get a 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ of 
+\begin_inset Formula $12.0893\:km/s$
+\end_inset
+
+, that is slightly larger of the one founded for the best transfer arc.
+ As result also the path is more or less equal, as it can be seen from figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Best-Transfer-Arc-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/suboptimal_transfer_arc.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Suboptimal-Transfer-Arc"
+
+\end_inset
+
+Suboptimal Transfer Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/bestvssub.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Best-Transfer-Arc-1"
+
+\end_inset
+
+Best Transfer Arc and Suboptimal Transfer Arc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Hohman Transfer Comparison
+\end_layout
+
+\begin_layout Standard
+For doing the Hohmann transfer comparison, the MATLAB functions 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+hohmann.m
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+inclinationchange.m
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+anoperichange.m
+\end_layout
+
+\end_inset
+
+ have been developed, that are then called in the main script in order to
+ compute the cost of an hypotetically Hohmann transfer from the Earth to
+ Florance asteroids.
+\end_layout
+
+\begin_layout Standard
+Since the two orbits are on different planes, a change of inclination 
+\begin_inset Formula $i$
+\end_inset
+
+ is needed, and then a change of the anomaly of the pericenter 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is done in order to put the spacecraft in the Florance orbit since the
+ two orbits are not coaxial.
+ In order to reach the maximum efficiency in terms of 
+\begin_inset Formula $\triangle V$
+\end_inset
+
+ , te change of inclination is done after the change of semimajor axis.
+\end_layout
+
+\begin_layout Standard
+As expected however, the overall cost of an Hohmann transfer is greater
+ than the Lambert's arc strategy due to the change of plane, in fact the
+ results are :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\triangle V\:[km/s]$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Change of 
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.9186$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Change of 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $11.3541$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Change of 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.7596$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ Total Cost
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $18.032333$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Hohmann Transfer
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Interplanetary Flyby
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The aim of this chapter is to explain to design an interplanetary trajectory
+ from Mars to Neptune with a flyby on Saturn.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename gfx/saturn_mars_neptune_2d.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Given-Orbits"
+
+\end_inset
+
+Given Orbits
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The three orbits are all on different planes, so Lambert's solution from
+ Mars orbit to Saturn orbit and from Saturn orbit to Neptune orbit will
+ be evaluated for the entire time window, ad interval of 100 days due to
+ computing costraint.
+ 
+\end_layout
+
+\begin_layout Standard
+The procedure applied in order to design the transfer is divided in three
+ main steps : 
+\end_layout
+
+\begin_layout Enumerate
+Set all known parameters and computation of orbits of both of the three
+ planets;
+\end_layout
+
+\begin_layout Enumerate
+Solve the Lambert's problem for every possible combination of TOFs at intervals
+ of 100 days both for the path Mars-Saturn and the path Saturn-Neptune;
+\end_layout
+
+\begin_layout Enumerate
+Evaluation of the more energy efficent Lambert's arcs;
+\end_layout
+
+\begin_layout Enumerate
+Evaulation of the powered gravity assist.
+\end_layout
+
+\begin_layout Standard
+The given time window goes from January 1, 2016 to December 31, 2055.
 \end_layout
 
 \end_body

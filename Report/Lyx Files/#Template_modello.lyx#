@@ -239,7 +239,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The aim of this chapter is to explain the design of an oribital transfer
+The aim of this assignment is to explain the design of an oribital transfer
  between the Earth and the asteroid Florance 35, an Apollo class asteroid.
  The Apollo asteroids are a group of NEO asteroids that orbit on an orbit
  that have a semimajor axis greater than the one of the Earth, but the perihelio
@@ -1636,9 +1636,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The aim of this chapter is to explain to design an interplanetary trajectory
- from Mars to Neptune with a flyby on Saturn.
- 
+
 \end_layout
 
 \end_body
