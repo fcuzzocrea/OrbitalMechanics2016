@@ -3041,6 +3041,23 @@ r_{p}=8.1008e+05\:km
 \begin_layout Standard
 
 \size small
+which means that the altitude from saturn is :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+altitude=7.5185e+05\:km
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
 that is a reasonable result since the radius of Saturn's SOI is 
 \begin_inset Formula $3.4247e+08\:km$
 \end_inset
@@ -3469,6 +3486,84 @@ Hyperbolic Flyby
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The time needed for the flyby can be easily calculated from the time law
+ by knowing the hyperbolic anomaly 
+\begin_inset Formula $F$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+F_min = acosh((cos(theta_SOI_min*2) + e_min)/(1 + e_min*cos(theta_SOI_min*2)));
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+dt_min = sqrt(a_min^3/ksaturn)*(e_min*sinh(F_min)-F_min); 
+\end_layout
+
+\begin_layout Plain Layout
+
+F_plus = acosh((cos(theta_SOI_plus*2) + e_plus)/(1 + e_plus*cos(theta_SOI_plus*2
+))); 
+\end_layout
+
+\begin_layout Plain Layout
+
+dt_plus = sqrt(a_plus^3/ksaturn)*(e_plus*sinh(F_plus)-F_plus); 
+\end_layout
+
+\begin_layout Plain Layout
+
+dt_tot = dt_min+dt_plus;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Flyby Time
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+as a result we get a total flyby time of about 5.8 days, which is reasonable
+ considering the large Saturn's SOI.
 \end_layout
 
 \end_body
