@@ -283,6 +283,15 @@ rx_arc_2_saturn = B(1,:);
 ry_arc_2_saturn = B(2,:);
 rz_arc_2_saturn = B(3,:);
 
+% Flyby Time
+
+F_min = acosh((cos(theta_SOI_min*2) + e_min)/(1 + e_min*cos(theta_SOI_min*2)));
+dt_min = sqrt(a_min^3/ksaturn)*(e_min*sinh(F_min)-F_min);
+F_plus = acosh((cos(theta_SOI_plus*2) + e_plus)/(1 + e_plus*cos(theta_SOI_plus*2)));
+dt_plus = sqrt(a_plus^3/ksaturn)*(e_plus*sinh(F_plus)-F_plus);
+
+dt_tot = dt_min+dt_plus
+
 %% PLOTTING 
 
 figure(1)
@@ -356,9 +365,9 @@ axis equal
 figure(6)
 hold on
 plot(x_hyp_min,y_hyp_min)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (6,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(x_hyp_plus,y_hyp_plus)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (6,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(0,0,'*')
 grid on
 axis equal
