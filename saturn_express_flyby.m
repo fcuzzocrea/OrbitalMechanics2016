@@ -249,6 +249,21 @@ theta_plus = [theta_plus theta_SOI_plus];
 x_hyp_plus = -a_plus*((e_plus+cos(theta_plus))./(1+e_plus*cos(theta_plus)))+a_plus+r_p;
 y_hyp_plus = b_plus*((sqrt(e_plus)^2*sin(theta_plus))./(1+e_plus*cos(theta_plus)));
 
+
+% Flyby Time
+F_min = acosh((cos(theta_SOI_min*2) + e_min)/(1 + e_min*cos(theta_SOI_min*2)));
+dt_min = sqrt(a_min^3/ksaturn)*(e_min*sinh(F_min)-F_min);
+F_plus = acosh((cos(theta_SOI_plus*2) + e_plus)/(1 + e_plus*cos(theta_SOI_plus*2)));
+dt_plus = sqrt(a_plus^3/ksaturn)*(e_plus*sinh(F_plus)-F_plus);
+dt_tot = dt_min+dt_plus;
+dt_tot_days = dt_tot*1.1574e-5;
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Flyby time %f : \n days',dt_tot_days);
+fclose(fileID);
+
+% FlyBy altitude from Saturn
+altitude = r_p-astroConstants(26);
+
 %% SATURNOCENTRIC FRAME PLOT
 
 % Rotation matrix : heliocentric -> saturnocentric
@@ -356,9 +371,9 @@ axis equal
 figure(6)
 hold on
 plot(x_hyp_min,y_hyp_min)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (6,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(x_hyp_plus,y_hyp_plus)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (6,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(0,0,'*')
 grid on
 axis equal
