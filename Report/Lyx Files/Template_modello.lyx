@@ -2622,7 +2622,7 @@ find
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3501,10 +3501,11 @@ The time needed for the flyby can be easily calculated from the time law
 \begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset listings
+lstparams "basicstyle={\footnotesize\ttfamily}"
 inline false
 status open
 
