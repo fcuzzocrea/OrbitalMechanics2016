@@ -139,38 +139,6 @@ pagenumbering{roman}
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{multicols}{2}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{multicols}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
 
@@ -255,7 +223,7 @@ zed by a a semi major axis greater than the one of the Earth; the perihelion
 
 \size small
 The procedure applied in order to design the transfer is divided in three
- main steps : 
+ main steps: 
 \end_layout
 
 \begin_layout Enumerate
@@ -280,7 +248,7 @@ Solve the Lambert's problem for every possible combination of TOFs at intervals
 \noindent
 
 \size small
-Evaluation of the best Lambert's arc .
+Evaluation of the best Lambert's arc.
 \end_layout
 
 \begin_layout Standard
@@ -292,7 +260,7 @@ A suboptimal solution is then chosen in order to respect the assigned launcher's
  C3 constraint.
  A qualitative comparison with a classical Hohmann transfer is then carried
  out in order to evaluate the differences in terms of 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  between the two solutions.
@@ -331,7 +299,7 @@ status collapsed
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -539,16 +507,16 @@ For the Lambert's problem, two position vectors and the time of flight between
 \align block
 
 \size small
-The MATLAB function that given initial and final position vector solve the
- Lambert's problem and gives as outputs the orbital parameters of the transfer
- ellipse is called at every step of the main routine.
+The MATLAB function that solves the Lambert's problem, given initial and
+ final position vector, and gives as outputs the orbital parameters of the
+ transfer ellipse is called at every step of the main routine.
  Once the initial velocity and the final velocity of the Lambert's arc are
  evaluated by the function, the total cost of the transfer ellipse in terms
  of 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
- can be easily evaluated by the following calculation : 
+ can be easily evaluated by the following calculation:
 \end_layout
 
 \begin_layout Standard
@@ -558,7 +526,7 @@ The MATLAB function that given initial and final position vector solve the
 \size small
 \begin_inset Formula 
 \[
-\triangle V_{a}=V_{trans_{A}}-V_{sat}
+\Delta V_{a}=V_{trans_{A}}-V_{sat}
 \]
 
 \end_inset
@@ -573,7 +541,7 @@ The MATLAB function that given initial and final position vector solve the
 \size small
 \begin_inset Formula 
 \[
-\triangle V_{b}=V_{sat}-V_{trans_{B}}
+\Delta V_{b}=V_{sat}-V_{trans_{B}}
 \]
 
 \end_inset
@@ -588,7 +556,7 @@ The MATLAB function that given initial and final position vector solve the
 \size small
 \begin_inset Formula 
 \[
-\triangle V_{TOT}=|\triangle V_{a}|+|\triangle V_{b}|
+\Delta V_{TOT}=|\Delta V_{a}|+|\Delta V_{b}|
 \]
 
 \end_inset
@@ -608,7 +576,7 @@ reference "fig:Lambert's-Arc"
 
 \end_inset
 
- :
+:
 \end_layout
 
 \begin_layout Standard
@@ -673,9 +641,9 @@ Design Strategy
 \size small
 In order to obtain the best orbital transfer we have developed a MATLAB
  script that, once all the possible combinations of TOFs are evaluated,
- launch a main routine in which are then evaluated Lambert's arcs for each
- possible combinations of departure days and arrival days at intervals of
- one week.
+ launches a main routine in which the Lambert's arcs are then evaluated
+ for each possible combinations of departure time and arrival time, at intervals
+ of one week.
 \end_layout
 
 \begin_layout Subsection
@@ -697,9 +665,9 @@ name "subsec:TOFs-Calculation"
 \align block
 
 \size small
-Since the computation should be done for every possible combination departure
- and arrival dates, a function has been developed that basically build a
- matrix with all the TOFs in the following way :
+Since the computation should be done for every possible combination of departure
+ and arrival dates, a function has been developed to basically build a matrix
+ with all the TOFs in the following way:
 \end_layout
 
 \begin_layout Standard
@@ -841,7 +809,7 @@ reference "alg:DV-Matrix-Computation"
 
 \end_inset
 
- : 
+: 
 \end_layout
 
 \begin_layout Standard
@@ -969,7 +937,7 @@ end
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  Matrix Computation
@@ -997,13 +965,13 @@ name "alg:DV-Matrix-Computation"
 \align block
 
 \size small
-As we can see, the for cycle pass through each day and compute the Lambert's
+As we can see, the for cycle passes through each day and computes the Lambert's
  arcs for all the combinations of launch date and arrival date.
  Then the total 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
- for each of the arc is computed and stored in a 2D matrix.
+ for each one of the arcs is computed and stored in a 2D matrix.
 \end_layout
 
 \begin_layout Subsection
@@ -1019,8 +987,8 @@ The Pork Chop Plot
 
 \size small
 A pork chop plot is a data visualization tool that can be used in interplanetary
- mission design, because displays contours of various quantities as a function
- of departure and arrival date.
+ mission design, because it displays contours of various quantities as a
+ function of departure and arrival date.
  For the Earth-Florence transfer we get the pork chop plot shown in figure
  
 \begin_inset CommandInset ref
@@ -1042,7 +1010,7 @@ reference "fig:Pork-Chop-Plot"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -1050,15 +1018,22 @@ status collapsed
 
 \size small
 \begin_inset Graphics
-	filename gfx/3d_porkchopplot.png
-	scale 30
+	filename gfx/3d_porkchopplot_new.png
+	width 100text%
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
 \begin_inset Graphics
-	filename gfx/PorkChop_contour.png
-	scale 30
+	filename gfx/PorkChop_contour_new.png
+	width 100text%
 
 \end_inset
 
@@ -1103,8 +1078,15 @@ name "fig:Pork-Chop-Plot"
 \size small
 in which the x-axis is the Earth departure date, the y-axis is the Florence
  arrival date.
- The contour lines show the sum of Earth departure C3 and Florence arrival
- C3, where C3 is the 
+ The contour lines show the sum of Earth departure 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ and Florence arrival 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+, which are related to the C3, the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1112,18 +1094,21 @@ characteristic energy
 \begin_inset Quotes erd
 \end_inset
 
- of the departure or arrival, and is equal to the 
-\begin_inset Formula $V_{\infty}^{2}$
-\end_inset
-
- of the hyperbolic trajectory.
+ of the departure or arrival.
  So, each point on the curve represents a transfer (computed using the Lambert
  solver shown in the previous section).
- A given contour, called a pork chop curve, represents constant C3, and
- the center of the pork chop the optimal minimum C3, and thus optimal transfers.
+ A given contour, called a pork chop curve, represents constant 
+\begin_inset Formula $\Delta V_{TOT}$
+\end_inset
+
+, and the center of the pork chop the optimal minimum 
+\begin_inset Formula $\Delta V_{TOT}$
+\end_inset
+
+, and thus the optimal transfer trajectory.
  On top of the Pork Chop Plot we have also superimposed the TOFs constant
  lines that are visible in red.
- As we can see from the pork chop plot there are different zones of minimum
+ As we can see from the pork chop plot, there are different zones of minimum
  which can be selected as possible departure window and arrival window.
 \end_layout
 
@@ -1140,14 +1125,14 @@ Best Transfer Arc
 
 \size small
 The best 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
- can be extracted from the 
-\begin_inset Formula $\triangle V$
+ can be extracted from the
+\begin_inset Formula $\Delta V$
 \end_inset
 
- matrix by simply taking is minimum, then using the MATLAB function 
+ matrix by simply taking is minimum, then, using the MATLAB function 
 \begin_inset listings
 lstparams "language=Matlab"
 inline true
@@ -1160,9 +1145,9 @@ find
 
 \end_inset
 
- we can retrieve its position in terms of rows and columns in the matrix
+, we can retrieve its position in terms of rows and columns in the matrix
  itself so we can retrieve departure position and arrival position from
- its respective vectors : 
+ its respective vectors: 
 \end_layout
 
 \begin_layout Standard
@@ -1225,7 +1210,7 @@ r2_arc = r_arr_vect(COLUMN,:);
 
 \begin_layout Plain Layout
 Minimum 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  
@@ -1247,7 +1232,7 @@ Minimum
 
 \size small
 As result we can see that the minimum 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  is about 
@@ -1255,7 +1240,7 @@ As result we can see that the minimum
 \end_inset
 
 , while the maximum 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  is about 
@@ -1271,11 +1256,11 @@ As result we can see that the minimum
 \align block
 
 \size small
-The transfer arc that correspond to the minimum 
-\begin_inset Formula $\triangle V$
+The transfer arc that corresponds to the minimum 
+\begin_inset Formula $\Delta V$
 \end_inset
 
- can be now integrated and it's path is shown in figure 
+ can now be integrated and its path is shown in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Transfer-Arcs"
@@ -1365,7 +1350,7 @@ reference "fig:Transfer-Arcs"
 \end_inset
 
  that is the value in the 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  matrix that is nearest to the given 
@@ -1374,14 +1359,14 @@ reference "fig:Transfer-Arcs"
 
 .
  As a result we get a 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  of 
 \begin_inset Formula $12.0893\:km/s$
 \end_inset
 
-, that is slightly larger of the one founded for the best transfer arc.
+, that is slightly larger than the one found for the best transfer arc.
  As result also the path is more or less equal, as it can be seen from figure
  
 \begin_inset CommandInset ref
@@ -1522,7 +1507,7 @@ Hohmann Transfer Comparison
 \align block
 
 \size small
-For doing the Hohmann transfer comparison, the MATLAB functions 
+To do the Hohmann transfer comparison, the MATLAB functions 
 \begin_inset listings
 lstparams "basicstyle={\ttfamily}"
 inline true
@@ -1561,8 +1546,8 @@ anoperichange.m
 
 \end_inset
 
- have been developed, that are then called in the main script in order to
- compute the cost of an hypothetically Hohmann transfer from the Earth to
+ have been developed, and are then called in the main script in order to
+ compute the cost of an hypothetical Hohmann transfer from the Earth to
  Florence asteroids.
 \end_layout
 
@@ -1579,13 +1564,13 @@ Since the two orbits are on different planes, a change of inclination
 \begin_inset Formula $\omega$
 \end_inset
 
- is done in order to put the spacecraft in the Florence orbit since the
+ is done in order to put the spacecraft in the Florence orbit, since the
  two orbits are not coaxial.
- In order to reach the maximum efficiency in terms of 
-\begin_inset Formula $\triangle V$
+ In order to reach the maximum efficiency in terms of
+\begin_inset Formula $\Delta V$
 \end_inset
 
- , the change of inclination is done after the change of semi major axis.
+, the change of inclination is done after the change of semi major axis.
 \end_layout
 
 \begin_layout Standard
@@ -1593,9 +1578,9 @@ Since the two orbits are on different planes, a change of inclination
 \align block
 
 \size small
-As expected however, the overall cost of an Hohmann transfer is greater
+However, as expected, the overall cost of an Hohmann transfer is greater
  than the Lambert's arc strategy due to the change of plane, in fact the
- results are :
+ results are:
 \end_layout
 
 \begin_layout Standard
@@ -1635,7 +1620,7 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $\triangle V\:[km/s]$
+\begin_inset Formula $\Delta V\:[km/s]$
 \end_inset
 
  
@@ -1827,7 +1812,7 @@ Introduction
 \align block
 
 \size small
-The aim of this chapter is to explain to design an interplanetary trajectory
+The aim of this chapter is to explain the design of an interplanetary trajectory
  from Mars to Neptune with a flyby on Saturn.
  
 \end_layout
@@ -1848,7 +1833,7 @@ status collapsed
 
 \size small
 \begin_inset Graphics
-	filename gfx/saturn_mars_neptune_2d.png
+	filename gfx/saturn_mars_neptune_2d_new.png
 	scale 45
 
 \end_inset
@@ -1890,7 +1875,7 @@ reference "fig:Given-Orbits"
 
  are all on different planes, so Lambert's solution from Mars orbit to Saturn
  orbit and from Saturn orbit to Neptune orbit will be evaluated for the
- entire time window, ad interval of 100 days due to computing constraint.
+ entire time window, at interval of 100 days, due to computing time constraints.
  
 \end_layout
 
@@ -1899,8 +1884,8 @@ reference "fig:Given-Orbits"
 \align block
 
 \size small
-The procedure applied in order to design the transfer is divided in three
- main steps : 
+The procedure applied in order to design the transfer is divided in four
+ main steps: 
 \end_layout
 
 \begin_layout Enumerate
@@ -1959,7 +1944,7 @@ The method of the patched conics
 \size small
 Interplanetary mission no longer conform to the idealized two-body problem.
  Just the fact that some vehicle is attempting to leave one planet to traverse
- the solar system which revolves about the Sun in order to reach another
+ the solar system, which revolves around the Sun, in order to reach another
  planet introduces at least three bodies.
  To make matters worse, interplanetary travel is also subject to the forces
  of other planets and objects which may be near to or in between the initial
@@ -1972,8 +1957,9 @@ Interplanetary mission no longer conform to the idealized two-body problem.
 
 \size small
 In order to simplify interplanetary missions design, a method known as patched
- (or linked) conics method has been developed, that break the multy-body
- system into three different sections of two body problems.
+ (or linked) conics method has been developed.
+ It basically breaks the multy-body system into three different sections
+ of two body problems.
  We define the sphere of influence (from now on SOI) of the planet as an
  attempt to mark the location where the Sun's gravitational effects become
  dominant with respect to the planet's one.
@@ -2003,7 +1989,7 @@ Initial planet's SOI where the spacecraft leaves planet's on hyperbolic
 \align block
 
 \size small
-Elliptical trajectory about the sun from initial planet toward the final
+Elliptical trajectory about the sun from initial planet towards the final
  planet;
 \end_layout
 
@@ -2013,9 +1999,9 @@ Elliptical trajectory about the sun from initial planet toward the final
 
 \size small
 Entering into the final planet's SOI on an hyperbolic capture trajectory
- and maneuvering in order to enter into an elliptical parking orbit about
- the final planet or descend to the planet surface.
- Or flyby to another destination.
+ and maneuvering in order to enter into an elliptical parking orbit around
+ the final planet or descend to the planet surface, or flyby to another
+ destination.
 \end_layout
 
 \begin_layout Standard
@@ -2071,7 +2057,7 @@ Method of Patched Conics
 \align block
 
 \size small
-The expression of the SOI of a planet orbiting the sun is given by : 
+The expression of the SOI of a planet orbiting the sun is given by: 
 \end_layout
 
 \begin_layout Standard
@@ -2148,9 +2134,10 @@ reference "subsec:TOFs-Calculation"
 
 .
  The resultant TOFs matrix is diagonal because half of evaluated TOFs can't
- be accepted mainly due to the fact that the two arcs have basically the
- same window and the situation in which the departure from Saturn to Neptune
- happens before the departure from Mars to Saturn should be avoided.
+ be accepted as the departure time window and the arrival time window are
+ the same, so half of the matrix contains negative time intervals.
+ Also the situation in which the departure from Saturn to Neptune happens
+ before the departure from Mars to Saturn should be avoided.
 \end_layout
 
 \begin_layout Subsection
@@ -2162,7 +2149,7 @@ The Main Routine
 \begin_layout Standard
 
 \size small
-The main routine has been developed by modifying slightly the algorithm
+The main routine has been developed by slightly modifying the algorithm
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2177,7 +2164,7 @@ reference "subsec:The-Main-Routine"
 
 \end_inset
 
- :
+:
 \end_layout
 
 \begin_layout Standard
@@ -2425,7 +2412,7 @@ name "alg:--Matrix_dv_3d"
 \end_inset
 
 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  Matrix Computation for Flyby
@@ -2455,22 +2442,22 @@ reference "alg:--Matrix_dv_3d"
  The second cycle calculates the Lambert's arc that goes from Mars to Saturn,
  while the third cycle calculates the arc that goes from Saturn to Neptune.
  The total 
-\begin_inset Formula $\triangle Vs$
+\begin_inset Formula $\Delta Vs$
 \end_inset
 
  that is computed by summation of the 
-\begin_inset Formula $\triangle Vs$
+\begin_inset Formula $\Delta Vs$
 \end_inset
 
  required for both arcs are then stored on a 3D tensor.
  Inside the inner cycle is also computed the 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  that is supplied for free by the planet.
  If during the cycle any TOF is negative will be automatically skipped.
  With respect to the previous 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  matrix (the one of section 
@@ -2551,11 +2538,11 @@ Transfer Arcs
 
 \size small
 The more energy efficient 
-\begin_inset Formula $\triangle Vs$
+\begin_inset Formula $\Delta Vs$
 \end_inset
 
  for both arcs can be extracted from the 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  matrix by simply taking is minimum.
@@ -2568,7 +2555,7 @@ depth
 \end_inset
 
  inside the 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  matrix the MATLAB command 
@@ -2622,7 +2609,7 @@ find
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -2775,12 +2762,12 @@ Best Transfer Arcs
 
 \size small
 The minimum 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  (that is given by the sum of both the two arcs) found by analyzing the
  
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  matrix is 
@@ -2794,7 +2781,7 @@ The minimum
 \begin_layout Standard
 
 \size small
-In the below plots are shown the two correspondent Lambert's arcs in the
+In the plots below are shown the two correspondent Lambert's arcs in the
  heliocentric reference frame and in the planetocentric reference frame
  :
 \end_layout
@@ -2814,15 +2801,22 @@ status collapsed
 
 \size small
 \begin_inset Graphics
-	filename gfx/arcs_helio.png
-	scale 30
+	filename gfx/arcs_helio_new.png
+	scale 50
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size small
 \begin_inset Graphics
 	filename gfx/arcs_planeto.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -2840,10 +2834,6 @@ Lambert's Arcs Path
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -2865,7 +2855,7 @@ By examining the two
 \begin_inset Formula $V_{\infty}$
 \end_inset
 
- we can recognize that a small powered gravity assist is needed, since :
+ we can recognize that a small powered gravity assist is needed, since:
 \end_layout
 
 \begin_layout Standard
@@ -2873,7 +2863,7 @@ By examining the two
 \size small
 \begin_inset Formula 
 \[
-\triangle V_{\infty}=V_{\infty^{-}}-V_{\infty^{+}}=(4.7556-4.6619)\:km/s=0.0937\:km/s
+\Delta V_{\infty}=V_{\infty^{-}}-V_{\infty^{+}}=(4.7556-4.6619)\:km/s=0.0937\:km/s
 \]
 
 \end_inset
@@ -2885,14 +2875,14 @@ By examining the two
 
 \size small
 In order to compute the amount of 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  that should be given at pericenter a constrained nonlinear system with
  boundary value conditions has to be solved to retrieve the radius of the
- pericenter, that can be then used to compute all the value needed to estimate
+ pericenter, that can be then used to compute all the values needed to estimate
  the 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  of the gravity assist.
@@ -3022,7 +3012,7 @@ delta
 \end_inset
 
 .
- As result we get : 
+ As result we get: 
 \end_layout
 
 \begin_layout Standard
@@ -3041,7 +3031,7 @@ r_{p}=8.1008e+05\:km
 \begin_layout Standard
 
 \size small
-which means that the altitude from saturn is :
+which means that the altitude from saturn is:
 \end_layout
 
 \begin_layout Standard
@@ -3076,7 +3066,7 @@ reference "tab:Hypebolas-Results"
 
 \end_inset
 
- :
+:
 \end_layout
 
 \begin_layout Standard
@@ -3431,7 +3421,7 @@ Hyperbolas Results
 
 \size small
 So the amount of 
-\begin_inset Formula $\triangle V$
+\begin_inset Formula $\Delta V$
 \end_inset
 
  that should be given at pericenter in order to perform the powered gravity
@@ -3441,7 +3431,7 @@ So the amount of
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\triangle V_{p}=v_{p^{+}}-v_{p^{-}}=0.0410\:km/s
+\Delta V_{p}=v_{p^{+}}-v_{p^{-}}=0.0410\:km/s
 \]
 
 \end_inset
@@ -3494,14 +3484,14 @@ The time needed for the flyby can be easily calculated from the time law
 \begin_inset Formula $F$
 \end_inset
 
- :
+:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float algorithm
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset listings

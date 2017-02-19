@@ -347,6 +347,9 @@ datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
+clb = colorbar;
+clb.Label.String = '\Delta V (km/s)';
+clb.Label.FontSize = 11;
 
 % Pork chop plot V infinity.
 figure(8)
@@ -373,13 +376,13 @@ grid on
 title('3D Pork chop plot')
 xlabel('Time of arrivals');
 ylabel('Time of departure');
-zlabel('Delta V')
+zlabel('Delta V (km/s)')
 %axis vis3d
-contour3(t_arr,t_dep,Dv_matrix,125);
+% contour3(t_arr,t_dep,Dv_matrix,125);
 caxis([Dv_min Dv_max]);
-[X,Y]=meshgrid(t_arr,t_dep);
-surface(X,Y,Dv_matrix); 
+[X,Y]=meshgrid(t_arr(1:2:end),t_dep(1:2:end));
+surface(X,Y,Dv_matrix(1:2:end,1:2:end)); 
 datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
-set(gca,'YTickLabelRotation',45)
+% set(gca,'XTickLabelRotation',45)
+% set(gca,'YTickLabelRotation',45)

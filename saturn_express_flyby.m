@@ -307,6 +307,7 @@ whitebg(figure(1), 'black')
 plot3(rx_mars,ry_mars,rz_mars);
 plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
+axis equal
 legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit')
 title('Orbits in Heliocentric Frame')
 
@@ -354,6 +355,7 @@ plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
 plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
 plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
+axis equal
 legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit', 'First Transfer Arc','Second Transfer Arc')
 title('Orbits and Lamberts Arc in Heliocentric Frame')
 
