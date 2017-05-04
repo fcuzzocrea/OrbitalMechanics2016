@@ -77,7 +77,7 @@ ibody_neptune = 8;
 
 %% ITERATIVE ROUTINE
 
-[DV_MIN, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
+[DV_MIN_ir, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
 
 %% INTERIOR POINT ALGORITHM WITH FMINCON
 
@@ -85,7 +85,42 @@ ibody_neptune = 8;
 
 %% GENETIC ALGORITHM
 
-[DV_MIN_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga] = Flyby_GA(1);
+[DV_MIN_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga] = Flyby_GA(10);
+
+%% OPTIMUM DELTAV SELECTION
+
+DV_OPT = [DV_MIN_ir, DV_MIN_fmc, DV_MIN_ga];
+
+DV_MIN = min(DV_OPT);
+
+if DV_MIN == DV_MIN_ir
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH ITERATIVE ROUTINE\n');
+    fclose(fileID);
+    r1_arc = r1_arc_ir;
+    r2_arc = r2_arc_ir;
+    r3_arc = r3_arc_ir;
+    v_saturn = v_saturn_ir; 
+    t_saturn = t_saturn_ir;
+elseif DV_MIN == DV_MIN_fmc
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH FMINCON\n');
+    fclose(fileID);
+    r1_arc = r1_arc_fmc;
+    r2_arc = r2_arc_fmc;
+    r3_arc = r3_arc_fmc;
+    v_saturn = v_saturn_fmc; 
+    t_saturn = t_saturn_fmc;
+elseif DV_MIN == DV_MIN_ga
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH GENETIC ALGORITHM\n');
+    fclose(fileID);
+    r1_arc = r1_arc_ga;
+    r2_arc = r2_arc_ga;
+    r3_arc = r3_arc_ga;
+    v_saturn = v_saturn_ga; 
+    t_saturn = t_saturn_ga;
+end
 
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DELTAV MIN %f: \n',DV_MIN);
