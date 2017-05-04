@@ -77,15 +77,15 @@ ibody_neptune = 8;
 
 %% ITERATIVE ROUTINE
 
-[DV_MIN_ir, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
+[DV_MIN_ir, DV_MAX, Dv_min_TOF_1_ir, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2_ir, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
 
 %% INTERIOR POINT ALGORITHM WITH FMINCON
 
-[DV_MIN_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc] = Fmincon_Flyby (t_dep);
+[DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc] = Fmincon_Flyby (t_dep);
 
 %% GENETIC ALGORITHM
 
-[DV_MIN_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga] = Flyby_GA(5);
+[DV_MIN_ga, Dv_min_TOF_1_ga, Dv_min_TOF_2_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga, dv_ga] = Flyby_GA(0);
 
 %% OPTIMUM DELTAV SELECTION
 
@@ -102,6 +102,8 @@ if DV_MIN == DV_MIN_ir
     r3_arc = r3_arc_ir;
     v_saturn = v_saturn_ir; 
     t_saturn = t_saturn_ir;
+    Dv_min_TOF_1 = Dv_min_TOF_1_ir;
+    Dv_min_TOF_2 = Dv_min_TOF_2_ir;
 elseif DV_MIN == DV_MIN_fmc
     fileID = fopen(filename,'a+');
     fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH FMINCON\n');
@@ -111,6 +113,8 @@ elseif DV_MIN == DV_MIN_fmc
     r3_arc = r3_arc_fmc;
     v_saturn = v_saturn_fmc; 
     t_saturn = t_saturn_fmc;
+    Dv_min_TOF_1 = Dv_min_TOF_1_fmc;
+    Dv_min_TOF_2 = Dv_min_TOF_2_fmc;
 elseif DV_MIN == DV_MIN_ga
     fileID = fopen(filename,'a+');
     fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH GENETIC ALGORITHM\n');
@@ -120,6 +124,8 @@ elseif DV_MIN == DV_MIN_ga
     r3_arc = r3_arc_ga;
     v_saturn = v_saturn_ga; 
     t_saturn = t_saturn_ga;
+    Dv_min_TOF_1 = Dv_min_TOF_1_ga;
+    Dv_min_TOF_2 = Dv_min_TOF_2_ga;
 end
 
 fileID = fopen(filename,'a+');
@@ -137,7 +143,7 @@ fclose(fileID);
 
 % V infinity
 
-v_inf_min = (VF_arc1 - v_saturn' );
+v_inf_min = (VF_arc1 - v_saturn');
 v_inf_plus = (VI_arc2 - v_saturn');
 
 %% FLYBY
@@ -186,7 +192,7 @@ fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
 fclose(fileID);
 
 % SOI Data
-r_soi_saturn = astroConstants(2)*59.879*((astroConstants(16)/astroConstants(1))/(astroConstants(4)/astroConstants(1)))^(2/5);
+r_soi_saturn = astroConstants(2)*9.53707032*(astroConstants(16)/astroConstants(4))^(2/5);
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Saturn SOI radius %f : \n',r_soi_saturn);
 fclose(fileID);

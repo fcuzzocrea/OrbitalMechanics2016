@@ -1,4 +1,4 @@
-function [Dv, r_mars, r_saturn, r_neptune, v_saturn] = dv_optimizator(x)
+function [Dv, r_mars, r_saturn, r_neptune, v_saturn, dv_ga] = dv_optimizator(x)
 
 ibody_mars = 4;
 ibody_saturn = 6;
