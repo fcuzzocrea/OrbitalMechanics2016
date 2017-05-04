@@ -77,7 +77,7 @@ ibody_neptune = 8;
 
 %% ITERATIVE ROUTINE
 
-[DV_MIN, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
+[DV_MIN_ir, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
 
 %% INTERIOR POINT ALGORITHM WITH FMINCON
 
@@ -85,7 +85,42 @@ ibody_neptune = 8;
 
 %% GENETIC ALGORITHM
 
-[DV_MIN_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga] = Flyby_GA(1);
+[DV_MIN_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga] = Flyby_GA(5);
+
+%% OPTIMUM DELTAV SELECTION
+
+DV_OPT = [DV_MIN_ir, DV_MIN_fmc, DV_MIN_ga];
+
+DV_MIN = min(DV_OPT);
+
+if DV_MIN == DV_MIN_ir
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH ITERATIVE ROUTINE\n');
+    fclose(fileID);
+    r1_arc = r1_arc_ir;
+    r2_arc = r2_arc_ir;
+    r3_arc = r3_arc_ir;
+    v_saturn = v_saturn_ir; 
+    t_saturn = t_saturn_ir;
+elseif DV_MIN == DV_MIN_fmc
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH FMINCON\n');
+    fclose(fileID);
+    r1_arc = r1_arc_fmc;
+    r2_arc = r2_arc_fmc;
+    r3_arc = r3_arc_fmc;
+    v_saturn = v_saturn_fmc; 
+    t_saturn = t_saturn_fmc;
+elseif DV_MIN == DV_MIN_ga
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST TRANSFER FOUND WITH GENETIC ALGORITHM\n');
+    fclose(fileID);
+    r1_arc = r1_arc_ga;
+    r2_arc = r2_arc_ga;
+    r3_arc = r3_arc_ga;
+    v_saturn = v_saturn_ga; 
+    t_saturn = t_saturn_ga;
+end
 
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DELTAV MIN %f: \n',DV_MIN);
@@ -102,8 +137,8 @@ fclose(fileID);
 
 % V infinity
 
-v_inf_min = (VF_arc1 - v_saturn );
-v_inf_plus = (VI_arc2 - v_saturn);
+v_inf_min = (VF_arc1 - v_saturn' );
+v_inf_plus = (VI_arc2 - v_saturn');
 
 %% FLYBY
 
@@ -114,7 +149,7 @@ end
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
 ksaturn = astroConstants(16);
 f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn))) - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn)));
-r_p = fzero(f,1000000);
+r_p = fzero(f,10000000);
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola %f: \n',r_p);
 fclose(fileID);
@@ -170,9 +205,9 @@ y_hyp_plus = b_plus*((sqrt(e_plus)^2*sin(theta_plus))./(1+e_plus*cos(theta_plus)
 
 
 % Flyby Time
-F_min = acosh((cos(theta_SOI_min*2) + e_min)/(1 + e_min*cos(theta_SOI_min*2)));
+F_min = acosh((cos(theta_SOI_min) + e_min)/(1 + e_min*cos(theta_SOI_min)));
 dt_min = sqrt(a_min^3/ksaturn)*(e_min*sinh(F_min)-F_min);
-F_plus = acosh((cos(theta_SOI_plus*2) + e_plus)/(1 + e_plus*cos(theta_SOI_plus*2)));
+F_plus = acosh((cos(theta_SOI_plus) + e_plus)/(1 + e_plus*cos(theta_SOI_plus)));
 dt_plus = sqrt(a_plus^3/ksaturn)*(e_plus*sinh(F_plus)-F_plus);
 dt_tot = dt_min+dt_plus;
 dt_tot_days = dt_tot*1.1574e-5;
@@ -204,7 +239,9 @@ T = RM_theta*RM_omg*RM_i*RM_OMG;
 v_inf_min_saturn = T*v_inf_min';
 v_inf_plus_saturn = T*v_inf_plus';
 k_direction = cross(v_inf_min_saturn,v_inf_plus_saturn);
-k_direction = k_direction/norm(k_direction);
+k_direction = k_direction/norm(k_direction); 
+
+
 
 % Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
