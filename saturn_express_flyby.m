@@ -186,7 +186,7 @@ fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
 fclose(fileID);
 
 % SOI Data
-r_soi_saturn = astroConstants(2)*59.879*((astroConstants(16)/astroConstants(1))/(astroConstants(4)/astroConstants(1)))^(2/5);
+r_soi_saturn = astroConstants(2)*59879*((astroConstants(16)/astroConstants(1))/(astroConstants(4)/astroConstants(1)))^(2/5);
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Saturn SOI radius %f : \n',r_soi_saturn);
 fclose(fileID);
@@ -240,8 +240,6 @@ v_inf_min_saturn = T*v_inf_min';
 v_inf_plus_saturn = T*v_inf_plus';
 k_direction = cross(v_inf_min_saturn,v_inf_plus_saturn);
 k_direction = k_direction/norm(k_direction); 
-
-
 
 % Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
