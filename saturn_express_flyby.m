@@ -192,6 +192,7 @@ fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
 fclose(fileID);
 
 % SOI Data
+
 r_soi_saturn = astroConstants(2)*9.53707032*(astroConstants(16)/astroConstants(4))^(2/5);
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Saturn SOI radius %f : \n',r_soi_saturn);
