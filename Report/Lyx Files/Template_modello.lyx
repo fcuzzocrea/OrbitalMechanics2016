@@ -2120,7 +2120,7 @@ To obtain the most energy efficient flyby, a MATLAB script has been developed.
  arrival/departure to/from Saturn.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 
 \size normal
 TOFs Calculation
@@ -2144,10 +2144,10 @@ reference "subsec:TOFs-Calculation"
  before the departure from Mars to Saturn should be avoided.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 
 \size normal
-The Main Routine
+The Main Cycle
 \end_layout
 
 \begin_layout Standard
@@ -2530,7 +2530,7 @@ Pork Chop Plots of the Two Paths
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 
 \size normal
 Transfer Arcs
@@ -2762,30 +2762,8 @@ Best Transfer Arcs
 
 \end_layout
 
-\begin_layout Paragraph
-
-\size normal
-Powered Gravity Assist
-\end_layout
-
 \begin_layout Standard
-
-\size small
-By examining the two 
-\begin_inset Formula $V_{\infty}$
-\end_inset
-
- we can recognize that a small powered gravity assist is needed, since:
-\end_layout
-
-\begin_layout Standard
-
-\size small
-\begin_inset Formula 
-\[
-\Delta V_{\infty}=V_{\infty^{-}}-V_{\infty^{+}}=(4.7556-4.6619)\:km/s=0.0937\:km/s
-\]
-
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -2807,7 +2785,7 @@ Genetic algorithm
 blablabla
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Hyperbola parameters
 \end_layout
 
@@ -2950,7 +2928,7 @@ In the plots below are shown the two correspondent Lambert's arcs in the
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -2959,7 +2937,7 @@ status collapsed
 \size small
 \begin_inset Graphics
 	filename gfx/arcs_helio_new.png
-	scale 50
+	scale 70
 
 \end_inset
 
@@ -2973,7 +2951,7 @@ status collapsed
 \size small
 \begin_inset Graphics
 	filename gfx/arcs_planeto.png
-	scale 50
+	scale 70
 
 \end_inset
 
@@ -3203,7 +3181,7 @@ reference "tab:Hypebolas-Results"
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -3546,8 +3524,14 @@ Hyperbolas Results
 \end_layout
 
 \begin_layout Standard
-The powered gravity assist for this transfer is not needed.
- In the figure below is shown the flyby from a 2D and a 3D perspective
+As we can see from the parameter of the two hyperbolas, a powered gravity
+ assist for this transfer is nearly not needed, since those two orbits are
+ almost lying on the same orbital plane.
+ 
+\end_layout
+
+\begin_layout Standard
+In the figure below is shown the flyby from a 2D and a 3D perspective
 \end_layout
 
 \begin_layout Standard
@@ -3561,14 +3545,14 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename gfx/flyby.png
-	scale 45
+	scale 70
 
 \end_inset
 
  
 \begin_inset Graphics
 	filename gfx/3d_hyperbola.png
-	scale 45
+	scale 70
 
 \end_inset
 
