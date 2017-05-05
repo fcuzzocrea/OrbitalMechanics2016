@@ -58,7 +58,7 @@ if ga_it
     vect_dv(ga_it) = 0;
     options = optimoptions('ga','Display','off');
     
-    % We create a population of ga_it elements (obtained by running 
+    % We create a set of ga_it elements (obtained by running 
     % ga_it times the genetic algorithm) 
     parfor i = 1:ga_it
         [t, dv_val] = ga(ObjectiveFunction,nvars,A,b,[],[],LB,UB,[],options);
