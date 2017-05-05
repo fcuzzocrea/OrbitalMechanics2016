@@ -247,16 +247,18 @@ rotm_h_2_plus = axang2rotm(axang_2_min);                 % Scrive la matrice di 
 
 % Radius of pericenter vector
 r_p_versor = (v_inf_min/norm(v_inf_min))*rotm_h_min;
-rp_vector = r_p * rp_versor;
+rp_vector = r_p * r_p_versor;
 
 % Velocity at pericenter vector
-rotation_min = rp_versor*rotm_h_2_min;      % Ruota il versore rp di 90 gradi attorno z per allinearsi con vp
+rotation_min = r_p_versor*rotm_h_2_min;      % Ruota il versore rp di 90 gradi attorno z per allinearsi con vp
 vp_min_vect = vp_min*rotation_min;          % Calcola vp 
-rotation_plus = rp_versor*rotm_h_2_plus;
+rotation_plus = r_p_versor*rotm_h_2_plus;
 vp_plus_vect = vp_plus*rotation_plus;
 
-% Verifica che sia un iperbole : [a_hyp,e_hyp,i_hyp,OMG_hyp,omg_hyp,theta_hyp]=car2kep(rp_vect,vp_min_vect,ksaturn);
-
+% Integrate the two hyperbola arcs
+options = odeset('Reltol',1e-13,'AbsTol',1e-14);
+[~,entering_hyperbola] = ode113(@(t,X) dyn_orb_eq(t,X,ksaturn),(30*86400:-86400:0),[rp_vector, vp_min_vect],options);
+[~,exiting_hyperbola] = ode113(@(t,X) dyn_orb_eq(t,X,ksaturn),(0:86400:30*86400),[rp_vector, vp_plus_vect],options);
 
 %% SATURNOCENTRIC FRAME PLOT
 
@@ -372,4 +374,14 @@ ylabel('Km')
 title('Flyby Hyperbola')
 legend('Entering Hyperbola', 'Exiting Hyperbola')
 
-
+% 3D Hyperbola
+figure(7)
+grid on
+hold on
+plot3(entering_hyperbola(:,1),entering_hyperbola(:,2),entering_hyperbola(:,3));
+plot3(exiting_hyperbola(:,1),exiting_hyperbola(:,2),exiting_hyperbola(:,3));
+axis equal
+legend('Enteing Hyperbola', 'Exiting Hyperbola')
+xlabel('Km')
+ylabel('Km')
+title('Flyby Hyperbola 3D')
