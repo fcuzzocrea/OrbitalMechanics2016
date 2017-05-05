@@ -256,6 +256,8 @@ rotation_plus = rp_versor*rotm_h_2_plus;
 vp_plus_vect = vp_plus*rotation_plus;
 
 % Verifica che sia un iperbole : [a_hyp,e_hyp,i_hyp,OMG_hyp,omg_hyp,theta_hyp]=car2kep(rp_vect,vp_min_vect,ksaturn);
+
+
 %% SATURNOCENTRIC FRAME PLOT
 
 % Rotation matrix : heliocentric -> saturnocentric
