@@ -255,7 +255,7 @@ vp_min_vect = vp_min*rotation_min;          % Calcola vp
 rotation_plus = r_p_versor*rotm_h_2_plus;
 vp_plus_vect = vp_plus*rotation_plus;
 
-% Integrate the two hyperbola arcs
+% Integrate the two hyperbola arcs for the 3D plot
 options = odeset('Reltol',1e-13,'AbsTol',1e-14);
 [~,entering_hyperbola] = ode113(@(t,X) dyn_orb_eq(t,X,ksaturn),(30*86400:-86400:0),[rp_vector, vp_min_vect],options);
 [~,exiting_hyperbola] = ode113(@(t,X) dyn_orb_eq(t,X,ksaturn),(0:86400:30*86400),[rp_vector, vp_plus_vect],options);
