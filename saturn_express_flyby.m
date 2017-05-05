@@ -227,6 +227,29 @@ fclose(fileID);
 % FlyBy altitude from Saturn
 altitude = r_p-astroConstants(26);
 
+% 3D Hyperbola heliocentric frame
+% Get the rotation matrix
+axang = [v_inf_min,beta_min];       % Ruota di beta_min attorno v_inf_meno
+rotm_v_inf_min = axang2rotm(axang); % Scrive la matrice di rotazione
+h = cross(v_inf_min,v_inf_plus);    % Trova h
+h_direction = h/norm(h);            % Tira fuori il versore associato
+rp_versor = h_direction*rotm;       % Ruota il versore h di b attorno v_inf_meno per ottenere un iptetico versore che punta nella direzione dell'eccentricita (???))
+rp_vect = r_p*rp_versor;            % Componenti di r_p
+rotation = rp_versor*rotz(90);      % Ruota il versore rp di 90 gradi attorno z per allinearsi con vp
+vp_min_vect = vp_min*rotation;      % Calcola vp 
+
+
+% Fondamentalmente ho che il versore uscente dal piano e perpendicolare ad esso sara quello dato dal
+% prodotto scalare di vinfmeno x vinfplus. L'orienzione : sara quella tale
+% per cui le due vinf giacciono sullo stesso piano. Ok, dato questo come
+% continuo per plottare l'iperbole ?
+% v_inf_min_saturn = T*v_inf_min';
+% v_inf_plus_saturn = T*v_inf_plus';
+% h = cross(v_inf_min_saturn,v_inf_plus_saturn);
+% h_direction = h/norm(h); 
+% v_inf_min_direction = v_inf_min_saturn/norm(v_inf_min_saturn);
+% rotm = axang2rotm(v_inf_min_saturn, beta_min);
+
 %% SATURNOCENTRIC FRAME PLOT
 
 % Rotation matrix : heliocentric -> saturnocentric
@@ -240,15 +263,6 @@ RM_OMG = [ cos(OMG_sat),sin(OMG_sat), 0; -sin(OMG_sat), cos(OMG_sat), 0; 0, 0, 1
 RM_i = [1, 0, 0; 0, cos(i_sat), sin(i_sat);  0, -sin(i_sat), cos(i_sat)];
 RM_omg = [cos(omg_sat), sin(omg_sat), 0; -sin(omg_sat), cos(omg_sat), 0; 0, 0, 1];
 T = RM_theta*RM_omg*RM_i*RM_OMG;
-
-% Fondamentalmente ho che il versore uscente dal piano e perpendicolare ad esso sara quello dato dal
-% prodotto scalare di vinfmeno x vinfplus. L'orienzione : sara quella tale
-% per cui le due vinf giacciono sullo stesso piano. Ok, dato questo come
-% continuo per plottare l'iperbole ?
-v_inf_min_saturn = T*v_inf_min';
-v_inf_plus_saturn = T*v_inf_plus';
-k_direction = cross(v_inf_min_saturn,v_inf_plus_saturn);
-k_direction = k_direction/norm(k_direction); 
 
 % Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
