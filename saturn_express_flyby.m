@@ -80,10 +80,10 @@ ibody_neptune = 8;
 [DV_MIN_ir, DV_MAX, Dv_min_TOF_1_ir, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2_ir, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
 
 % INTERIOR POINT ALGORITHM WITH FMINCON
-[DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc] = Fmincon_Flyby (t_dep);
+[DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc,~] = Fmincon_Flyby (t_dep);
 
 % GENETIC ALGORITHM
-[DV_MIN_ga, Dv_min_TOF_1_ga, Dv_min_TOF_2_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga, dv_ga] = Flyby_GA(0);
+[DV_MIN_ga, Dv_min_TOF_1_ga, Dv_min_TOF_2_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga,~] = Flyby_GA(0);
 
 %% OPTIMUM DELTAV SELECTOR
 
