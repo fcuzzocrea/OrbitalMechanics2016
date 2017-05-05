@@ -44,11 +44,14 @@ b = [0; 0];
 
 % Upper bound and lower bound are first day and latest day of the given
 % window for the mission
-LB = 5844*[1 1.1 1.2];  
-UB = 20044*[1 1 1]; 
+LB = 5844*[1 1.1 1.2];
+UB = 20044*[1 1 1];
+
+% Options to remove output
+options = optimoptions('fmincon','Display','off');
 
 % Call the optimizator to find best days
-x = fmincon(@dv_optimizator,x0,A,b,[],[],LB,UB);
+x = fmincon(@dv_optimizator,x0,A,b,[],[],LB,UB,[],options);
 
 % Outputs DV_min and the position of the planets evaluated at the days 
 % founded by the fmincon optimizator
