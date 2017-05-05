@@ -54,7 +54,7 @@ end
 options = odeset('Reltol',1e-13,'AbsTol',1e-14);
 
 % Integration with ode113 function
-[T,X] = ode113(@(t,X) dyn_orb_eq(t,X,mu),time,X0,options);
+[~,X] = ode113(@(t,X) dyn_orb_eq(t,X,mu),time,X0,options);
 
 % Definition of the Output after from integration values
 rx_vect = X(:,1);

@@ -1010,7 +1010,7 @@ reference "fig:Pork-Chop-Plot"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -2102,6 +2102,10 @@ ry spacecraft missions, there are missions for which this approximation
 Design Strategy
 \end_layout
 
+\begin_layout Subsection
+Iterative routine
+\end_layout
+
 \begin_layout Standard
 \noindent
 \align block
@@ -2116,7 +2120,7 @@ To obtain the most energy efficient flyby, a MATLAB script has been developed.
  arrival/departure to/from Saturn.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Paragraph
 
 \size normal
 TOFs Calculation
@@ -2140,7 +2144,7 @@ reference "subsec:TOFs-Calculation"
  before the departure from Mars to Saturn should be avoided.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Paragraph
 
 \size normal
 The Main Routine
@@ -2526,7 +2530,7 @@ Pork Chop Plots of the Two Paths
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Paragraph
 
 \size normal
 Transfer Arcs
@@ -2758,6 +2762,55 @@ Best Transfer Arcs
 
 \end_layout
 
+\begin_layout Paragraph
+
+\size normal
+Powered Gravity Assist
+\end_layout
+
+\begin_layout Standard
+
+\size small
+By examining the two 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ we can recognize that a small powered gravity assist is needed, since:
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Formula 
+\[
+\Delta V_{\infty}=V_{\infty^{-}}-V_{\infty^{+}}=(4.7556-4.6619)\:km/s=0.0937\:km/s
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Fmincon optimizator
+\end_layout
+
+\begin_layout Standard
+blablablabla
+\end_layout
+
+\begin_layout Subsection
+Genetic algorithm
+\end_layout
+
+\begin_layout Standard
+blablabla
+\end_layout
+
+\begin_layout Subsection
+Hyperbola parameters
+\end_layout
+
 \begin_layout Standard
 
 \size small
@@ -2765,17 +2818,121 @@ The minimum
 \begin_inset Formula $\Delta V$
 \end_inset
 
- (that is given by the sum of both the two arcs) found by analyzing the
+ (that is given by the sum of both the two arcs) was found by using the
+ genetic algorithm and is : 
+\begin_inset Formula $10.61\,km/s$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then the transfer arcs are computed for the minimum
+\size small
  
 \begin_inset Formula $\Delta V$
 \end_inset
 
- matrix is 
-\begin_inset Formula $22.7448\:km/s$
+ transfer along with the 
+\begin_inset Formula $v_{\infty^{+}}$
 \end_inset
 
-.
- 
+ and the 
+\begin_inset Formula $v_{\infty^{-}}$
+\end_inset
+
+: 
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+% Compute bests transfer arcs 
+\end_layout
+
+\begin_layout Plain Layout
+
+[~,~,~,~,VI_arc1,VF_arc1,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF_1,ksun);
+ [~,~,~,~,VI_arc2,VF_arc2,~,~] = lambertMR(r2_arc,r3_arc,Dv_min_TOF_2,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+[rx_arc_1, ry_arc_1, rz_arc_1, vx_arc_1, vy_arc_1, vz_arc_1] = intARC_lamb(r1_ar
+c,...
+     VI_arc1,ksun,Dv_min_TOF_1,86400);
+\end_layout
+
+\begin_layout Plain Layout
+
+[rx_arc_2, ry_arc_2, rz_arc_2, vx_arc_2, vy_arc_2, vz_arc_2] = intARC_lamb(r2_ar
+c,...
+     VI_arc2,ksun,Dv_min_TOF_2,86400);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% V infinity 
+\end_layout
+
+\begin_layout Plain Layout
+
+v_inf_min = (VF_arc1 - v_saturn'); 
+\end_layout
+
+\begin_layout Plain Layout
+
+v_inf_plus = (VI_arc2 - v_saturn');
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:best_transfer_computation"
+
+\end_inset
+
+Best Transfer Computation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2836,35 +2993,6 @@ Lambert's Arcs Path
 
 
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-
-\size normal
-Powered Gravity Assist
-\end_layout
-
-\begin_layout Standard
-
-\size small
-By examining the two 
-\begin_inset Formula $V_{\infty}$
-\end_inset
-
- we can recognize that a small powered gravity assist is needed, since:
-\end_layout
-
-\begin_layout Standard
-
-\size small
-\begin_inset Formula 
-\[
-\Delta V_{\infty}=V_{\infty^{-}}-V_{\infty^{+}}=(4.7556-4.6619)\:km/s=0.0937\:km/s
-\]
 
 \end_inset
 
@@ -3020,7 +3148,7 @@ delta
 \size small
 \begin_inset Formula 
 \[
-r_{p}=8.1008e+05\:km
+r_{p}=1.27e+06\:km
 \]
 
 \end_inset
@@ -3037,7 +3165,7 @@ which means that the altitude from saturn is:
 \begin_layout Standard
 \begin_inset Formula 
 \[
-altitude=7.5185e+05\:km
+altitude=1.21e+06\:km
 \]
 
 \end_inset
@@ -3049,7 +3177,7 @@ altitude=7.5185e+05\:km
 
 \size small
 that is a reasonable result since the radius of Saturn's SOI is 
-\begin_inset Formula $3.4247e+08\:km$
+\begin_inset Formula $5.45e+07\:km$
 \end_inset
 
  .
@@ -3075,7 +3203,7 @@ reference "tab:Hypebolas-Results"
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -3142,7 +3270,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $1.4830$
+\begin_inset Formula $2.07187733056$
 \end_inset
 
 
@@ -3156,7 +3284,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $1.4642$
+\begin_inset Formula $2.07187733047$
 \end_inset
 
 
@@ -3186,7 +3314,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $1.4830\:rad$
+\begin_inset Formula $0.96530811476\:rad$
 \end_inset
 
 
@@ -3200,7 +3328,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $1.3660\:rad$
+\begin_inset Formula $0.96530811481\:rad$
 \end_inset
 
 
@@ -3230,7 +3358,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $1.8367e+06\:km$
+\begin_inset Formula $2.1588150264887e+06\:km$
 \end_inset
 
 
@@ -3244,7 +3372,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $1.8665e+06\:km$
+\begin_inset Formula $2.1588150265496e+06\:km$
 \end_inset
 
 
@@ -3274,7 +3402,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $2.3108\:rad$
+\begin_inset Formula $2.07447891699\:rad$
 \end_inset
 
 
@@ -3288,7 +3416,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $2.3226\:rad$
+\begin_inset Formula $2.0744789170\:rad$
 \end_inset
 
 
@@ -3318,7 +3446,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $0.8308\:rad$
+\begin_inset Formula $1.06711373659\:rad$
 \end_inset
 
 
@@ -3332,7 +3460,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $0.8189\:rad$
+\begin_inset Formula $1.06711373657\:rad$
 \end_inset
 
 
@@ -3362,7 +3490,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $10.7825\:km/s$
+\begin_inset Formula $9.55885975030\:km/s$
 \end_inset
 
 
@@ -3376,7 +3504,7 @@ Exiting Hyperbola
 \begin_layout Plain Layout
 
 \size small
-\begin_inset Formula $10.7415\:km/s$
+\begin_inset Formula $9.55885975015\:km/s$
 \end_inset
 
 
@@ -3418,25 +3546,8 @@ Hyperbolas Results
 \end_layout
 
 \begin_layout Standard
-
-\size small
-So the amount of 
-\begin_inset Formula $\Delta V$
-\end_inset
-
- that should be given at pericenter in order to perform the powered gravity
- assist and inject the spacecraft into the second Lambert's arc is : 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\Delta V_{p}=v_{p^{+}}-v_{p^{-}}=0.0410\:km/s
-\]
-
-\end_inset
-
-
+The powered gravity assist for this transfer is not needed.
+ In the figure below is shown the flyby from a 2D and a 3D perspective
 \end_layout
 
 \begin_layout Standard
@@ -3450,6 +3561,13 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename gfx/flyby.png
+	scale 45
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename gfx/3d_hyperbola.png
 	scale 45
 
 \end_inset
@@ -3501,7 +3619,7 @@ status open
 
 \begin_layout Plain Layout
 
-F_min = acosh((cos(theta_SOI_min*2) + e_min)/(1 + e_min*cos(theta_SOI_min*2)));
+F_min = acosh((cos(theta_SOI_min) + e_min)/(1 + e_min*cos(theta_SOI_min)));
  
 \end_layout
 
@@ -3512,8 +3630,8 @@ dt_min = sqrt(a_min^3/ksaturn)*(e_min*sinh(F_min)-F_min);
 
 \begin_layout Plain Layout
 
-F_plus = acosh((cos(theta_SOI_plus*2) + e_plus)/(1 + e_plus*cos(theta_SOI_plus*2
-))); 
+F_plus = acosh((cos(theta_SOI_plus) + e_plus)/(1 + e_plus*cos(theta_SOI_plus)));
+ 
 \end_layout
 
 \begin_layout Plain Layout
@@ -3553,8 +3671,16 @@ Flyby Time
 \end_layout
 
 \begin_layout Standard
-as a result we get a total flyby time of about 5.8 days, which is reasonable
- considering the large Saturn's SOI.
+as a result we get a total flyby time of about 159.17 days, which is reasonable
+ considering the large Saturn's SOI and the small total 
+\size small
+
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ 
+\size default
+needed for the transfer.
 \end_layout
 
 \end_body
