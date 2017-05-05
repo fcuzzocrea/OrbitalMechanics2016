@@ -2111,11 +2111,13 @@ Iterative routine
 \align block
 
 \size small
-To obtain the most energy efficient flyby, a MATLAB script has been developed.
- Once all the possible TOFs are evaluated, a main routine is called, and
- all the Lambert's arcs for each possible combinations of departure from
- Mars and arrival to Saturn and departure from Saturn and arrival to Neptune
- are evaluated at interval of 100 days, due to computing constraints.
+To obtain the most energy efficient flyby, as a first design strategy an
+ iterative routine has been developed.
+ First all the possible TOFs are evaluated, then the main routine starts
+ cycling around every day, and all the Lambert's arcs for each possible
+ combinations of departure from Mars and arrival to Saturn and departure
+ from Saturn and arrival to Neptune are evaluated at interval of 100 days.
+ The 100 days limit it is imposed due to computing costraint.
  Then the flyby is computed for the best energy efficient combination of
  arrival/departure to/from Saturn.
 \end_layout
@@ -2690,50 +2692,6 @@ Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
 
 \end_layout
 
-\begin_layout Plain Layout
-
-% Integration of arcs
-\end_layout
-
-\begin_layout Plain Layout
-
-[~,~,~,~,VI_arc1,VF_arc1,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF_1,ksun);
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-[~,~,~,~,VI_arc2,VF_arc2,~,~] = lambertMR(r2_arc,r3_arc,Dv_min_TOF_2,ksun);
-\end_layout
-
-\begin_layout Plain Layout
-
-[rx_arc_1, ry_arc_1, rz_arc_1, vx_arc_1, vy_arc_1, vz_arc_1] = intARC_lamb(r1_ar
-c,...
-     
-\end_layout
-
-\begin_layout Plain Layout
-
-...VI_arc1,ksun,Dv_min_TOF_1,86400);
-\end_layout
-
-\begin_layout Plain Layout
-
-[rx_arc_2, ry_arc_2, rz_arc_2, vx_arc_2, vy_arc_2, vz_arc_2] = intARC_lamb(r2_ar
-c,...
-     
-\end_layout
-
-\begin_layout Plain Layout
-
-...VI_arc2,ksun,Dv_min_TOF_2,86400); 
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -2763,6 +2721,20 @@ Best Transfer Arcs
 \end_layout
 
 \begin_layout Standard
+The minum
+\size small
+ 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ found with this method is 
+\begin_inset Formula $11.3291\,km/s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
@@ -2774,7 +2746,245 @@ Fmincon optimizator
 \end_layout
 
 \begin_layout Standard
-blablablabla
+In order to obtain a 
+\size small
+
+\begin_inset Formula $\Delta V$
+\end_inset
+
+
+\size default
+ lower than one find by the iterative routine, a possible solution with
+ the MATLAB 
+\size small
+
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+fmincon
+\end_layout
+
+\end_inset
+
+ optimizer has been investigated.
+ In order to use such optimizer, a fitness function has been developed,
+ that basically implements the same steps implemented in the iterative routine.
+ The fitness function is evaluated at each step by the optimizer in order
+ to find the best days that are the parameter of the fitness function itself.
+ The fitness function has been implemented has follows : 
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+function [Dv, r_mars, r_saturn, r_neptune, v_saturn, dv_ga] = dv_optimizator(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% From ephemeris compute position and velocity for the selected day 
+\end_layout
+
+\begin_layout Plain Layout
+
+[kep_dep_vect_mars,ksun] = uplanet(x(1),ibody_mars); 
+\end_layout
+
+\begin_layout Plain Layout
+
+[r_mars,v_mars] = kep2car(kep_dep_vect_mars,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+[kep_dep_vect_saturn,~] = uplanet(x(2),ibody_saturn); 
+\end_layout
+
+\begin_layout Plain Layout
+
+[r_saturn,v_saturn] = kep2car(kep_dep_vect_saturn,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+[kep_dep_vect_neptune,~] = uplanet(x(3),ibody_neptune); 
+\end_layout
+
+\begin_layout Plain Layout
+
+[r_neptune,v_neptune] = kep2car(kep_dep_vect_neptune,ksun);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% TOF to go from Mars to Saturn, in days 
+\end_layout
+
+\begin_layout Plain Layout
+
+tof_1 = (x(2)-x(1))*86400;
+\end_layout
+
+\begin_layout Plain Layout
+
+% Compute the Lambert arc for tof_1 
+\end_layout
+
+\begin_layout Plain Layout
+
+[~,~,~,~,VI_mars,VF_saturn,~,~] = lambertMR(r_mars,r_saturn,tof_1,ksun);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+dv1_mars = norm(VI_mars - v_mars'); 
+\end_layout
+
+\begin_layout Plain Layout
+
+dv2_saturn = norm(v_saturn' - VF_saturn); 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% TOF to go from Saturn to Neptune, in days 
+\end_layout
+
+\begin_layout Plain Layout
+
+tof_2 = (x(3)-x(2))*86400;
+\end_layout
+
+\begin_layout Plain Layout
+
+% Compute the Lambert arc for tof_2 
+\end_layout
+
+\begin_layout Plain Layout
+
+[~,~,~,~,VI_saturn,VF_neptune,~,~] = lambertMR(r_saturn,r_neptune,tof_2,ksun);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+dv1_saturn = norm(VI_saturn - v_saturn'); 
+\end_layout
+
+\begin_layout Plain Layout
+
+dv2_neptune = norm(v_neptune' - VF_neptune);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% "Powered" DV 
+\end_layout
+
+\begin_layout Plain Layout
+
+dv_ga = abs(dv1_saturn - dv2_saturn);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Compute the total DV 
+\end_layout
+
+\begin_layout Plain Layout
+
+Dv = dv1_mars + dv_ga + dv2_neptune;
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fitness Function
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The optimizer is called by a function called in the main script.
+ As upper bound is given the last day of the window, as lower bound the
+ first day of the window.
+ As costraint, as usual, we have that we cannot arrive before the departure.
+\end_layout
+
+\begin_layout Standard
+The minum
+\size small
+ 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ found with this method is 
+\begin_inset Formula $13.2057\,km/s$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -2782,7 +2992,98 @@ Genetic algorithm
 \end_layout
 
 \begin_layout Standard
-blablabla
+In order to find the minimum possible
+\size small
+
+\begin_inset Formula $\Delta V$
+\end_inset
+
+
+\size default
+ the MATLAB genetic algorithm implementation 
+\size small
+
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+ga
+\end_layout
+
+\end_inset
+
+ has been investigated.
+ The fitness funcion, the upper bounds and the costraints are the same of
+ the
+\size default
+ 
+\size small
+
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+fmincon
+\end_layout
+
+\end_inset
+
+ optimizer.
+ Due to te randomatic behaviour of the genetic algorithm, we have developed
+ an iterative cycle that calls 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+
+ga
+\end_layout
+
+\end_inset
+
+ with a maximum population of 200 elements several times, in order to search
+ for the minimum
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ present in the resulting set of 
+\size default
+e
+\size small
+
+\begin_inset Formula $\Delta Vs$
+\end_inset
+
+.
+
+\size default
+ 
+\end_layout
+
+\begin_layout Standard
+After this optimization process we have found a minimum
+\size small
+
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ of
+\size default
+ 
+\size small
+
+\begin_inset Formula $10.61\,km/s$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -2796,16 +3097,13 @@ The minimum
 \begin_inset Formula $\Delta V$
 \end_inset
 
- (that is given by the sum of both the two arcs) was found by using the
- genetic algorithm and is : 
+ was found by using the genetic algorithm is 
 \begin_inset Formula $10.61\,km/s$
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Then the transfer arcs are computed for the minimum
+\size default
+, so the transfer arcs are computed with respect to this
 \size small
  
 \begin_inset Formula $\Delta V$
@@ -2928,7 +3226,7 @@ In the plots below are shown the two correspondent Lambert's arcs in the
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -2972,6 +3270,13 @@ Lambert's Arcs Path
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 

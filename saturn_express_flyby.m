@@ -230,28 +230,28 @@ altitude = r_p-astroConstants(26);
 % 3D Hyperbola heliocentric frame
 
 % Get h direction
-h_inf = cross(v_inf_min,v_inf_plus);    % Trova h
-h_direction = h_inf/norm(h_inf);        % Tira fuori il versore associato
+h_inf = cross(v_inf_min,v_inf_plus);    % Vector exiting from the plane between the two velocities (it is not a true h)
+h_direction = h_inf/norm(h_inf);        
 
 % Get rotation matrices for the entering hyperbola
-axang_min = [h_direction,(beta_min+delta_min)];         % Ruota di beta_min attorno v_inf_meno
-rotm_h_min = axang2rotm(axang_min);                     % Scrive la matrice di rotazione
-axang_2_min = [h_direction,-pi/2];                      % Ruota di beta_min attorno v_inf_meno
-rotm_h_2_min = axang2rotm(axang_2_min);                 % Scrive la matrice di rotazione
+axang_min = [h_direction,(beta_min+delta_min)];         % Rotates by beta_min+delta_min around v_inf_min
+rotm_h_min = axang2rotm(axang_min);                     
+axang_2_min = [h_direction,-pi/2];                      % Rotates by pi/2 around v_inf_min
+rotm_h_2_min = axang2rotm(axang_2_min);                 
 
 % Get rotation matrices for the exiting hyperbola 
-axang_plus = [h_direction,(beta_plus)];                  % Ruota di beta_min attorno v_inf_meno
-rotm_h_plus = axang2rotm(axang_plus);                    % Scrive la matrice di rotazione
-axang_2_plus = [h_direction,pi/2];                       % Ruota di beta_min attorno v_inf_meno
-rotm_h_2_plus = axang2rotm(axang_2_min);                 % Scrive la matrice di rotazione
+axang_plus = [h_direction,(beta_plus)];                  % Rotates by beta_plus around v_inf_plus
+rotm_h_plus = axang2rotm(axang_plus);                    
+axang_2_plus = [h_direction,pi/2];                       % Rotates by pi/2 around v_inf_plus
+rotm_h_2_plus = axang2rotm(axang_2_min);                 
 
 % Radius of pericenter vector
 r_p_versor = (v_inf_min/norm(v_inf_min))*rotm_h_min;
 rp_vector = r_p * r_p_versor;
 
 % Velocity at pericenter vector
-rotation_min = r_p_versor*rotm_h_2_min;      % Ruota il versore rp di 90 gradi attorno z per allinearsi con vp
-vp_min_vect = vp_min*rotation_min;          % Calcola vp 
+rotation_min = r_p_versor*rotm_h_2_min;      % Rotates versor r_p di by pi/2 around "z" to found the direction of vp
+vp_min_vect = vp_min*rotation_min;           
 rotation_plus = r_p_versor*rotm_h_2_plus;
 vp_plus_vect = vp_plus*rotation_plus;
 
