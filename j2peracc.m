@@ -3,8 +3,8 @@ function [apJ2_vect] = j2peracc (r_vect,J2,R,mu)
 r = norm(r_vect);
 
 x = r_vect(1);
-y = r_vect(1);
-z = r_vect(1);
+y = r_vect(2);
+z = r_vect(3);
 
 c = 3/2*(J2*mu*R^2)/r^4;
 
