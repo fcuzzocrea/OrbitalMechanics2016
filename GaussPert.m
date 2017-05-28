@@ -1,6 +1,4 @@
-function [dkep] = GaussPert (~,kep)
-
-global mu_earth ap_tnh
+function [dkep] = GaussPert (time,kep,mu_earth,earth_radius,J2,A,date)
 
 a = kep(1);
 e = kep(2);
@@ -16,6 +14,16 @@ h = n*a*b;
 r = p/(1+e*cos(th));
 v = sqrt((2*mu_earth)/r-mu_earth/a);
 th_star = th+om;
+
+[r_sp,~] = kep2car(kep,mu_earth);
+[r_Moon,~] = ephMoon(date+time/86400);
+
+apJ2_vect = j2peracc (r_sp,J2,earth_radius,mu_earth);    % J2 perturbed acceleration vector
+apMG_vect = Moonper (r_Moon,r_sp'); % Moon gravity perturbed acceleration vector
+
+ap_car = apJ2_vect + apMG_vect;          % Total perturbed acceleration vector
+ap_tnh = A'*ap_car';
+% ap_tnh = [0 0 0]';
 
 da = (2*a^2*v)/mu_earth*ap_tnh(1);
 de = 1/v*(2*(e+cos(th))*ap_tnh(1)-r/a*sin(th)*ap_tnh(2));
