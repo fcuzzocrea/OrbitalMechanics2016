@@ -48,6 +48,7 @@ tof_1 = (x(2)-x(1))*86400;
 [~,~,~,~,VI_mars,VF_saturn,~,~] = lambertMR(r_mars,r_saturn,tof_1,ksun);
 dv1_mars = norm(VI_mars - v_mars');
 dv2_saturn = norm(v_saturn' - VF_saturn);
+
 % Dv_matrix_1(i,j) = abs(dv1_mars) + abs(dv2_saturn);
 % v_inf_matrix_1(i,j) = dv1_mars;
 
