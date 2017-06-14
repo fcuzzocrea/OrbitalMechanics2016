@@ -1,3 +1,4 @@
+
 %% ASSIGNMENT 2 - INTERPLANETARY FLYBY
 %  Planetes : Mars, Saturn, Neptune
 %  (C) Collogrosso Alfonso, Cuzzocrea Francescodario, Lui Benedetto - POLIMI SPACE AGENCY
@@ -149,7 +150,8 @@ v_inf_plus = (VI_arc2 - v_saturn');
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
 ksaturn = astroConstants(16);
 f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn))) - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn)));
-r_p = fzero(f,10000000);
+%r_p = fzero(f,10000000);
+
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola : %f \n',r_p);
 fclose(fileID);
