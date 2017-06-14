@@ -33,7 +33,7 @@ date1_departure = date2mjd2000(starting_departure_time);
 date2_departure = date2mjd2000(final_departure_time);
 
 % Time of departure window vectors in days and seconds.
-t_dep = date1_departure : 100 : date2_departure ;
+t_dep = date1_departure : 200 : date2_departure ;
 t_dep_sec = t_dep*86400;
 
 
@@ -48,7 +48,7 @@ date2_arrival = date2mjd2000(final_arrival_time);
 
 % Time of arrival window vectors in days and seconds
 % One arrival per month (needed by iterative routine and Pork Chop plots)
-t_arr = date1_arrival: 100 : date2_arrival ;
+t_arr = date1_arrival: 200 : date2_arrival ;
 t_arr_sec = t_arr*86400;
 
 % Time of fligth matrix computation
@@ -80,7 +80,7 @@ ibody_neptune = 8;
 [DV_MIN_ir, DV_MAX, Dv_min_TOF_1_ir, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2_ir, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
 
 % INTERIOR POINT ALGORITHM WITH FMINCON
-[DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc,~] = Fmincon_Flyby (t_dep);
+% [DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc,~] = Fmincon_Flyby (t_dep);
 
 % GENETIC ALGORITHM
 [DV_MIN_ga, Dv_min_TOF_1_ga, Dv_min_TOF_2_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga,~] = Flyby_GA(0);
@@ -140,8 +140,8 @@ fclose(fileID);
     VI_arc2,ksun,Dv_min_TOF_2,86400);
 
 % V infinity
-v_inf_min = (VF_arc1 - v_saturn');
-v_inf_plus = (VI_arc2 - v_saturn');
+v_inf_min = (VF_arc1 - v_saturn);
+v_inf_plus = (VI_arc2 - v_saturn);
 
 %% FLYBY
 
