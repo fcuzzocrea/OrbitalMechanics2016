@@ -58,6 +58,7 @@ end
 
 %% Compare the parametres
 %% Plot the parametres
+% Da fare con subplot
 
 figure,plot(t_out,kep_out(:,1))
 figure,plot(t_out,kep_out(:,2))
@@ -77,4 +78,39 @@ figure(3), hold on, plot(t_out2,kep_vect(:,3))
 figure(4), hold on, plot(t_out2,kep_vect(:,4))
 figure(5), hold on, plot(t_out2,kep_vect(:,5))
 figure(6), hold on, plot(t_out2,kep_vect(:,6))
+
+%% Lowpass Filter Design (parameters tbf)
+y0 = interp1(linspace(0,10*86400,1e4),t_out2,kep_vect(:,3)); 
+% Sampling rate
+% Lunghezza della finestra, la documentazione suggerisce :
+NFFT = pow2(nextpow2(length(y0)));
+% Faccio la fft
+Y=fft(y0,NFFT);
+% Prendo solo la lunghezza che mi interessa
+Y=Y(1:length(kep_vect)); 
+
+%Plot
+fs = 0.0116;
+dF = fs/length(kep_vect);
+f = -fs/2:dF:fs/2-dF;
+figure
+plot(f,abs(Y)/length(kep_vect));
+figure
+semilogy(f,mag2db(abs(Y)/length(kep_vect)));
+% Filter design
+fc = 0.0002; % Frequenza di taglio,
+fs = 0.0116; %Frequenza di campionamento come cazzo faccio a saperla se campiono con ode ??? 
+[b,a] = butter(6,fc/(fs/2)); % Butterworth filter of order 6
+output = filter(b,a,Y); % Will be the filtered signal
+% Antitrasformo il segnale
+iY = ifft(output);
+% A me interessa solo l'ampiezza del segnale
+fY = abs(iY);
+% Prendi un numero di dati pari al numero di dati originale
+fY=fY(1:length(t_out2));
+% Correggi la max ampiezza dei dati
+filteredsignal = fY*NFFT;
+% Plotta
+figure
+plot(t_out2, filteredsignal);
 
