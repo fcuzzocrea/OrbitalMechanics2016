@@ -13,12 +13,14 @@ mu_earth = astroConstants(13);
 a = 3.7067e4;
 e = 0.5682;
 i = 49.587/180*pi;
+OM = pi/6;
+om = pi/3;
 h_p = 9627.33;
 earth_radius = 6378.14;
 
 r_p =  earth_radius + h_p;
 
-kep_0 = [a,e,i,pi/6,pi/3,0];
+kep_0 = [a,e,i,OM,om,0];
 [r_sp,v_sp] = kep2car(kep_0,mu_earth);
 
 %% Perturbation Data
@@ -35,7 +37,7 @@ J2 = 1.08e-3;
 
 odeopt = odeset('RelTol',1e-13,'AbsTol',1e-14');
 [t_out,kep_out] = ode45(@(t,kep) GaussPert(t,kep,mu_earth, ...
-    earth_radius,J2,date),[0,10*86400],kep_0,odeopt);
+    earth_radius,J2,date),linspace(0,28*12*86400,5e5),kep_0,odeopt);
 
 r_vect = zeros(size(kep_out,1),3);
 for j = 1:size(kep_out,1)
@@ -80,37 +82,55 @@ figure(5), hold on, plot(t_out2,kep_vect(:,5))
 figure(6), hold on, plot(t_out2,kep_vect(:,6))
 
 %% Lowpass Filter Design (parameters tbf)
-y0 = interp1(linspace(0,10*86400,1e4),t_out2,kep_vect(:,3)); 
-% Sampling rate
-% Lunghezza della finestra, la documentazione suggerisce :
-NFFT = pow2(nextpow2(length(y0)));
-% Faccio la fft
-Y=fft(y0,NFFT);
-% Prendo solo la lunghezza che mi interessa
-Y=Y(1:length(kep_vect)); 
 
-%Plot
-fs = 0.0116;
-dF = fs/length(kep_vect);
-f = -fs/2:dF:fs/2-dF;
-figure
-plot(f,abs(Y)/length(kep_vect));
-figure
-semilogy(f,mag2db(abs(Y)/length(kep_vect)));
-% Filter design
-fc = 0.0002; % Frequenza di taglio,
-fs = 0.0116; %Frequenza di campionamento come cazzo faccio a saperla se campiono con ode ??? 
-[b,a] = butter(6,fc/(fs/2)); % Butterworth filter of order 6
-output = filter(b,a,Y); % Will be the filtered signal
-% Antitrasformo il segnale
-iY = ifft(output);
-% A me interessa solo l'ampiezza del segnale
-fY = abs(iY);
-% Prendi un numero di dati pari al numero di dati originale
-fY=fY(1:length(t_out2));
-% Correggi la max ampiezza dei dati
-filteredsignal = fY*NFFT;
-% Plotta
-figure
-plot(t_out2, filteredsignal);
+L = 5e5;
+Ts = t_out(2)-t_out(1);
+Fs = 1/Ts;
 
+NFFT = 2^nextpow2(L);
+X_a = fft(detrend(kep_out(:,1)-a),NFFT)/L;
+X_e = fft(detrend(kep_out(:,2)-e),NFFT)/L;
+X_i = fft(detrend(kep_out(:,3)-i),NFFT)/L;
+X_OM = fft(detrend(kep_out(:,4)-OM),NFFT)/L;
+X_om = fft(detrend(kep_out(:,5)-om),NFFT)/L;
+f = Fs/2*linspace(0,1,NFFT/2+1);
+
+figure
+plot(f,abs(X_a(1:NFFT/2+1)),'.-')
+figure
+plot(f,abs(X_e(1:NFFT/2+1)),'.-')
+figure
+plot(f,abs(X_i(1:NFFT/2+1)),'.-')
+figure
+plot(f,abs(X_OM(1:NFFT/2+1)),'.-')
+figure
+plot(f,abs(X_om(1:NFFT/2+1)),'.-')
+
+%% Filtering
+
+f_c = 0.5*sqrt(mu_earth/a^3)/pi/2;
+[b_f,a_f] = butter(2,f_c/(Fs/2));
+
+e_filt = filtfilt(b_f,a_f,kep_out(:,2));
+i_filt = filtfilt(b_f,a_f,kep_out(:,3));
+OM_filt = filtfilt(b_f,a_f,kep_out(:,4));
+om_filt = filtfilt(b_f,a_f,kep_out(:,5));
+
+figure
+plot(t_out,e_filt)
+figure
+plot(t_out,i_filt)
+figure
+plot(t_out,OM_filt)
+figure
+plot(t_out,om_filt)
+
+%%
+
+f_c = 1e-6;
+[b_f,a_f] = butter(2,f_c/(Fs/2));
+
+a_filt = filtfilt(b_f,a_f,kep_out(:,1)-a);
+
+figure
+plot(t_out,a_filt)
