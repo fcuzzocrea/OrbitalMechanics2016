@@ -1,5 +1,26 @@
 function dv = powerflyby(v_inf_min,v_inf_plus,k)
 
+% powerflyby.m 
+% 
+% PROTOTYPE:
+%   dv = powerflyby(v_inf_min,v_inf_plus,k)
+%
+% DESCRIPTION:
+% 	 This function give the perturbed dynamics orbit equations
+%    
+% INPUT:
+%   v_inf_min              Infinite velocity minus
+%   v_inf_plus             Infinite velocity plus
+%   k                      Saturn Gravitational constant
+% 
+% OUTPUT:
+%   [dv]                   Delta velocity obtained by the powered flyby
+%
+% AUTHOR:
+%    Benedetto Lui
+%    Francescodario Cuzzocrea
+%
+
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
 
 f = @(r_p) delta - asin(1./(1+(r_p*norm(v_inf_min)^2/k))) - asin(1./(1+(r_p*norm(v_inf_plus)^2/k)));

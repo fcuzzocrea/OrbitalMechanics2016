@@ -1,5 +1,30 @@
 function [dkep] = GaussPert (time,kep,mu_earth,earth_radius,J2,date)
 
+% GaussPert.m
+% 
+% PROTOTYPE:
+%   [dkep] = GaussPert (time,kep,mu_earth,earth_radius,J2,date)
+%
+% DESCRIPTION:
+% 	This function implements the Gauss equation for the computation of 
+% 	perturbed orbital parameters 
+%
+% INPUT:
+%	time               Time interval of integration
+%   kep                Keplerian parameters vector
+%	mu_earth           Earth gravitational constant
+%   earth_radius       Earth radious
+%   J2                 J2 parameters due Earth oblateness
+%   date               Date of starting evaluation
+%
+% OUTPUT:
+%   [dkep]             Perturbed keplerian parameters
+%   
+% AUTHOR:
+%   Francescodario Cuzzocrea
+%   Benedetto Lui
+%   Collogrosso Alfonso
+
 a = kep(1);
 e = kep(2);
 i = kep(3);
