@@ -4008,7 +4008,7 @@ n of orbit pertubations caused by the moon and the J2 perturbation of the
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -4016,7 +4016,7 @@ status collapsed
 
 \size small
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="2">
+<lyxtabular version="3" rows="8" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -4193,7 +4193,7 @@ Value
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4207,13 +4207,43 @@ Value
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \size small
 \begin_inset Formula $9627.33\:km$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $J_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size small
+\begin_inset Formula $1.08e-3$
 \end_inset
 
 
@@ -4246,6 +4276,10 @@ Initial orbit
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Inserire plot orbita iniziale 
 \end_layout
 
 \begin_layout Section
@@ -4287,83 +4321,89 @@ ode45
 \end_layout
 
 \begin_layout Standard
-A MATLAB function implementing those equation has been developed : 
-\end_layout
-
-\begin_layout Standard
-
-\size small
-\begin_inset Float algorithm
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-
-\size small
-\begin_inset listings
-lstparams "language=Matlab,basicstyle={\footnotesize\ttfamily}"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-ksaturn = astroConstants(16); 
-\end_layout
-
-\begin_layout Plain Layout
-
-f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn)))...
-\end_layout
-
-\begin_layout Plain Layout
-
-...
- - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn))); 
-\end_layout
-
-\begin_layout Plain Layout
-
-r_p = fzero(f,700000);
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\size small
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Gauss Equations
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+A MATLAB function implementing those equation has been developed.
 \end_layout
 
 \begin_layout Section
 Direct dynamic integration
 \end_layout
 
+\begin_layout Standard
+Another option that we have to find out the evolution of the perturbed problem
+ is to directly insert into the 2 body equation the perturbing acceleration
+ term, and then integrate the resulting equations :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ddot{r}=-\frac{\mu}{r^{3}}\mathbf{r}+\sum\mathbf{a}_{p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In our case 
+\begin_inset Formula $\mathbf{a}_{p}$
+\end_inset
+
+ is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathbf{a}_{p}=\mathbf{a}_{p_{J2}}+\mathbf{a}_{p_{m}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathbf{a}_{p_{J2}}=\frac{3}{2}\frac{J_{2}\mu R^{2}}{r^{4}}\left[\frac{x}{r}\left(5\frac{z^{2}}{r^{2}}-1\right)\mathbf{\hat{i}}+\frac{y}{r}\left(5\frac{z^{2}}{r^{2}}-1\right)\mathbf{\hat{j}}+\frac{z}{r}\left(5\frac{z^{2}}{r^{2}}-3\right)\mathbf{\hat{k}}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathbf{a}_{p_{m}}=\mu_{m}\left(\frac{\mathbf{r}_{m/s}}{r_{m/s}^{3}}-\frac{\mathbf{r}_{m}}{r_{m}^{3}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-Results
+Pertubations evolution
+\end_layout
+
+\begin_layout Standard
+Gruond track
+\end_layout
+
+\begin_layout Standard
+Plot e commenti
+\end_layout
+
+\begin_layout Section
+Secular component
 \end_layout
 
 \end_body
