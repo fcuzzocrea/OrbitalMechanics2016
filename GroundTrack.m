@@ -1,8 +1,8 @@
-function [ra,dec,lat,lon] = ourGroundTrack(date,r_vect,v_vect,w_p,mu_p)
+function [ra,dec,lat,lon] = GroundTrack(date,r_vect,v_vect,mu_p)
 
 t_vect = date.*86400;
 
-theta= w_p*t_vect;
+theta= 2*pi/86400*t_vect;
 
 X0 = [r_vect,v_vect];
 options = odeset('Reltol',1e-13,'AbsTol',1e-14);
@@ -54,5 +54,7 @@ axis equal
 axis([-180 180 -90 +90])
 xticks(-180:30:180)
 yticks(-90:30:90)
+xlabel('Longitude [°]')
+ylabel('Latitude [°]')
 
 end
