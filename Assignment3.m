@@ -134,6 +134,7 @@ hold on
 plot3(r_vect_gauss(:,1),r_vect_gauss(:,2),r_vect_gauss(:,3),'r')
 title('Orbit evolution : 2 years simulation')
 legend('Initial Orbit')
+axis equal
 
 figure(2)
 hold on
@@ -205,7 +206,7 @@ ylabel('Magnitude')
 xlabel('Frequency')
 figure(9)
 plot(f,abs(X_e(1:NFFT/2+1)),'.-')
-xlim([0 1e-3])
+xlim([0 1e-5])
 title('Eccentricity frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
