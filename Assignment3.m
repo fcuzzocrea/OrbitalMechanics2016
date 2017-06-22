@@ -115,8 +115,18 @@ a_filt = filtfilt(b_f,a_f,kep_out_gauss(:,1)-a);
 
 %% PLOTTING
 
-t_plot_gauss = t_out_gauss/86400 + date; 
-t_plot_ddi = t_out_ddi/84600 + date;
+t_plot_gauss = zeros(size(t_out_gauss));
+t_plot_ddi = zeros(size(t_out_ddi));
+
+for j = 1:length(t_plot_gauss)
+    t_plot_gauss(j) = datenum(mjd20002date(t_out_gauss(j)/86400 + date));
+end
+
+for j = 1:length(t_plot_ddi)
+    t_plot_ddi(j) = datenum(mjd20002date(t_out_ddi(j)/84600 + date));
+end
+
+limit_t_gauss = ceil(length(t_out_gauss)/12);
 
 figure(1)
 plotorbit(a,e,i,pi/6,pi/3,mu_earth,1)
@@ -127,7 +137,7 @@ legend('Initial Orbit')
 
 figure(2)
 hold on
-plot(t_plot_gauss(1:41667),kep_out_gauss(1:41667,1))
+plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,1))
 plot(t_plot_ddi,kep_vect_ddi(:,1))
 title('Semimajor axis variation')
 legend('Gauss Results','DDI Results')
@@ -135,45 +145,50 @@ xlabel('Days')
 ylabel('Km')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
+
 figure(3)
 hold on
-plot(t_plot_gauss(1:41667),kep_out_gauss(1:41667,2))
+plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,2))
 plot(t_plot_ddi,kep_vect_ddi(:,2))
 title('Eccentricity variation')
 legend('Gauss Results','DDI Results')
 xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
+
 figure(4)
 hold on
-plot(t_plot_gauss(1:41667),kep_out_gauss(1:41667,3))
+plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,3))
 plot(t_plot_ddi,kep_vect_ddi(:,3))
 title('Inclination variation')
 legend('Gauss Results','DDI Results')
 xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
+
 figure(5)
 hold on
-plot(t_plot_gauss(1:41667),kep_out_gauss(1:41667,4))
+plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,4))
 plot(t_plot_ddi,kep_vect_ddi(:,4))
 title('Right Ascension variation')
 legend('Gauss Results','DDI Results')
 xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
+
 figure(6)
 hold on
-plot(t_plot_gauss(1:41667),kep_out_gauss(1:41667,5))
+plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,5))
 plot(t_plot_ddi,kep_vect_ddi(:,5))
 title('Argument of perigee variation')
 legend('Gauss Results','DDI Results')
 xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
+
 figure(7)
 hold on
-plot(t_plot_gauss(1:41667),kep_out_gauss(1:41667,6))
+plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,6))
 plot(t_plot_ddi,kep_vect_ddi(:,6))
 title('True anomaly variation')
 legend('Gauss Results','DDI Results')
