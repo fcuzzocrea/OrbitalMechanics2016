@@ -110,9 +110,9 @@ OM_filt = filtfilt(b_f,a_f,kep_out_gauss(:,4));
 om_filt = filtfilt(b_f,a_f,kep_out_gauss(:,5));
 
 % Semimajor axis is a 'special guy...'
-f_c = 1e-6;
+%f_c = 1e-6;
 [b_f,a_f] = butter(2,f_c/(Fs/2));
-a_filt = filtfilt(b_f,a_f,kep_out_gauss(:,1)-a);
+a_filt = filtfilt(b_f,a_f,kep_out_gauss(2000:end,1));
 
 %% PLOTTING
 
@@ -236,27 +236,38 @@ xlabel('Frequency')
 
 % Secular Components
 figure(13)
-plot(t_out_gauss,e_filt)
-title('Eccentricity axis secular component')
-xlabel('Months')
+plot(t_plot_gauss(2000:end),a_filt)
+title('Semimajor axis secular component')
+xlabel('Days')
+ylabel('Km')
+datetick('x','20yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
 
 figure(14)
-plot(t_out_gauss,i_filt)
-title('Inclination secular component')
-xlabel('Months')
+plot(t_plot_gauss,e_filt)
+title('Eccentricity secular component')
+xlabel('Days')
+datetick('x','20yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
 
 figure(15)
-plot(t_out_gauss,OM_filt)
-title('Right ascension secular component')
-xlabel('Months')
+plot(t_plot_gauss,i_filt)
+title('Inclination secular component')
+xlabel('Days')
+datetick('x','20yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
 
 figure(16)
-plot(t_out_gauss,om_filt)
-title('Argument of perigee secular component')
-xlabel('Months')
+plot(t_plot_gauss,OM_filt)
+title('Right ascension secular component')
+xlabel('Days')
+datetick('x','20yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
 
 figure(17)
-plot(t_out_gauss,a_filt)
-title('Semimajor axis secular component')
-xlabel('Months')
-ylabel('Km')
+plot(t_plot_gauss,om_filt)
+title('Argument of perigee secular component')
+xlabel('Days')
+datetick('x','20yy/mm/dd','keepticks','keeplimits')
+set(gca,'XTickLabelRotation',45)
+
