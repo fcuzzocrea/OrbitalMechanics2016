@@ -54,7 +54,7 @@ axis equal
 axis([-180 180 -90 +90])
 xticks(-180:30:180)
 yticks(-90:30:90)
-xlabel('Longitude [°]')
-ylabel('Latitude [°]')
+xlabel('Longitude [Â°]')
+ylabel('Latitude [Â°]')
 
 end
