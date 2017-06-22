@@ -45,7 +45,8 @@ odeopt = odeset('RelTol',1e-13,'AbsTol',1e-14');
 
 %% GROUND TRACK
 
-% Still to do
+t_ground_track = linspace(0,1,1e4);
+[ra,dec,lat,lon] = GroundTrack(t_ground_track,r_0,v_0,mu_earth);
 
 
 %% EVALUATION OF ORBITAL PERTURBATIONS BY GAUSS EQUATIONS
@@ -203,12 +204,14 @@ xlim([0 1e-4])
 title('Semimajor axis frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
+
 figure(9)
 plot(f,abs(X_e(1:NFFT/2+1)),'.-')
 xlim([0 1e-3])
 title('Eccentricity frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
+
 figure(10)
 plot(f,abs(X_i(1:NFFT/2+1)),'.-')
 xlim([0 1e-5])
@@ -216,11 +219,13 @@ title('Inclination frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
 figure(11)
+
 plot(f,abs(X_OM(1:NFFT/2+1)),'.-')
 xlim([0 1e-5])
 title('Right ascension frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
+
 figure(12)
 plot(f,abs(X_om(1:NFFT/2+1)),'.-')
 xlim([0 1e-5])
@@ -233,18 +238,22 @@ figure(13)
 plot(t_out_gauss,e_filt)
 title('Eccentricity axis secular component')
 xlabel('Months')
+
 figure(14)
 plot(t_out_gauss,i_filt)
 title('Inclination secular component')
 xlabel('Months')
+
 figure(15)
 plot(t_out_gauss,OM_filt)
 title('Right ascension secular component')
 xlabel('Months')
+
 figure(16)
 plot(t_out_gauss,om_filt)
 title('Argument of perigee secular component')
 xlabel('Months')
+
 figure(17)
 plot(t_out_gauss,a_filt)
 title('Semimajor axis secular component')
