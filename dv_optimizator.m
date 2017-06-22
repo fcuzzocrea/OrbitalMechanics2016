@@ -37,6 +37,7 @@ ibody_neptune = 8;
 
 [kep_dep_vect_saturn,~] = uplanet(x(2),ibody_saturn);
 [r_saturn,v_saturn] = kep2car(kep_dep_vect_saturn,ksun);
+v_saturn = v_saturn';
 
 [kep_dep_vect_neptune,~] = uplanet(x(3),ibody_neptune);
 [r_neptune,v_neptune] = kep2car(kep_dep_vect_neptune,ksun);
@@ -47,7 +48,7 @@ tof_1 = (x(2)-x(1))*86400;
 % Compute the Lambert arc for tof_1
 [~,~,~,~,VI_mars,VF_saturn,~,~] = lambertMR(r_mars,r_saturn,tof_1,ksun);
 dv1_mars = norm(VI_mars - v_mars');
-dv2_saturn = norm(v_saturn' - VF_saturn);
+dv2_saturn = VF_saturn - v_saturn;
 
 % Dv_matrix_1(i,j) = abs(dv1_mars) + abs(dv2_saturn);
 % v_inf_matrix_1(i,j) = dv1_mars;
@@ -57,11 +58,12 @@ tof_2 = (x(3)-x(2))*86400;
 
 % Compute the Lambert arc for tof_2
 [~,~,~,~,VI_saturn,VF_neptune,~,~] = lambertMR(r_saturn,r_neptune,tof_2,ksun);
-dv1_saturn = norm(VI_saturn - v_saturn');
+dv1_saturn = VI_saturn - v_saturn;
 dv2_neptune = norm(v_neptune' - VF_neptune);
 
 % "Powered" DV
-dv_ga = abs(dv1_saturn - dv2_saturn);
+% dv_ga = abs(dv1_saturn - dv2_saturn);
+dv_ga = powerflyby(dv2_saturn,dv1_saturn,astroConstants(ibody_saturn+10));
 
 % Compute the total DV
 Dv = dv1_mars + dv_ga + dv2_neptune;

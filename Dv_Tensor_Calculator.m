@@ -68,6 +68,8 @@ v_inf_matrix_2 = zeros(size(t_dep));
 DV_Tensor = zeros(length(t_dep),length(t_dep),length(t_dep));
 
 % Computation of the 3D-Tensor of deltav with 3 nested for cycles
+ wb = waitbar(0,'Computing ...');
+ 
 for i = 1:length(t_dep)
     
     r_mars = r_dep_vect_mars(i,:);
@@ -82,8 +84,8 @@ for i = 1:length(t_dep)
             v_saturn = v_dep_vect_saturn(j,:);
             [~,~,~,~,VI_mars,VF_saturn,~,~] = lambertMR(r_mars,r_saturn,tof_1,ksun);
             dv1_mars = norm(VI_mars - v_mars);
-            dv2_saturn = norm(v_saturn - VF_saturn);
-            Dv_matrix_1(i,j) = abs(dv1_mars) + abs(dv2_saturn);
+            dv2_saturn =  VF_saturn - v_saturn;
+            Dv_matrix_1(i,j) = dv1_mars + norm(dv2_saturn);
             v_inf_matrix_1(i,j) = dv1_mars;
             
             for k = 1:length(t_dep)
@@ -94,13 +96,14 @@ for i = 1:length(t_dep)
                     r_neptune = r_dep_vect_neptune(k,:);
                     v_neptune = v_dep_vect_neptune(k,:);
                     [~,~,~,~,VI_saturn,VF_neptune,~,~] = lambertMR(r_saturn,r_neptune,tof_2,ksun);
-                    dv1_saturn = norm(VI_saturn - v_saturn);
+                    dv1_saturn = VI_saturn - v_saturn;
                     dv2_neptune = norm(v_neptune - VF_neptune);
-                    Dv_matrix_2(j,k) = abs(dv1_saturn) + abs(dv2_neptune);
-                    v_inf_matrix_2(j,k) = dv1_saturn;
-                                       
-                    dv_ga = abs(dv1_saturn - dv2_saturn);
-                                     
+                    Dv_matrix_2(j,k) = norm(dv1_saturn) + dv2_neptune;
+                    v_inf_matrix_2(j,k) = norm(dv1_saturn);
+                    
+                    % dv_ga = abs(norm(dv1_saturn) - norm(dv2_saturn));
+                    dv_ga = powerflyby(dv2_saturn,dv1_saturn,astroConstants(ibody_saturn+10));
+                    
                     DV_Tensor(i,j,k) = dv1_mars + dv_ga + dv2_neptune;
                     
                 else
@@ -114,8 +117,11 @@ for i = 1:length(t_dep)
             v_inf_matrix_1(i,j) = nan;
             DV_Tensor(i,j,:) = nan;
         end
-    end    
+    end
+    waitbar(i/length(t_dep))
 end
+
+close(wb)
 
 % This is done due to fact that first row of output matrix is zeros
 Dv_matrix_2(1,:) = nan;
