@@ -1,0 +1,2 @@
+[ASSIGNMENT 3 - ORBITAL PERTURBATIONS]
+[LOG] Starting time for simulation : [6.352233e+03 
