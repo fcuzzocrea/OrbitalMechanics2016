@@ -5,7 +5,7 @@
 
 clear
 close all
-% clc
+clc
 
 % File for saving datas
 if exist(fullfile(cd, 'results_flyby.txt'), 'file') == 2
@@ -80,7 +80,7 @@ ibody_neptune = 8;
 [DV_MIN_ir, DV_MAX, Dv_min_TOF_1_ir, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2_ir, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
 
 % INTERIOR POINT ALGORITHM WITH FMINCON
-% [DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc,~] = Fmincon_Flyby (t_dep);
+[DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc,~] = Fmincon_Flyby (t_dep);
 
 % GENETIC ALGORITHM
 [DV_MIN_ga, Dv_min_TOF_1_ga, Dv_min_TOF_2_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga,~] = Flyby_GA(0);
@@ -127,6 +127,9 @@ end
 
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] DELTAV MIN : %f \n',DV_MIN);
+fprintf(fileID,'[LOG] MARS DEPARTURE JD2000 : %.2f \n',t_saturn-Dv_min_TOF_1/86400);
+fprintf(fileID,'[LOG] SATURN FLYBY JD2000 : %.2f \n',t_saturn);
+fprintf(fileID,'[LOG] NEPTUNE ARRIVAL JD2000 : %.2f \n',t_saturn+Dv_min_TOF_2/86400);
 fclose(fileID);
 
 % Compute bests transfer arcs
@@ -381,7 +384,7 @@ hold on
 plot3(entering_hyperbola(:,1),entering_hyperbola(:,2),entering_hyperbola(:,3));
 plot3(exiting_hyperbola(:,1),exiting_hyperbola(:,2),exiting_hyperbola(:,3));
 axis equal
-legend('Enteing Hyperbola', 'Exiting Hyperbola')
+legend('Entering Hyperbola', 'Exiting Hyperbola')
 xlabel('Km')
 ylabel('Km')
 title('Flyby Hyperbola 3D')

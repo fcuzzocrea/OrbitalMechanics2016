@@ -32,7 +32,7 @@ function [DV_MIN, Dv_min_TOF_1, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, 
 
 % Initial condition (putted here manually, guessed from the iterative cycle
 % to make the fmicon algorithm converge faster, can be automated)
-x0 = [t_dep(1);t_dep(22);t_dep(143)];
+x0 = [t_dep(1);t_dep(11);t_dep(71)];
 
 % Costrained system of equation for TOFs (we cannot arrive before we
 % depart)

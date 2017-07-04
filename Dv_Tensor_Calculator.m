@@ -61,15 +61,15 @@ end
 % MAIN ROUTINE
 
 % Preallocation
-Dv_matrix_1 = zeros(size(t_dep));
-Dv_matrix_2 = zeros(size(t_dep));
-v_inf_matrix_1 = zeros(size(t_dep));
-v_inf_matrix_2 = zeros(size(t_dep));
+Dv_matrix_1 = zeros(length(t_dep));
+Dv_matrix_2 = zeros(length(t_dep));
+v_inf_matrix_1 = zeros(length(t_dep));
+v_inf_matrix_2 = zeros(length(t_dep));
 DV_Tensor = zeros(length(t_dep),length(t_dep),length(t_dep));
 
 % Computation of the 3D-Tensor of deltav with 3 nested for cycles
- wb = waitbar(0,'Computing ...');
- 
+wb = waitbar(0,'Computing ...');
+
 for i = 1:length(t_dep)
     
     r_mars = r_dep_vect_mars(i,:);
