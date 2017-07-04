@@ -1866,24 +1866,6 @@ Given Orbits
 \align block
 
 \size small
-The three orbits, showed in figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Given-Orbits"
-
-\end_inset
-
- are all on different planes, so Lambert's solution from Mars orbit to Saturn
- orbit and from Saturn orbit to Neptune orbit will be evaluated for the
- entire time window, at interval of 100 days, due to computing time constraints.
- 
-\end_layout
-
-\begin_layout Standard
-\noindent
-\align block
-
-\size small
 The procedure applied in order to design the transfer is divided in four
  main steps: 
 \end_layout
@@ -1893,7 +1875,7 @@ The procedure applied in order to design the transfer is divided in four
 \align block
 
 \size small
-Set all known parameters and computation of orbits of both of the three
+Set all known parameters and computation of orbits for all of the three
  planets;
 \end_layout
 
@@ -1902,8 +1884,8 @@ Set all known parameters and computation of orbits of both of the three
 \align block
 
 \size small
-Solve the Lambert's problem for every possible combination of TOFs at intervals
- of 100 days both for the path Mars-Saturn and the path Saturn-Neptune;
+Solve the Lambert's problem for the selected combination of Mars departure
+ time, Saturn flyby time and Neptune arrival time;
 \end_layout
 
 \begin_layout Enumerate
@@ -1911,7 +1893,7 @@ Solve the Lambert's problem for every possible combination of TOFs at intervals
 \align block
 
 \size small
-Evaluation of the more energy efficient Lambert's arcs;
+Evaluation of the powered gravity assist;
 \end_layout
 
 \begin_layout Enumerate
@@ -1919,7 +1901,7 @@ Evaluation of the more energy efficient Lambert's arcs;
 \align block
 
 \size small
-Evaluation of the powered gravity assist.
+Evaluation of the more energy efficient Lambert's arcs.
 \end_layout
 
 \begin_layout Standard
@@ -2114,10 +2096,10 @@ Iterative routine
 To obtain the most energy efficient flyby, as a first design strategy an
  iterative routine has been developed.
  First all the possible TOFs are evaluated, then the main routine starts
- cycling around every day, and all the Lambert's arcs for each possible
+ cycling around every selected day: all the Lambert's arcs for each possible
  combinations of departure from Mars and arrival to Saturn and departure
- from Saturn and arrival to Neptune are evaluated at interval of 100 days.
- The 100 days limit it is imposed due to computing costraint.
+ from Saturn and arrival to Neptune are evaluated at interval of 200 days.
+ The 200 days limit it is imposed due to computing costraint.
  Then the flyby is computed for the best energy efficient combination of
  arrival/departure to/from Saturn.
 \end_layout
@@ -2139,9 +2121,9 @@ reference "subsec:TOFs-Calculation"
 \end_inset
 
 .
- The resultant TOFs matrix is diagonal because half of evaluated TOFs can't
- be accepted as the departure time window and the arrival time window are
- the same, so half of the matrix contains negative time intervals.
+ The resultant TOFs matrix is triangular because half of evaluated TOFs
+ can't be accepted as the departure time window and the arrival time window
+ are the same, so half of the matrix contains negative time intervals.
  Also the situation in which the departure from Saturn to Neptune happens
  before the departure from Mars to Saturn should be avoided.
 \end_layout
@@ -2180,7 +2162,7 @@ reference "subsec:The-Main-Routine"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -2325,13 +2307,23 @@ for i = 1:length(t_dep)
 
 \begin_layout Plain Layout
 
-					dv_ga = abs(dv1_saturn - dv2_saturn);
+					dv_ga = powerflyby(dv2_saturn,dv1_saturn, ...
+\end_layout
+
+\begin_layout Plain Layout
+
+						astroConstants(ibody_saturn+10));
 \end_layout
 
 \begin_layout Plain Layout
 
 					DV_Tensor(i,j,k) = Dv_matrix_1(i,j)+dv_ga+Dv_matrix_2(j,k);       
-                            
+                        
+\end_layout
+
+\begin_layout Plain Layout
+
+   
 \end_layout
 
 \begin_layout Plain Layout
@@ -2444,9 +2436,38 @@ reference "alg:--Matrix_dv_3d"
 
 \end_inset
 
- there are three nested for cycle that passes trough each departure day.
+ there are three nested for cycle that passes trough each selected departure
+ day.
  The second cycle calculates the Lambert's arc that goes from Mars to Saturn,
- while the third cycle calculates the arc that goes from Saturn to Neptune.
+ while the third cycle calculates the arc that goes from Saturn to Neptune,
+ and the 
+\begin_inset Formula $\Delta V$
+\end_inset
+
+ needed to 
+\begin_inset Quotes eld
+\end_inset
+
+power
+\begin_inset Quotes erd
+\end_inset
+
+ the flyby, throug the function 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align block
+
+powerflyby
+\end_layout
+
+\end_inset
+
+, described afterwards.
  The total 
 \begin_inset Formula $\Delta Vs$
 \end_inset
@@ -2456,11 +2477,6 @@ reference "alg:--Matrix_dv_3d"
 \end_inset
 
  required for both arcs are then stored on a 3D tensor.
- Inside the inner cycle is also computed the 
-\begin_inset Formula $\Delta V$
-\end_inset
-
- that is supplied for free by the planet.
  If during the cycle any TOF is negative will be automatically skipped.
  With respect to the previous 
 \begin_inset Formula $\Delta V$
@@ -2728,7 +2744,7 @@ The minum
 \end_inset
 
  found with this method is 
-\begin_inset Formula $11.3291\,km/s$
+\begin_inset Formula $11.2869\,km/s$
 \end_inset
 
 .
@@ -2771,8 +2787,8 @@ fmincon
 \end_inset
 
  optimizer has been investigated.
- In order to use such optimizer, a fitness function has been developed,
- that basically implements the same steps implemented in the iterative routine.
+ In order to use such optimizer, a fitness function, that basically implements
+ the same steps implemented in the iterative routine, has been developed.
  The fitness function is evaluated at each step by the optimizer in order
  to find the best days that are the parameter of the fitness function itself.
  The fitness function has been implemented has follows : 
@@ -2855,6 +2871,10 @@ tof_1 = (x(2)-x(1))*86400;
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\begin_layout Plain Layout
+
 % Compute the Lambert arc for tof_1 
 \end_layout
 
@@ -2890,6 +2910,10 @@ tof_2 = (x(3)-x(2))*86400;
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\begin_layout Plain Layout
+
 % Compute the Lambert arc for tof_2 
 \end_layout
 
@@ -2920,7 +2944,7 @@ dv2_neptune = norm(v_neptune' - VF_neptune);
 
 \begin_layout Plain Layout
 
-dv_ga = abs(dv1_saturn - dv2_saturn);
+dv_ga = powerflyby(dv2_saturn,dv1_saturn,astroConstants(ibody_saturn+10));
 \end_layout
 
 \begin_layout Plain Layout
@@ -2970,7 +2994,7 @@ Fitness Function
 The optimizer is called by a function called in the main script.
  As upper bound is given the last day of the window, as lower bound the
  first day of the window.
- As costraint, as usual, we have that we cannot arrive before the departure.
+ As costraint, as usual, we have that the arrival must be after the departure.
 \end_layout
 
 \begin_layout Standard
@@ -2981,7 +3005,7 @@ The minum
 \end_inset
 
  found with this method is 
-\begin_inset Formula $13.2057\,km/s$
+\begin_inset Formula $12.8127\,km/s$
 \end_inset
 
 .
@@ -3049,7 +3073,7 @@ ga
 
 \end_inset
 
- with a maximum population of 200 elements several times, in order to search
+ with a maximum population of 100 elements several times, in order to search
  for the minimum
 \begin_inset Formula $\Delta V$
 \end_inset
@@ -3317,14 +3341,30 @@ fzero
 
 \end_inset
 
- as shown in algorithm 
+, setting as boundaries the planet's radius and the SOI radius.
+ The function 
+\begin_inset listings
+lstparams "language=Matlab,basicstyle={\ttfamily}"
+inline true
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align block
+
+powerflyby
+\end_layout
+
+\end_inset
+
+, shown in algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:Nonlinear-System"
 
 \end_inset
 
- :
+, does the computation:
 \end_layout
 
 \begin_layout Standard
@@ -3334,7 +3374,7 @@ reference "alg:Nonlinear-System"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -3346,29 +3386,138 @@ status open
 
 \begin_layout Plain Layout
 
+function dv = powerflyby(v_inf_min,v_inf_plus,k)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
- 
 \end_layout
 
 \begin_layout Plain Layout
 
-ksaturn = astroConstants(16); 
 \end_layout
 
 \begin_layout Plain Layout
 
-f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn)))...
+f = @(r_p) delta - asin(1./(1+(r_p*norm(v_inf_min)^2/k))) - asin(1./(1+(r_p*norm(v
+_inf_plus)^2/k)));
 \end_layout
 
 \begin_layout Plain Layout
 
-...
- - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn))); 
+try
 \end_layout
 
 \begin_layout Plain Layout
 
-r_p = fzero(f,700000);
+    r_p = fzero(f,[1e5 1e9]);
+\end_layout
+
+\begin_layout Plain Layout
+
+catch err     
+\end_layout
+
+\begin_layout Plain Layout
+
+if (strcmp(err.identifier,'MATLAB:fzero:ValuesAtEndPtsSameSign'))
+\end_layout
+
+\begin_layout Plain Layout
+
+        dv = nan;
+\end_layout
+
+\begin_layout Plain Layout
+
+        return
+\end_layout
+
+\begin_layout Plain Layout
+
+    elseif (strcmp(err.identifier,'MATLAB:fzero:ValuesAtEndPtsComplexOrNotFinite'
+))
+\end_layout
+
+\begin_layout Plain Layout
+
+        dv = nan;
+\end_layout
+
+\begin_layout Plain Layout
+
+        return
+\end_layout
+
+\begin_layout Plain Layout
+
+    else
+\end_layout
+
+\begin_layout Plain Layout
+
+        rethrow(err)
+\end_layout
+
+\begin_layout Plain Layout
+
+    end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+DELTA_min = r_p*sqrt(1 + 2*(k/(r_p*norm(v_inf_min)^2)));
+\end_layout
+
+\begin_layout Plain Layout
+
+DELTA_plus = r_p*sqrt(1 + 2*(k/(r_p*norm(v_inf_plus)^2)));
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
+\end_layout
+
+\begin_layout Plain Layout
+
+vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+dv = abs(vp_plus - vp_min);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
 \end_layout
 
 \end_inset
@@ -3388,7 +3537,7 @@ name "alg:Nonlinear-System"
 
 \end_inset
 
-Nonlinear System
+Powerflyby function
 \end_layout
 
 \end_inset
@@ -3999,7 +4148,7 @@ Introduction
 \size small
 The aim of this chapter is to explain the preliminary analysis of the propagatio
 n of orbit pertubations caused by the moon and the J2 perturbation of the
- orbit characterized by the following parameters : 
+ orbit characterized by the following parameters: 
 \end_layout
 
 \begin_layout Standard
@@ -4279,7 +4428,118 @@ Initial orbit
 \end_layout
 
 \begin_layout Standard
-Inserire plot orbita iniziale 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/GroundTrackOrbit.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ground track over one orbit
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gfx/GroundTrackDay.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Ground track over one day
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Perturbing acceleration
+\end_layout
+
+\begin_layout Standard
+In our case the perturbing accelerastion
+\begin_inset Formula $\mathbf{a}_{p}$
+\end_inset
+
+ is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathbf{a}_{p}=\mathbf{a}_{p_{J2}}+\mathbf{a}_{p_{m}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathbf{a}_{p_{J2}}=\frac{3}{2}\frac{J_{2}\mu R^{2}}{r^{4}}\left[\frac{x}{r}\left(5\frac{z^{2}}{r^{2}}-1\right)\mathbf{\hat{i}}+\frac{y}{r}\left(5\frac{z^{2}}{r^{2}}-1\right)\mathbf{\hat{j}}+\frac{z}{r}\left(5\frac{z^{2}}{r^{2}}-3\right)\mathbf{\hat{k}}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathbf{a}_{p_{m}}=\mu_{m}\left(\frac{\mathbf{r}_{m/s}}{r_{m/s}^{3}}-\frac{\mathbf{r}_{m}}{r_{m}^{3}}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -4321,6 +4581,16 @@ ode45
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $a_{t},a_{n},a_{h}$
+\end_inset
+
+are the components of the perturbing acceleration in the TNH reference frame,
+ where the t component is parallel to the velocity, the h component is parallel
+ to the angular momentum vector, and the n component is perpendicular to
+ the other two.
+\end_layout
+
+\begin_layout Standard
 A MATLAB function implementing those equation has been developed.
 \end_layout
 
@@ -4331,58 +4601,13 @@ Direct dynamic integration
 \begin_layout Standard
 Another option that we have to find out the evolution of the perturbed problem
  is to directly insert into the 2 body equation the perturbing acceleration
- term, and then integrate the resulting equations :
+ term, and then integrate the resulting equations:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
 \ddot{r}=-\frac{\mu}{r^{3}}\mathbf{r}+\sum\mathbf{a}_{p}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In our case 
-\begin_inset Formula $\mathbf{a}_{p}$
-\end_inset
-
- is given by:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\mathbf{a}_{p}=\mathbf{a}_{p_{J2}}+\mathbf{a}_{p_{m}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-where :
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\mathbf{a}_{p_{J2}}=\frac{3}{2}\frac{J_{2}\mu R^{2}}{r^{4}}\left[\frac{x}{r}\left(5\frac{z^{2}}{r^{2}}-1\right)\mathbf{\hat{i}}+\frac{y}{r}\left(5\frac{z^{2}}{r^{2}}-1\right)\mathbf{\hat{j}}+\frac{z}{r}\left(5\frac{z^{2}}{r^{2}}-3\right)\mathbf{\hat{k}}\right]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\mathbf{a}_{p_{m}}=\mu_{m}\left(\frac{\mathbf{r}_{m/s}}{r_{m/s}^{3}}-\frac{\mathbf{r}_{m}}{r_{m}^{3}}\right)
 \]
 
 \end_inset
@@ -4398,7 +4623,7 @@ Pertubations evolution
 The variation of orbital parameter according to Gauss equation estimation
  and to the perturbed two body problem is shown in the plots below.
  In particular, in the semimajor axis plot the periodic motion of the orbit
- can be seen by means of the highest peaks of the plot : 
+ can be seen by means of the highest peaks of the plot: 
 \end_layout
 
 \begin_layout Standard
@@ -4577,26 +4802,15 @@ Argument of perigee
 \end_layout
 
 \begin_layout Standard
-As we can see the Gauss equation represents a good approximation of the
- perturbed motion.
-\end_layout
-
-\begin_layout Standard
-The time evolution of the orbit as seen from the Earth is : 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
-\noindent
-\align center
 \begin_inset Graphics
-	filename gfx/gt.png
-	scale 70
+	filename gfx/pert2.png
+	width 80text%
 
 \end_inset
 
@@ -4607,7 +4821,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Ground Track
+Orbit evolution
 \end_layout
 
 \end_inset
@@ -4615,9 +4829,18 @@ Ground Track
 
 \end_layout
 
+\begin_layout Plain Layout
+
+\end_layout
+
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+As we can see the Gauss equation represents a good approximation of the
+ perturbed motion.
 \end_layout
 
 \begin_layout Section
@@ -4638,7 +4861,7 @@ In order to find out the cutoff frequency for the low pass filter, a frequency
 
 \begin_layout Standard
 The frequency content associated with each parameter con be seen in the
- figures below :
+ figures below:
 \end_layout
 
 \begin_layout Standard
@@ -4818,10 +5041,9 @@ Argument of perigee
 \end_layout
 
 \begin_layout Standard
-As we can see all the frequency component higher than the one related to
- the orbital period can be discarded.
- It should come with no surprise that the first frequency is the one related
- to the orbital period, because it represents the fastest 
+It should come with no surprise that the first frequency of the semimajor
+ axis perturbation frequency content is the one related to the orbital period,
+ because it represents the fastest 
 \begin_inset Quotes eld
 \end_inset
 
@@ -4830,12 +5052,22 @@ dynamic
 \end_inset
 
  of the orbital motion.
+ It is also present in the other parameters' perturbation frequency content,
+ though it is not the first one.
 \end_layout
 
 \begin_layout Standard
-By choosing half of the orbit period as a cutoff frequency for a second
- order Butterworth lowpass filter we can obtain the secular trend of the
- orbital parameters.
+By choosing half of the inverse of the orbital period as cutoff frequency
+ for a second order Butterworth lowpass filter, we can obtain the secular
+ trend of the orbital parameters.
+\end_layout
+
+\begin_layout Standard
+Concerning the semimajor axis variation, it can be observed that it is variating
+ around the mean value of abount some tens of meters, so it is almost constant.
+ It can also be observed the presence af a very low frequency oscillation,
+ which is related to the moon orbital period, as it completes two periods
+ every sideral month.
 \end_layout
 
 \begin_layout Standard
