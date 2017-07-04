@@ -2,7 +2,7 @@ function [ra,dec,lat,lon] = GroundTrack(date,r_vect,v_vect,mu_p)
 
 t_vect = date.*86400;
 
-theta= 2*pi/86400*t_vect;
+theta= (2*pi+2*pi/365.26)/86400*t_vect;
 
 X0 = [r_vect,v_vect];
 options = odeset('Reltol',1e-13,'AbsTol',1e-14);
@@ -48,8 +48,8 @@ end
 
 figure
 hold on
-image([-180 180],[90 -90],imread('Earth.jpg'));
-plot(lon/pi*180,lat/pi*180,'.')
+image([-180 180],[90 -90],imread('Earth2.jpg'));
+plot(lon/pi*180,lat/pi*180,'.b')
 axis equal
 axis([-180 180 -90 +90])
 xticks(-180:30:180)

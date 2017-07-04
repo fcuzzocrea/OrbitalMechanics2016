@@ -5,7 +5,7 @@
 
 clear
 close all
-%clc
+clc
 
 % File for saving datas
 if exist(fullfile(cd, 'results_perturbations.txt'), 'file') == 2
@@ -41,12 +41,16 @@ kep_0 = [a,e,i,OM,om,0];
 J2 = 1.08e-3;
 
 % ODE Options
-odeopt = odeset('RelTol',1e-13,'AbsTol',1e-14');
+odeopt = odeset('RelTol',1e-13,'AbsTol',1e-14','OutputFcn',@odewbar);
 
 %% GROUND TRACK
 
-t_ground_track = linspace(0,1,1e4);
-[ra,dec,lat,lon] = GroundTrack(t_ground_track,r_0,v_0,mu_earth);
+T = 2*pi*sqrt(a^3/mu_earth)/86400;
+t_ground_track_orbit = linspace(0,T,1e4);
+t_ground_track_day = linspace(0,1,1e4);
+
+GroundTrack(t_ground_track_orbit,r_0,v_0,mu_earth);
+GroundTrack(t_ground_track_day,r_0,v_0,mu_earth);
 
 
 %% EVALUATION OF ORBITAL PERTURBATIONS BY GAUSS EQUATIONS
@@ -110,8 +114,6 @@ OM_filt = filtfilt(b_f,a_f,kep_out_gauss(:,4));
 om_filt = filtfilt(b_f,a_f,kep_out_gauss(:,5));
 
 % Semimajor axis is a 'special guy...'
-%f_c = 1e-6;
-[b_f,a_f] = butter(2,f_c/(Fs/2));
 a_filt = filtfilt(b_f,a_f,kep_out_gauss(2000:end,1));
 
 %% PLOTTING
@@ -129,15 +131,21 @@ end
 
 limit_t_gauss = ceil(length(t_out_gauss)/12);
 
-figure(1)
+[X,Y,Z] = sphere(50);
+X = -earth_radius*X;
+Y = -earth_radius*Y;
+Z = -earth_radius*Z;
+
+figure
 plotorbit(a,e,i,pi/6,pi/3,mu_earth,1)
 hold on
 plot3(r_vect_gauss(:,1),r_vect_gauss(:,2),r_vect_gauss(:,3),'r')
+surf(gca,X,Y,Z,imread('Earth2.jpg'),'LineStyle','none','FaceColor','texturemap');
 title('Orbit evolution : 2 years simulation')
 legend('Initial Orbit')
 axis equal
 
-figure(2)
+figure
 hold on
 plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,1))
 plot(t_plot_ddi,kep_vect_ddi(:,1))
@@ -148,7 +156,7 @@ ylabel('Km')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 
-figure(3)
+figure
 hold on
 plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,2))
 plot(t_plot_ddi,kep_vect_ddi(:,2))
@@ -158,7 +166,7 @@ xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 
-figure(4)
+figure
 hold on
 plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,3))
 plot(t_plot_ddi,kep_vect_ddi(:,3))
@@ -168,7 +176,7 @@ xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 
-figure(5)
+figure
 hold on
 plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,4))
 plot(t_plot_ddi,kep_vect_ddi(:,4))
@@ -178,7 +186,7 @@ xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 
-figure(6)
+figure
 hold on
 plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,5))
 plot(t_plot_ddi,kep_vect_ddi(:,5))
@@ -188,10 +196,10 @@ xlabel('Days')
 datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 
-figure(7)
+figure
 hold on
 plot(t_plot_gauss(1:limit_t_gauss),kep_out_gauss(1:limit_t_gauss,6))
-plot(t_plot_ddi,kep_vect_ddi(:,6))
+plot(t_plot_ddi,abs(kep_vect_ddi(:,6)))
 title('True anomaly variation')
 legend('Gauss Results','DDI Results')
 xlabel('Days')
@@ -199,75 +207,68 @@ datetick('x','20yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 
 % FFT Plots
-figure(8)
+figure
 plot(f,abs(X_a(1:NFFT/2+1)),'.-')
 xlim([0 1e-4])
 title('Semimajor axis frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
 
-figure(9)
+figure
 plot(f,abs(X_e(1:NFFT/2+1)),'.-')
-xlim([0 1e-5])
+xlim([0 1e-4])
 title('Eccentricity frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
 
-figure(10)
+figure
 plot(f,abs(X_i(1:NFFT/2+1)),'.-')
-xlim([0 1e-5])
+xlim([0 1e-4])
 title('Inclination frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
-figure(11)
 
+figure
 plot(f,abs(X_OM(1:NFFT/2+1)),'.-')
-xlim([0 1e-5])
+xlim([0 1e-4])
 title('Right ascension frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
 
-figure(12)
+figure
 plot(f,abs(X_om(1:NFFT/2+1)),'.-')
-xlim([0 1e-5])
+xlim([0 1e-4])
 title('Argument of perigee frequency content')
 ylabel('Magnitude')
 xlabel('Frequency')
 
 % Secular Components
-figure(13)
-plot(t_plot_gauss(2000:end),a_filt)
+figure
+plot(t_out_gauss(2000:end)./(27.321*86400),a_filt)
 title('Semimajor axis secular component')
-xlabel('Days')
+xlabel('Sideral months')
 ylabel('Km')
-datetick('x','20yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
 
-figure(14)
-plot(t_plot_gauss,e_filt)
+figure
+plot(t_out_gauss./(27.321*86400),e_filt)
 title('Eccentricity secular component')
-xlabel('Days')
-datetick('x','20yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
+xlabel('Sideral months')
 
-figure(15)
-plot(t_plot_gauss,i_filt)
+figure
+plot(t_out_gauss./(27.321*86400),i_filt/pi*180)
 title('Inclination secular component')
-xlabel('Days')
-datetick('x','20yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
+xlabel('Sideral months')
+ylabel('Deg.')
 
-figure(16)
-plot(t_plot_gauss,OM_filt)
+figure
+plot(t_out_gauss./(27.321*86400),OM_filt/pi*180)
 title('Right ascension secular component')
-xlabel('Days')
-datetick('x','20yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
+xlabel('Sideral months')
+ylabel('Deg.')
 
-figure(17)
-plot(t_plot_gauss,om_filt)
+figure
+plot(t_out_gauss./(27.321*86400),om_filt/pi*180)
 title('Argument of perigee secular component')
-xlabel('Days')
-datetick('x','20yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
+xlabel('Sideral months')
+ylabel('Deg.')
 
