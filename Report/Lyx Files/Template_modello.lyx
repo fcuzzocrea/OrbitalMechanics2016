@@ -2162,7 +2162,7 @@ reference "subsec:The-Main-Routine"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -3011,6 +3011,13 @@ The minum
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Genetic algorithm
 \end_layout
@@ -3079,10 +3086,6 @@ ga
 \end_inset
 
  present in the resulting set of 
-\size default
-e
-\size small
-
 \begin_inset Formula $\Delta Vs$
 \end_inset
 
@@ -3095,7 +3098,7 @@ e
 \begin_layout Standard
 After this optimization process we have found a minimum
 \size small
-
+ 
 \begin_inset Formula $\Delta V$
 \end_inset
 
@@ -3141,7 +3144,7 @@ The minimum
 \begin_inset Formula $v_{\infty^{-}}$
 \end_inset
 
-: 
+:
 \end_layout
 
 \begin_layout Standard
@@ -3374,7 +3377,7 @@ reference "alg:Nonlinear-System"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -3983,13 +3986,6 @@ Hyperbolas Results
 \end_layout
 
 \begin_layout Standard
-As we can see from the parameter of the two hyperbolas, a powered gravity
- assist for this transfer is nearly not needed, since those two orbits are
- almost lying on the same orbital plane.
- 
-\end_layout
-
-\begin_layout Standard
 In the figure below is shown the flyby from a 2D and a 3D perspective
 \end_layout
 
@@ -4004,14 +4000,14 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename gfx/flyby.png
-	scale 70
+	scale 65
 
 \end_inset
 
  
 \begin_inset Graphics
 	filename gfx/3d_hyperbola.png
-	scale 70
+	scale 65
 
 \end_inset
 
@@ -4037,6 +4033,13 @@ Hyperbolic Flyby
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+As we can see from the parameter of the two hyperbolas, a powered gravity
+ assist for this transfer is nearly not needed, since those two orbits are
+ almost lying on the same orbital plane.
+ 
 \end_layout
 
 \begin_layout Standard
