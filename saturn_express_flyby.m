@@ -97,7 +97,7 @@ if DV_MIN == DV_MIN_ir
     r1_arc = r1_arc_ir;
     r2_arc = r2_arc_ir;
     r3_arc = r3_arc_ir;
-    v_saturn = v_saturn_ir; 
+    v_saturn = v_saturn_ir;
     t_saturn = t_saturn_ir;
     Dv_min_TOF_1 = Dv_min_TOF_1_ir;
     Dv_min_TOF_2 = Dv_min_TOF_2_ir;
@@ -108,7 +108,7 @@ elseif DV_MIN == DV_MIN_fmc
     r1_arc = r1_arc_fmc;
     r2_arc = r2_arc_fmc;
     r3_arc = r3_arc_fmc;
-    v_saturn = v_saturn_fmc; 
+    v_saturn = v_saturn_fmc;
     t_saturn = t_saturn_fmc;
     Dv_min_TOF_1 = Dv_min_TOF_1_fmc;
     Dv_min_TOF_2 = Dv_min_TOF_2_fmc;
@@ -119,7 +119,7 @@ elseif DV_MIN == DV_MIN_ga
     r1_arc = r1_arc_ga;
     r2_arc = r2_arc_ga;
     r3_arc = r3_arc_ga;
-    v_saturn = v_saturn_ga; 
+    v_saturn = v_saturn_ga;
     t_saturn = t_saturn_ga;
     Dv_min_TOF_1 = Dv_min_TOF_1_ga;
     Dv_min_TOF_2 = Dv_min_TOF_2_ga;
@@ -157,7 +157,7 @@ fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola : %f \n',r_p);
 fclose(fileID);
 
-% Entering hyperbola 
+% Entering hyperbola
 e_min = 1 + (r_p*norm(v_inf_min)^2)/ksaturn;
 delta_min = 2*(1/e_min);
 DELTA_min = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_min)^2)));
@@ -177,7 +177,7 @@ a_plus = DELTA_plus /(e_plus^2 -1);
 h_plus = sqrt(ksaturn*a_plus*(e_plus^2 -1));
 b_plus = a_plus*(sqrt(e_plus^2 -1));
 
-% Velocities at pericenter 
+% Velocities at pericenter
 vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
 vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
 
@@ -234,19 +234,19 @@ altitude = r_p-astroConstants(26);
 
 % Get h direction
 h_inf = cross(v_inf_min,v_inf_plus);    % Vector exiting from the plane between the two velocities (it is not a true h)
-h_direction = h_inf/norm(h_inf);        
+h_direction = h_inf/norm(h_inf);
 
 % Get rotation matrices for the entering hyperbola
 axang_min = [h_direction,(beta_min+delta_min)];         % Rotates by beta_min+delta_min around v_inf_min
-rotm_h_min = axang2rotm(axang_min);                     
+rotm_h_min = axang2rotm(axang_min);
 axang_2_min = [h_direction,-pi/2];                      % Rotates by pi/2 around v_inf_min
-rotm_h_2_min = axang2rotm(axang_2_min);                 
+rotm_h_2_min = axang2rotm(axang_2_min);
 
-% Get rotation matrices for the exiting hyperbola 
+% Get rotation matrices for the exiting hyperbola
 axang_plus = [h_direction,(beta_plus)];                  % Rotates by beta_plus around v_inf_plus
-rotm_h_plus = axang2rotm(axang_plus);                    
+rotm_h_plus = axang2rotm(axang_plus);
 axang_2_plus = [h_direction,pi/2];                       % Rotates by pi/2 around v_inf_plus
-rotm_h_2_plus = axang2rotm(axang_2_min);                 
+rotm_h_2_plus = axang2rotm(axang_2_min);
 
 % Radius of pericenter vector
 r_p_versor = (v_inf_min/norm(v_inf_min))*rotm_h_min;
@@ -254,7 +254,7 @@ rp_vector = r_p * r_p_versor;
 
 % Velocity at pericenter vector
 rotation_min = r_p_versor*rotm_h_2_min;      % Rotates versor r_p di by pi/2 around "z" to found the direction of vp
-vp_min_vect = vp_min*rotation_min;           
+vp_min_vect = vp_min*rotation_min;
 rotation_plus = r_p_versor*rotm_h_2_plus;
 vp_plus_vect = vp_plus*rotation_plus;
 
@@ -288,7 +288,7 @@ rx_arc_2_saturn = B(1,:);
 ry_arc_2_saturn = B(2,:);
 rz_arc_2_saturn = B(3,:);
 
-%% PLOTTING 
+%% PLOTTING
 
 % Orbits in the heliocentric frame
 figure(1)
@@ -352,7 +352,7 @@ title('Orbits and Lamberts Arc in Heliocentric Frame')
 
 % Best flyby in saturnocentric frame
 figure(5)
-grid on 
+grid on
 hold on
 title('Lambert Arcs in Planetocentric Frame')
 plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)

@@ -1,16 +1,16 @@
 function [DV_MIN, Dv_min_TOF_1, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn, dv_ga] = Fmincon_Flyby(t_dep)
 
 % Fmincon_Flyby.m
-% 
+%
 % PROTOTYPE:
 %   [DV_MIN, Dv_min_TOF_1, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn, dv_ga] = Fmincon_Flyby(t_dep)
 %
 % DESCRIPTION:
 % 	This function set the costraint, the upper and the lower bound to call
 % 	the optimizator fmincon that evaluates the fitness function
-% 	dv_optimizer. Then call the fitness function itself and collects 
+% 	dv_optimizer. Then call the fitness function itself and collects
 %   the best results.
-% 	
+%
 % INPUT:
 %   t_dep[]             Vector of departure\arrival dates (needed to
 %                       evaluate initial condition)
@@ -53,7 +53,7 @@ options = optimoptions('fmincon','Display','off');
 % Call the optimizator to find best days
 x = fmincon(@dv_optimizator,x0,A,b,[],[],LB,UB,[],options);
 
-% Outputs DV_min and the position of the planets evaluated at the days 
+% Outputs DV_min and the position of the planets evaluated at the days
 % founded by the fmincon optimizator
 [DV_MIN, r1_arc, r2_arc, r3_arc, v_saturn, dv_ga] = dv_optimizator(x);
 

@@ -1,16 +1,16 @@
 function [DV_MIN, Dv_min_TOF_1, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn, dv_ga] = Flyby_GA(ga_it)
 
 % Flyby_GA.m
-% 
+%
 % PROTOTYPE:
 %   [DV_MIN, Dv_min_TOF_1, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn, dv_ga] = Flyby_GA(ga_it)
 %
 % DESCRIPTION:
 % 	This function set the costraint, the upper and the lower bound to call
 % 	a genetic algorithm that evaluates the fitness function
-% 	dv_optimizer. Then call the fitness function itself and collects 
+% 	dv_optimizer. Then call the fitness function itself and collects
 %   the best results.
-% 	
+%
 % INPUT:
 %   ga_it[]             Number of iterations tbd with the ga optimizer
 %
@@ -23,7 +23,7 @@ function [DV_MIN, Dv_min_TOF_1, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, 
 %   r3_arc[3]           Position of Mars for the transfer arc Saturn->Neptune
 %   v_saturn[3]         Saturn velocity at flyby
 %   t_saturn[1]         Saturn day at flyby
-%   dv_ga[1]            DV to be given by propulsive system for the flyby           
+%   dv_ga[1]            DV to be given by propulsive system for the flyby
 %
 % AUTHOR:
 %   Alfonso Collogrosso, Francescodario Cuzzocrea, Benedetto Lui
@@ -58,8 +58,8 @@ if ga_it
     vect_dv(ga_it) = 0;
     options = optimoptions('ga','Display','off');
     
-    % We create a set of ga_it elements (obtained by running 
-    % ga_it times the genetic algorithm) 
+    % We create a set of ga_it elements (obtained by running
+    % ga_it times the genetic algorithm)
     parfor i = 1:ga_it
         [t, dv_val] = ga(ObjectiveFunction,nvars,A,b,[],[],LB,UB,[],options);
         vect_t(i,:) = t;
@@ -75,7 +75,7 @@ else
     T_DV_MIN = 1e4*[0.649799190637866, 0.834549018712001, 2.004399559036041];
 end
 
-% Outputs DV_min and the position of the planets evaluated at the days 
+% Outputs DV_min and the position of the planets evaluated at the days
 % founded by the fmincon optimizator
 [DV_MIN, r1_arc, r2_arc, r3_arc, v_saturn, dv_ga] = dv_optimizator(T_DV_MIN);
 

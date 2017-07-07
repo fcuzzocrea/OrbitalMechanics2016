@@ -1,28 +1,28 @@
 function [DV_MIN, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix)
 
 % DV_Tensor_Calculator.m
-% 
+%
 % PROTOTYPE:
 %   [DV_MIN, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, r1_arc, r2_arc, r3_arc, v_saturn, t_saturn] = ...
 %                                              ... Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix)
 %
 % DESCRIPTION:
-% 	This function implements an iterative routine that builds a "3D tensor" 
+% 	This function implements an iterative routine that builds a "3D tensor"
 % 	of deltavs for any combination of departure times and arrival times,
 % 	obviously excluding nonsense combinations (like arrival before
 % 	departure) at intervals of one departure\arrival per 100 days
-% 	(according to the definition of t_dep done in the main script). 
+% 	(according to the definition of t_dep done in the main script).
 %   Then compute the minimum DV in that tensor and retrieve the
-%   corresponding best arcs. 
+%   corresponding best arcs.
 %   TOFs by searching the correspondent indexes in the TOF_matrix.
-% 	
+%
 %
 % INPUT:
 %   t_dep[]             Vector of departure\arrival dates
-%   ibody_mars[1]       Integer number identifying Mars 
+%   ibody_mars[1]       Integer number identifying Mars
 %   ibody_saturn[1]     Integer number identifying Saturn
 %   ibody_neptune[1]    Integer number identifying Neptune
-%   ksun[1]             Sun constant 
+%   ksun[1]             Sun constant
 %   TOF_matrix[1]       Matrix containing all TOFs combinations
 %
 % OUTPUT :
@@ -30,7 +30,7 @@ function [DV_MIN, DV_MAX, Dv_min_TOF_1, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2, 
 %   DV_MAX[1]           Maximum DV found in DV_Tensor
 %   Dv_min_TOF_1[1]     TOF corresponding to the first transfer arc
 %   Dv_matrix_1[]       DV_matrix for the first arc (useful for porkchops)
-%   Dv_matrix_2[]       DV_matrix for the second arc (useful for porkchops)  
+%   Dv_matrix_2[]       DV_matrix for the second arc (useful for porkchops)
 %   Dv_min_TOF_2[1]     TOF corresponding to the second transfer arc
 %   r1_arc[3]           Position of Mars for the transfer arc Mars->Saturn
 %   r2_arc[3]           Position of Mars for the transfer arc Mars->Saturn and Saturn->Neptune
@@ -50,7 +50,7 @@ end
 
 parfor i = 1 : length(t_dep)
     [kep_dep_vect_saturn(i,:),~] = uplanet(t_dep(i),ibody_saturn);
-    [r_dep_vect_saturn(i,:),v_dep_vect_saturn(i,:)] = kep2car(kep_dep_vect_saturn(i,:),ksun); 
+    [r_dep_vect_saturn(i,:),v_dep_vect_saturn(i,:)] = kep2car(kep_dep_vect_saturn(i,:),ksun);
 end
 
 parfor i = 1 : length(t_dep)
