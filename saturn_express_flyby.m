@@ -33,8 +33,7 @@ date1_departure = date2mjd2000(starting_departure_time);
 date2_departure = date2mjd2000(final_departure_time);
 
 % Time of departure window vectors in days and seconds.
-% One departure per month
-t_dep = date1_departure : 100 : date2_departure ;
+t_dep = date1_departure : 200 : date2_departure ;
 t_dep_sec = t_dep*86400;
 
 
@@ -43,16 +42,16 @@ starting_arrival_time = [2016 1 1 12 0 0];
 final_arrival_time = [2055 1 1 12 0 0];
 
 % Conversion of arrival dates from Gregorian calendar
-% to modified Julian Day 2000.
+% to modified Julian Day 2000
 date1_arrival = date2mjd2000(starting_arrival_time);
 date2_arrival = date2mjd2000(final_arrival_time);
 
-% Time of arrival window vectors in days and seconds.
-% One arrival per month
-t_arr = date1_arrival: 100 : date2_arrival ;
+% Time of arrival window vectors in days and seconds
+% One arrival per month (needed by iterative routine and Pork Chop plots)
+t_arr = date1_arrival: 200 : date2_arrival ;
 t_arr_sec = t_arr*86400;
 
-% Time of fligth computation. 
+% Time of fligth matrix computation
 TOF_matrix = tof_calculator (t_dep,t_arr);
 for q = 1: numel(TOF_matrix)
     if TOF_matrix(q) <= 0
@@ -60,9 +59,9 @@ for q = 1: numel(TOF_matrix)
     end
 end
 
-%% DEFINE ORBITS
+%% ORBITS DEFINITION
 
-% Generic for plotting
+% Needed for orbits plots
 ibody_mars = 4;
 [kep_mars,ksun] = uplanet(date, ibody_mars);
 [rx_mars, ry_mars, rz_mars, vx_mars, vy_mars, vz_mars] = int_orb_eq(kep_mars,ksun);
@@ -75,102 +74,65 @@ ibody_neptune = 8;
 [kep_neptune,ksun] = uplanet(date, ibody_neptune);
 [rx_neptune, ry_neptune, rz_neptune, vx_neptune, vy_neptune, vz_neptune] = int_orb_eq(kep_neptune,ksun);
 
-% From ephemeris compute position and velocity for the entire window
-parfor i = 1 : length(t_dep)
-    [kep_dep_vect_mars(i,:),~] = uplanet(t_dep(i),ibody_mars);
-    [r_dep_vect_mars(i,:),v_dep_vect_mars(i,:)] = kep2car(kep_dep_vect_mars(i,:),ksun);
+%% DELTAV CALCULATION
+
+% ITERATIVE ROUTINE
+[DV_MIN_ir, DV_MAX, Dv_min_TOF_1_ir, Dv_matrix_1, Dv_matrix_2, Dv_min_TOF_2_ir, r1_arc_ir, r2_arc_ir, r3_arc_ir, v_saturn_ir, t_saturn_ir] = Dv_Tensor_Calculator (t_dep, ibody_mars, ibody_saturn, ibody_neptune, ksun, TOF_matrix);
+
+% INTERIOR POINT ALGORITHM WITH FMINCON
+[DV_MIN_fmc, Dv_min_TOF_1_fmc, Dv_min_TOF_2_fmc, r1_arc_fmc, r2_arc_fmc, r3_arc_fmc, v_saturn_fmc, t_saturn_fmc,~] = Fmincon_Flyby (t_dep);
+
+% GENETIC ALGORITHM
+[DV_MIN_ga, Dv_min_TOF_1_ga, Dv_min_TOF_2_ga, r1_arc_ga, r2_arc_ga, r3_arc_ga, v_saturn_ga, t_saturn_ga,~] = Flyby_GA(0);
+
+%% OPTIMUM DELTAV SELECTOR
+
+DV_OPT = [DV_MIN_ir, DV_MIN_fmc, DV_MIN_ga];
+DV_MIN = min(DV_OPT);
+
+if DV_MIN == DV_MIN_ir
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST FLYBY FOUND WITH ITERATIVE ROUTINE\n');
+    fclose(fileID);
+    r1_arc = r1_arc_ir;
+    r2_arc = r2_arc_ir;
+    r3_arc = r3_arc_ir;
+    v_saturn = v_saturn_ir;
+    t_saturn = t_saturn_ir;
+    Dv_min_TOF_1 = Dv_min_TOF_1_ir;
+    Dv_min_TOF_2 = Dv_min_TOF_2_ir;
+elseif DV_MIN == DV_MIN_fmc
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST FLYBY FOUND WITH FMINCON\n');
+    fclose(fileID);
+    r1_arc = r1_arc_fmc;
+    r2_arc = r2_arc_fmc;
+    r3_arc = r3_arc_fmc;
+    v_saturn = v_saturn_fmc;
+    t_saturn = t_saturn_fmc;
+    Dv_min_TOF_1 = Dv_min_TOF_1_fmc;
+    Dv_min_TOF_2 = Dv_min_TOF_2_fmc;
+elseif DV_MIN == DV_MIN_ga
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] BEST FLYBY FOUND WITH GENETIC ALGORITHM\n');
+    fclose(fileID);
+    r1_arc = r1_arc_ga;
+    r2_arc = r2_arc_ga;
+    r3_arc = r3_arc_ga;
+    v_saturn = v_saturn_ga;
+    t_saturn = t_saturn_ga;
+    Dv_min_TOF_1 = Dv_min_TOF_1_ga;
+    Dv_min_TOF_2 = Dv_min_TOF_2_ga;
 end
 
-parfor i = 1 : length(t_dep)
-    [kep_dep_vect_saturn(i,:),~] = uplanet(t_dep(i),ibody_saturn);
-    [r_dep_vect_saturn(i,:),v_dep_vect_saturn(i,:)] = kep2car(kep_dep_vect_saturn(i,:),ksun); 
-end
-
-parfor i = 1 : length(t_dep)
-    [kep_dep_vect_neptune(i,:),~] = uplanet(t_dep(i),ibody_neptune);
-    [r_dep_vect_neptune(i,:),v_dep_vect_neptune(i,:)] = kep2car(kep_dep_vect_neptune(i,:),ksun);
-end
-
-%% MAIN ROUTINE
-
-% Preallocation
-Dv_matrix_1 = zeros(size(t_dep));
-Dv_matrix_2 = zeros(size(t_dep));
-v_inf_matrix_1 = zeros(size(t_dep));
-v_inf_matrix_2 = zeros(size(t_dep));
-DV_Tensor = zeros(length(t_dep),length(t_dep),length(t_dep));
-
-% Computation of the 3D-Tensor of deltav with 3 nested for cycles
-for i = 1:length(t_dep)
-    
-    r_mars = r_dep_vect_mars(i,:);
-    v_mars = v_dep_vect_mars(i,:);
-    
-    for j = 1:length(t_dep)
-        
-        tof_1 = TOF_matrix(i,j)*86400;
-        
-        if tof_1 > 0
-            r_saturn = r_dep_vect_saturn(j,:);
-            v_saturn = v_dep_vect_saturn(j,:);
-            [~,~,~,~,VI_mars,VF_saturn,~,~] = lambertMR(r_mars,r_saturn,tof_1,ksun);
-            dv1_mars = norm(VI_mars - v_mars);
-            dv2_saturn = norm(v_saturn - VF_saturn);
-            Dv_matrix_1(i,j) = abs(dv1_mars) + abs(dv2_saturn);
-            v_inf_matrix_1(i,j) = dv1_mars;
-            
-            for k = 1:length(t_dep)
-                
-                tof_2 = TOF_matrix(j,k)*86400;
-                
-                if tof_2 > 0
-                    r_neptune = r_dep_vect_neptune(k,:);
-                    v_neptune = v_dep_vect_neptune(k,:);
-                    [~,~,~,~,VI_saturn,VF_neptune,~,~] = lambertMR(r_saturn,r_neptune,tof_2,ksun);
-                    dv1_saturn = norm(VI_saturn - v_saturn);
-                    dv2_neptune = norm(v_neptune - VF_neptune);
-                    Dv_matrix_2(j,k) = abs(dv1_saturn) + abs(dv2_neptune);
-                    v_inf_matrix_2(j,k) = dv1_saturn;
-                                       
-                    dv_ga = abs(dv1_saturn - dv2_saturn);
-                                     
-                    DV_Tensor(i,j,k) = Dv_matrix_1(i,j) + dv_ga + Dv_matrix_2(j,k);
-                    
-                else
-                    Dv_matrix_2(j,k) = nan;
-                    v_inf_matrix_2(j,k) = nan;
-                    DV_Tensor(i,j,k) = nan;
-                end
-            end
-        else
-            Dv_matrix_1(i,j) = nan;
-            v_inf_matrix_1(i,j) = nan;
-            DV_Tensor(i,j,:) = nan;
-        end
-    end    
-end
-
-% This is done due to fact that first row of output matrix is zeros
-Dv_matrix_2(1,:) = nan;
-v_inf_matrix_2(1,:) = nan;
-
-% Find the minimum DV
-DV_MIN = min(min(min(DV_Tensor)));
-DV_MAX = max(max(max(DV_Tensor)));
-[row,column,depth] = ind2sub(size(DV_Tensor),find(DV_Tensor == DV_MIN));
 fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] DELTAV MIN %f: \n',DV_MIN);
+fprintf(fileID,'[LOG] DELTAV MIN : %f \n',DV_MIN);
+fprintf(fileID,'[LOG] MARS DEPARTURE JD2000 : %.2f \n',t_saturn-Dv_min_TOF_1/86400);
+fprintf(fileID,'[LOG] SATURN FLYBY JD2000 : %.2f \n',t_saturn);
+fprintf(fileID,'[LOG] NEPTUNE ARRIVAL JD2000 : %.2f \n',t_saturn+Dv_min_TOF_2/86400);
 fclose(fileID);
 
-% Find best arcs
-r1_arc = r_dep_vect_mars(row,:);
-r2_arc = r_dep_vect_saturn(column,:);
-r3_arc = r_dep_vect_neptune(depth,:);
-
-% Find correspondent TOFs
-Dv_min_TOF_1 = (TOF_matrix(row,column)*86400);
-Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
-
+% Compute bests transfer arcs
 [~,~,~,~,VI_arc1,VF_arc1,~,~] = lambertMR(r1_arc,r2_arc,Dv_min_TOF_1,ksun);
 [~,~,~,~,VI_arc2,VF_arc2,~,~] = lambertMR(r2_arc,r3_arc,Dv_min_TOF_2,ksun);
 
@@ -180,27 +142,22 @@ Dv_min_TOF_2 = (TOF_matrix(column,depth)*86400);
 [rx_arc_2, ry_arc_2, rz_arc_2, vx_arc_2, vy_arc_2, vz_arc_2] = intARC_lamb(r2_arc,...
     VI_arc2,ksun,Dv_min_TOF_2,86400);
 
-% V infinity 
-v_saturn = v_dep_vect_saturn(column,:);
-
-v_inf_min = (VF_arc1 - v_saturn );
+% V infinity
+v_inf_min = (VF_arc1 - v_saturn);
 v_inf_plus = (VI_arc2 - v_saturn);
 
 %% FLYBY
 
-if norm(v_inf_min) - norm(v_inf_plus) == 0
-    disp('Powered gravity assist is not needed')
-end
-
+% Radius of pericenter of the flyby hyperbola
 delta = acos(dot(v_inf_min,v_inf_plus)/(norm(v_inf_min)*norm(v_inf_plus)));
 ksaturn = astroConstants(16);
 f = @(r_p) delta - asin(1/(1+(r_p*norm(v_inf_min)^2/ksaturn))) - asin(1/(1+(r_p*norm(v_inf_plus)^2/ksaturn)));
-r_p = fzero(f,700000);
+r_p = fzero(f,10000000);
 fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola %f: \n',r_p);
+fprintf(fileID,'[LOG] Pericenter Radius of Hyperbola : %f \n',r_p);
 fclose(fileID);
 
-% Entering Hyperbola 
+% Entering hyperbola
 e_min = 1 + (r_p*norm(v_inf_min)^2)/ksaturn;
 delta_min = 2*(1/e_min);
 DELTA_min = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_min)^2)));
@@ -210,7 +167,7 @@ a_min = DELTA_min /(e_min^2 -1);
 b_min = a_min*(sqrt(e_min^2 -1));
 h_min = sqrt(ksaturn*a_min*(e_min^2 -1));
 
-% Exiting Hyperbola
+% Exiting hyperbola
 e_plus = 1 + (r_p*norm(v_inf_plus)^2)/ksaturn;
 delta_plus = 2*(1/e_plus);
 DELTA_plus = r_p*sqrt(1 + 2*(ksaturn/(r_p*norm(v_inf_plus)^2)));
@@ -220,23 +177,33 @@ a_plus = DELTA_plus /(e_plus^2 -1);
 h_plus = sqrt(ksaturn*a_plus*(e_plus^2 -1));
 b_plus = a_plus*(sqrt(e_plus^2 -1));
 
-%DeltaV Pericenter 
+% Velocities at pericenter
 vp_min = (DELTA_min*norm(v_inf_min))/(r_p);
 vp_plus = (DELTA_plus*norm(v_inf_plus))/(r_p);
 
-% DeltaV Flyby
+% DeltaV flyby
+toll = 2.5e-10;
 DELTA_FLYBY = norm(v_inf_plus - v_inf_min);
 DELTA_VP = abs(vp_plus - vp_min);
+if DELTA_VP <= toll
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] Powered gravity assist is not needed \n');
+    fclose(fileID);
+else
+    fileID = fopen(filename,'a+');
+    fprintf(fileID,'[LOG] DeltaV to give at pericenter%f : \n',DELTA_VP);
+    fclose(fileID);
+end
+
+% Saturn SOI data
+% Saturn Semimajor axis in AU from https://nssdc.gsfc.nasa.gov/planetary/factsheet/saturnfact.html
+a_saturn = 9.53707032;
+r_soi_saturn = astroConstants(2)*a_saturn*(astroConstants(16)/astroConstants(4))^(2/5);
 fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] DeltaV to give %f : \n',DELTA_VP);
+fprintf(fileID,'[LOG] Saturn SOI radius : %f \n',r_soi_saturn);
 fclose(fileID);
 
-% SOI Data
-r_soi_saturn = astroConstants(2)*59.879*((astroConstants(16)/astroConstants(1))/(astroConstants(4)/astroConstants(1)))^(2/5);
-fileID = fopen(filename,'a+');
-fprintf(fileID,'[LOG] Saturn SOI radius %f : \n',r_soi_saturn);
-fclose(fileID);
-
+% Hyperbola parameters
 theta_SOI_min = acos((h_min^2/(ksaturn*r_soi_saturn*e_min))-1/e_min);
 theta_min = -theta_SOI_min:0.01:0;
 theta_min = [theta_min 0];
@@ -249,10 +216,57 @@ theta_plus = [theta_plus theta_SOI_plus];
 x_hyp_plus = -a_plus*((e_plus+cos(theta_plus))./(1+e_plus*cos(theta_plus)))+a_plus+r_p;
 y_hyp_plus = b_plus*((sqrt(e_plus)^2*sin(theta_plus))./(1+e_plus*cos(theta_plus)));
 
+% Flyby Time
+F_min = acosh((cos(theta_SOI_min) + e_min)/(1 + e_min*cos(theta_SOI_min)));
+dt_min = sqrt(a_min^3/ksaturn)*(e_min*sinh(F_min)-F_min);
+F_plus = acosh((cos(theta_SOI_plus) + e_plus)/(1 + e_plus*cos(theta_SOI_plus)));
+dt_plus = sqrt(a_plus^3/ksaturn)*(e_plus*sinh(F_plus)-F_plus);
+dt_tot = dt_min+dt_plus;
+dt_tot_days = dt_tot*1.1574e-5;
+fileID = fopen(filename,'a+');
+fprintf(fileID,'[LOG] Flyby time %f days\n',dt_tot_days);
+fclose(fileID);
+
+% FlyBy altitude from Saturn
+altitude = r_p-astroConstants(26);
+
+% 3D Hyperbola heliocentric frame
+
+% Get h direction
+h_inf = cross(v_inf_min,v_inf_plus);    % Vector exiting from the plane between the two velocities (it is not a true h)
+h_direction = h_inf/norm(h_inf);
+
+% Get rotation matrices for the entering hyperbola
+axang_min = [h_direction,(beta_min+delta_min)];         % Rotates by beta_min+delta_min around v_inf_min
+rotm_h_min = axang2rotm(axang_min);
+axang_2_min = [h_direction,-pi/2];                      % Rotates by pi/2 around v_inf_min
+rotm_h_2_min = axang2rotm(axang_2_min);
+
+% Get rotation matrices for the exiting hyperbola
+axang_plus = [h_direction,(beta_plus)];                  % Rotates by beta_plus around v_inf_plus
+rotm_h_plus = axang2rotm(axang_plus);
+axang_2_plus = [h_direction,pi/2];                       % Rotates by pi/2 around v_inf_plus
+rotm_h_2_plus = axang2rotm(axang_2_min);
+
+% Radius of pericenter vector
+r_p_versor = (v_inf_min/norm(v_inf_min))*rotm_h_min;
+rp_vector = r_p * r_p_versor;
+
+% Velocity at pericenter vector
+rotation_min = r_p_versor*rotm_h_2_min;      % Rotates versor r_p di by pi/2 around "z" to found the direction of vp
+vp_min_vect = vp_min*rotation_min;
+rotation_plus = r_p_versor*rotm_h_2_plus;
+vp_plus_vect = vp_plus*rotation_plus;
+
+% Integrate the two hyperbola arcs for the 3D plot
+options = odeset('Reltol',1e-13,'AbsTol',1e-14);
+[~,entering_hyperbola] = ode113(@(t,X) dyn_orb_eq(t,X,ksaturn),(30*86400:-86400:0),[rp_vector, vp_min_vect],options);
+[~,exiting_hyperbola] = ode113(@(t,X) dyn_orb_eq(t,X,ksaturn),(0:86400:30*86400),[rp_vector, vp_plus_vect],options);
+
 %% SATURNOCENTRIC FRAME PLOT
 
 % Rotation matrix : heliocentric -> saturnocentric
-[kep_saturn,ksun] = uplanet(t_dep(column), ibody_saturn);
+[kep_saturn,ksun] = uplanet(t_saturn, ibody_saturn);
 i_sat = kep_saturn(3);
 OMG_sat = kep_saturn(4);
 omg_sat = kep_saturn(5);
@@ -262,15 +276,6 @@ RM_OMG = [ cos(OMG_sat),sin(OMG_sat), 0; -sin(OMG_sat), cos(OMG_sat), 0; 0, 0, 1
 RM_i = [1, 0, 0; 0, cos(i_sat), sin(i_sat);  0, -sin(i_sat), cos(i_sat)];
 RM_omg = [cos(omg_sat), sin(omg_sat), 0; -sin(omg_sat), cos(omg_sat), 0; 0, 0, 1];
 T = RM_theta*RM_omg*RM_i*RM_OMG;
-
-% Fondamentalmente ho che il versore uscente dal piano e perpendicolare ad esso sara quello dato dal
-% prodotto scalare di vinfmeno x vinfplus. L'orienzione : sara quella tale
-% per cui le due vinf giacciono sullo stesso piano. Ok, dato questo come
-% continuo per plottare l'iperbole ?
-v_inf_min_saturn = T*v_inf_min';
-v_inf_plus_saturn = T*v_inf_plus';
-k_direction = cross(v_inf_min_saturn,v_inf_plus_saturn);
-k_direction = k_direction/norm(k_direction);
 
 % Get Lambert arc in Saturnocentric frame
 [A]=T*[rx_arc_1, ry_arc_1, rz_arc_1]';
@@ -283,8 +288,9 @@ rx_arc_2_saturn = B(1,:);
 ry_arc_2_saturn = B(2,:);
 rz_arc_2_saturn = B(3,:);
 
-%% PLOTTING 
+%% PLOTTING
 
+% Orbits in the heliocentric frame
 figure(1)
 grid on
 hold on
@@ -292,10 +298,11 @@ whitebg(figure(1), 'black')
 plot3(rx_mars,ry_mars,rz_mars);
 plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
+axis equal
 legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit')
 title('Orbits in Heliocentric Frame')
 
-%  Pork chop plot DV,TOF.
+%  Pork chop plot DV,TOF for Mars -> Saturn transfer
 figure(2)
 hold on
 grid on
@@ -312,7 +319,7 @@ datetick('y','yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
-%  Pork chop plot DV,TOF.
+%  Pork chop plot DV,TOF for Saturn -> Neptune transfer
 figure(3)
 hold on
 grid on
@@ -329,7 +336,7 @@ datetick('y','yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
 
-
+% Best flyby plot in heliocentric frame
 figure(4)
 grid on
 hold on
@@ -339,11 +346,13 @@ plot3(rx_neptune,ry_neptune,rz_neptune);
 plot3(rx_saturn,ry_saturn,rz_saturn);
 plot3(rx_arc_1, ry_arc_1, rz_arc_1,'y')
 plot3(rx_arc_2, ry_arc_2, rz_arc_2,'w')
+axis equal
 legend('Mars Orbit', 'Neptune Orbit', 'Saturn Orbit', 'First Transfer Arc','Second Transfer Arc')
 title('Orbits and Lamberts Arc in Heliocentric Frame')
 
+% Best flyby in saturnocentric frame
 figure(5)
-grid on 
+grid on
 hold on
 title('Lambert Arcs in Planetocentric Frame')
 plot3(rx_arc_1_saturn,ry_arc_1_saturn,rz_arc_1_saturn)
@@ -353,12 +362,13 @@ ylabel('Km')
 legend('Before GA', 'After GA')
 axis equal
 
+% 2D Hyperbola
 figure(6)
 hold on
 plot(x_hyp_min,y_hyp_min)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (6,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(x_hyp_plus,y_hyp_plus)
-zoomPlot (4,'x',[-10000000 3000000],'y',[-5000000 5000000]);
+zoomPlot (6,'x',[-10000000 3000000],'y',[-5000000 5000000]);
 plot(0,0,'*')
 grid on
 axis equal
@@ -367,4 +377,14 @@ ylabel('Km')
 title('Flyby Hyperbola')
 legend('Entering Hyperbola', 'Exiting Hyperbola')
 
-
+% 3D Hyperbola
+figure(7)
+grid on
+hold on
+plot3(entering_hyperbola(:,1),entering_hyperbola(:,2),entering_hyperbola(:,3));
+plot3(exiting_hyperbola(:,1),exiting_hyperbola(:,2),exiting_hyperbola(:,3));
+axis equal
+legend('Entering Hyperbola', 'Exiting Hyperbola')
+xlabel('Km')
+ylabel('Km')
+title('Flyby Hyperbola 3D')

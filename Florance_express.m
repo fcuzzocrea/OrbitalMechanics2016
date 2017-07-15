@@ -3,7 +3,7 @@
 %  (C) Collogrosso Alfonso, Cuzzocrea Francescodario, Lui Benedetto - POLIMI SPACE AGENCY
 %  WEB : https://github.com/fcuzzocrea/OrbitalMechanics2016
 
-clear 
+clear
 close all
 clc
 
@@ -50,7 +50,7 @@ date2_arrival = date2mjd2000(final_arrival_time);
 t_arr = date1_arrival: 7 : date2_arrival ;
 t_arr_sec = t_arr*86400;
 
-% Time of fligth computation. 
+% Time of fligth computation.
 TOF_matrix = tof_calculator (t_dep,t_arr);
 
 for q = 1: numel(TOF_matrix)
@@ -87,7 +87,7 @@ i_dep = kep_dep(3);
 OMG_dep = kep_dep(4);
 omg_dep = kep_dep(5);
 theta_dep = kep_dep(6);
- 
+
 % Arrival orbit.
 id_arr = 35;
 [kep_arr, Mass_Florence, M_Florence] = ephNEO(date1_arrival,id_arr);
@@ -142,7 +142,7 @@ for i = 1 : length(t_dep)
             dv1 = norm(VI - v_e);
             dv2 = norm(v_f - VF);
             Dv_matrix(i,j) = abs(dv1) + abs(dv2);
-            v_inf_matrix(i,j) = dv1;     
+            v_inf_matrix(i,j) = dv1;
         else
             Dv_matrix(i,j) = nan;
             v_inf_matrix(i,j) = nan;
@@ -181,7 +181,7 @@ end
 
 for s = 1 : numel(v_inf_matrix)
     if v_inf_matrix(s) > v_inf_assigned
-       v_inf_matrix(s) = nan;
+        v_inf_matrix(s) = nan;
     end
 end
 
@@ -203,7 +203,7 @@ r2_arc = r_arr_vect(COLUMN,:);
 %%  SUB-OPTIMAL TRANSFER ARC COMPUTATION
 %   for the nearest V infinity to V infinity assigned
 
-v_inf_max = max(min(v_inf_matrix));
+v_inf_max = max(max(v_inf_matrix));
 fileID = fopen(filename,'a+');
 fprintf(fileID,'[LOG] Maximum V_infinity : %f\n',v_inf_max);
 fclose(fileID);
@@ -225,10 +225,10 @@ r2_sub_arc = r_arr_vect(COLUMN_v_inf,:);
 % Change of a and e whith an ohman transfer
 [deltaV_a_t1,deltaV_a_t2,Tt_1,Tt_2,e_t1,e_t2,a_t1,a_t2]=homann(a_dep,e_dep,a_arr,e_arr,ksun);
 
-% Change of inclination 
+% Change of inclination
 [delta_v_inc,theta_1,omega_2]=inclinationchange(a_dep,e_dep,0.00001,OMG_dep,i_arr,OMG_arr,omg_dep,0,ksun);
 
-% Change of w in order to adjust the shape of the orbit 
+% Change of w in order to adjust the shape of the orbit
 [delta_v_w,theta_man,theta_after_man]= anoperichange(a_dep, e_dep, omega_2, omg_arr, theta_1, ksun);
 
 % Total deltaV
@@ -306,7 +306,7 @@ legend('Earth Orbit','Florence Orbit','Earth Departure Position',...
 
 title('Best Transfer Arc against Suboptimal')
 
-% Time of departure, Time of fligt, Delta v plot. 
+% Time of departure, Time of fligt, Delta v plot.
 figure(5)
 hold on
 grid on
@@ -316,7 +316,7 @@ ylabel('Time of Fligth');
 zlabel('DeltaV')
 plot3(t_dep_sec,TOF_matrix*86400,Dv_matrix);
 
-% Pork chop plot contour. 
+% Pork chop plot contour.
 figure(6)
 hold on
 grid on
@@ -347,6 +347,9 @@ datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
 set(gca,'XTickLabelRotation',45)
 set(gca,'YTickLabelRotation',45)
+clb = colorbar;
+clb.Label.String = '\Delta V (km/s)';
+clb.Label.FontSize = 11;
 
 % Pork chop plot V infinity.
 figure(8)
@@ -373,13 +376,13 @@ grid on
 title('3D Pork chop plot')
 xlabel('Time of arrivals');
 ylabel('Time of departure');
-zlabel('Delta V')
+zlabel('Delta V (km/s)')
 %axis vis3d
-contour3(t_arr,t_dep,Dv_matrix,125);
+% contour3(t_arr,t_dep,Dv_matrix,125);
 caxis([Dv_min Dv_max]);
-[X,Y]=meshgrid(t_arr,t_dep);
-surface(X,Y,Dv_matrix); 
+[X,Y]=meshgrid(t_arr(1:2:end),t_dep(1:2:end));
+surface(X,Y,Dv_matrix(1:2:end,1:2:end));
 datetick('x','yy/mm/dd','keepticks','keeplimits')
 datetick('y','yy/mm/dd','keepticks','keeplimits')
-set(gca,'XTickLabelRotation',45)
-set(gca,'YTickLabelRotation',45)
+% set(gca,'XTickLabelRotation',45)
+% set(gca,'YTickLabelRotation',45)
