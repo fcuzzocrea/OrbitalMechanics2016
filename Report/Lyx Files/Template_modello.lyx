@@ -4501,7 +4501,7 @@ Perturbing acceleration
 \end_layout
 
 \begin_layout Standard
-In our case the perturbing accelerastion
+In our case the perturbing acceleration 
 \begin_inset Formula $\mathbf{a}_{p}$
 \end_inset
 
@@ -4808,9 +4808,11 @@ Argument of perigee
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\noindent
+\align center
 \begin_inset Graphics
 	filename gfx/pert2.png
 	width 80text%
