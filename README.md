@@ -1,7 +1,7 @@
 __OrbitalMechanics2016__
 ===============
 
-_Files and scripts for the assigments required for the course of Orbital Mechanics, PoliMI Fall 2016_
+_Files and scripts done for the assigments required for the course of Orbital Mechanics, PoliMI Fall 2016_
 
 __Overview of contents:__
 
