@@ -1,19 +1,23 @@
-OrbitalMechanics2016
+__OrbitalMechanics2016__
 ===============
 
-Files and scripts for the assigments of Polimi Course of Orbital Mechanics
+_Files and scripts for the assigments required for the course of Orbital Mechanics, PoliMI Fall 2016_
 
-#Overview of contents:
+__Overview of contents:__
 
 * Orbital Maneuvers
 * Interplanetary Flyby
+* Orbital Perturbations
 
-#How to use:
+__How to use:__
 
-* Extract all the files in a folder and run the main scripts
+* Extract all the files in a folder and run one the main scripts : 
+    * Florance_express.m : Assignment 1
+    * Saturn_express_flyby : Assignment 2
+    * Assignment3 : Assignment 3
 * Most significant results are automatically saved in .txt files
 
-#Authors:
+__Authors:__
 
 * Alfonso Collogrosso
 * Francescodario Cuzzocrea
