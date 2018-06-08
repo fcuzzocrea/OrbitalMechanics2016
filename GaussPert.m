@@ -45,6 +45,7 @@ th_star = th+om;
 
 apJ2_vect = j2peracc (r_sp,J2,earth_radius,mu_earth);    % J2 perturbed acceleration vector
 apMG_vect = Moonper (r_Moon,r_sp'); % Moon gravity perturbed acceleration vector
+apSRP_vect = srpper (time);                                 % Perturbation due to the solar radiation pressure
 
 % "Cartesian" to TNH reference frame rotation matrix
 
@@ -53,7 +54,7 @@ h_vers = cross(r_sp,v_sp)/norm(cross(r_sp,v_sp));
 n_vers = cross(h_vers,t_vers);
 A = [t_vers,n_vers,h_vers];
 
-ap_car = apJ2_vect + apMG_vect;          % Total perturbed acceleration vector
+ap_car = apJ2_vect + apMG_vect + apSRP_vect;          % Total perturbed acceleration vector
 ap_tnh = A'*ap_car';
 % ap_tnh = [0 0 0]';
 
